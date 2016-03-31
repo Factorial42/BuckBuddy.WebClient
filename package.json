@@ -1,0 +1,32 @@
+{
+  "name": "BuckBuddy.WebClient",
+  "version": "1.0.0",
+  "description": "web UI",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node server"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Factorial42/BuckBuddy.WebClient"
+  },
+  "author": "Mandarin",
+  "homepage": "https://github.com/Factorial42/BuckBuddy.WebClient",
+  "dependencies": {
+    "camelize": "^1.0.0",
+    "envok": "^1.0.0",
+    "hapi": "^8.4.0",
+    "hapi-auth-bearer-token": "^3.1.1",
+    "hoek": "^2.14.0",
+    "jade": "^1.11.0",
+    "joi": "^6.4.1",
+    "jwt-simple": "^0.3.0",
+    "moment": "2.10.6",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {}
+}

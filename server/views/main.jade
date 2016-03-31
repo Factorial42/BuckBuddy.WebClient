@@ -1,0 +1,19 @@
+doctype html
+
+html
+  head
+    title BuckBuddy
+    meta(name="viewport", content="initial-scale=1, maximum-scale=1, user-scalable=no")
+    include includes/default-styles
+
+  body
+    #mainViewContainer
+      div.loading-indicator-splash
+        | Loading..
+    script.
+      var user = !{JSON.stringify(user)},
+        packageVersion = "#{packageVersion}";
+
+    script(src="/static/js/vendor.bundle.js")
+    script(src="/static/js/main.bundle.js")
+    script(src="https://js.stripe.com/v2/")
