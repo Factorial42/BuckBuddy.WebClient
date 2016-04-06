@@ -1,5 +1,7 @@
 import React from 'react'
-import {Row, Col, Button} from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
+import { Link } from 'react-router'
+
 
 export default function LoginOptionsPage() {
   return (
@@ -23,13 +25,13 @@ export default function LoginOptionsPage() {
 
 const LoginButton = () => {
   return (
-    <Button>Log in with email</Button>
+    <Button><Link to="/login">Log in with email</Link></Button>
   )
 }
 
 const SignupButton = () => {
   return (
-    <Button>Sign up with email</Button>
+    <Button><Link to="/signup">Sign up with email</Link></Button>
   )
 }
 
