@@ -49,18 +49,6 @@ function _applyRoutes(server) {
   });
 
   /**
-   * Login page route
-   */
-  server.route({
-    method: "GET",
-    path: "/login",
-    handler: function (request, reply) {
-      reply.view('login', commonLocals);
-    }
-  });
-
-
-  /**
    * Login action route
    */
   server.route({

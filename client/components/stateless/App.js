@@ -1,16 +1,22 @@
 import React from 'react'
 //import Header from 'app/components/stateless/Header'
 import {Grid} from 'bootstrap'
-import Checkout from 'react-stripe-checkout'
+//import Checkout from 'react-stripe-checkout'
 
-const App = () => (
+const App = ({children}) => (
   <Grid fluid>
-  test..
-    <Checkout
-          token={() => {}}
-          name={"BuckBuddy"}
-          image={"/static/img/buck.png"}
-          stripeKey="pk_test_6pRNASCoBOKtIshFeQd4XMUh" />
+    TODO...header
+
+    {children}
+
+    {/*
+
+      <Checkout
+            token={() => {}}
+            name={"BuckBuddy"}
+            image={"/static/img/buck.png"}
+            stripeKey="pk_test_6pRNASCoBOKtIshFeQd4XMUh" />
+    */}
   </Grid>
 )
 
