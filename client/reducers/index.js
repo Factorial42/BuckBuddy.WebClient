@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import test from 'client/reducers/test'
+import login from 'client/reducers/login'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 const reducers = combineReducers({
-  test,
+  login,
   routing: routerReducer
 })
 

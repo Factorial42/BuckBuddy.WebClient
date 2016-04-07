@@ -3,14 +3,14 @@ import React from 'react'
 import { render } from 'react-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import App from 'client/components/stateless/App'
+import App from 'client/components/App'
 import reducers from 'client/reducers'
 import { Router, Route, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 
-import Login from 'client/components/stateless/pages/Login'
-import LoginOptions from 'client/components/stateless/pages/LoginOptions'
-import Signup from 'client/components/stateless/pages/Signup'
+import Login from 'client/components/pages/Login'
+import LoginOptions from 'client/components/pages/LoginOptions'
+import Signup from 'client/components/pages/Signup'
 
 
 require('client/style/app');
