@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { signup } from 'client/actions'
+import { signup } from 'client/actions/signup'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
@@ -51,7 +51,7 @@ const SignupPage = React.createClass({
 
     //TODO: verify pass match
 
-    this.props.signup(name, email, password);
+    this.props.signup({name, email, password});
 
   }
 

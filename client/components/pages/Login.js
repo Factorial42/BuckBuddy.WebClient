@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { login } from 'client/actions'
+import { login } from 'client/actions/login'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
@@ -43,7 +43,7 @@ const LoginPage = React.createClass({
     let email = this.refs.txtEmail.getInputDOMNode().value;
     let password = this.refs.txtPassword.getInputDOMNode().value;
 
-    this.props.login(email, password);
+    this.props.login({email, password});
 
   }
 

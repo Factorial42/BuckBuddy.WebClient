@@ -30,6 +30,7 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
+    "axios": "^0.9.1",
     "babel-core": "^6.6.5",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
@@ -47,6 +48,8 @@
     "react-router-redux": "^4.0.1",
     "react-stripe-checkout": "^1.8.0",
     "redux": "^3.3.1",
+    "redux-logger": "^2.6.1",
+    "redux-thunk": "^2.0.1",
     "style-loader": "^0.13.0",
     "stylus-loader": "^1.5.1",
     "webpack": "^1.12.14",
