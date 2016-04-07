@@ -1,13 +1,14 @@
 import React from 'react'
 import {Grid} from 'bootstrap'
+import Header from 'client/components/Header'
 //import Checkout from 'react-stripe-checkout'
 
 const App = ({children}) => (
   <Grid fluid>
-    TODO...header
-
-    {children}
-
+    <Header />
+    <div className="content">
+      {children}
+    </div>
     {/*
 
       <Checkout
