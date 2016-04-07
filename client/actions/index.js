@@ -5,3 +5,12 @@ export const login = (username, password) => {
     password
   }
 }
+
+export const signup = (name, username, password) => {
+  return {
+    type: 'SIGNUP',
+    name,
+    username,
+    password
+  }
+}
