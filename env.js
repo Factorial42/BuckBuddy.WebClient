@@ -9,7 +9,11 @@ const config = envok({
   BB_API_ENDPOINT: Joi.string().uri({scheme: ['http']}).required(),
   BB_API_KEY: Joi.string().required(),
   BB_COOKIE_DOMAIN: Joi.string().empty(""),
-  BB_STRIPE_PUBLIC_KEY: Joi.string().token().required()
+  BB_STRIPE_PUBLIC_KEY: Joi.string().token().required(),
+  BB_STRIPE_CLIENT_ID: Joi.string().token().required(),
+  BB_FB_APP_ID: Joi.string().token().required()
 })
+
+console.log(config);
 
 module.exports = config;

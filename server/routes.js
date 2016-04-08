@@ -32,6 +32,8 @@ function _applyRoutes(server) {
       reply.view('main', _.extend(commonLocals, {
         user: {}, //TODO: remove this?
         stripeKey: envCfg.stripePublicKey,
+        stripeClientId: envCfg.bbStripeClientId,
+        fbAppId: envCfg.bbFbAppId,
         packageVersion: require('../package.json').version
       }));
 

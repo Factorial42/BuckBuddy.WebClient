@@ -11,8 +11,8 @@ html
       div.loading-indicator-splash
         | Loading..      
     script.
-      var user = !{JSON.stringify(user)},
-        packageVersion = "#{packageVersion}";
+      var packageVersion = "#{packageVersion}",
+        stripeClientId = "#{stripeClientId}";        
 
     script(src="/static/js/bundle.js")
     script(src="https://js.stripe.com/v2/")
