@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { signup } from 'client/actions/signup'
+import { fbLoginCheck } from 'client/actions/login'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
@@ -53,6 +54,10 @@ const SignupPage = React.createClass({
 
     this.props.signup({name, email, password});
 
+  },
+
+  componentDidMount() {
+    this.props.fbLoginCheck();
   }
 
 });
@@ -63,4 +68,4 @@ const SubmitButton = ({onClick}) => {
   )
 }
 
-export default connect(null, {signup})(SignupPage)
+export default connect(null, {signup, fbLoginCheck})(SignupPage)

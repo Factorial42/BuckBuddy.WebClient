@@ -1,4 +1,5 @@
 import {login as apiLogin} from 'client/data/user'
+import {resolveFBHandle} from 'client/lib/fb'
 
 export function loginError(error) {
   return dispatch => {
@@ -34,31 +35,23 @@ export function fbLoginCheck() {
 
   return dispatch =>
     {
-      return new Promise((ful, rej) => {
-        let waitInt = setInterval(() => {
-          if (typeof FB !== 'undefined') {
-            clearInterval(waitInt);
-            ful();
-          }
-        }, 1000)
-      })
-      .then(() => {
-
-        return new Promise((ful, rej) => {
-          FB.getLoginStatus((response) => {
-            ful(response)
-          });
+      return resolveFBHandle()
+        .then($fb => {
+          return new Promise((ful, rej) => {
+            $fb.getLoginStatus((response) => {
+              ful(response)
+            });
+          })
         })
-      })
-      .then(response => {
+        .then(response => {
 
-        console.log(response);
-        if (response.status === 'connected') {
-          // Logged into your app and Facebook.
-          //TODO: use an action, or a redux-router call or something, not window.location.href
-          window.location.href = "/campaign";
-        }
-      })
+          console.log(response);
+          if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            //TODO: use an action, or a redux-router call or something, not window.location.href
+            window.location.href = "/campaign";
+          }
+        })
     }
 
 }
@@ -71,22 +64,19 @@ export function fbLoginCheck() {
 export function fbLogin() {
 
   return dispatch => {
-
-    return new Promise((ful, rej) => {
-
-      FB.login(function(response) {
-        console.log(response);
-        if (response.status === 'connected') {
-          let {accessToken} = response.authResponse;
-          console.log('TODO...get a bb access token from the API!');
-          ful();
-        } else {
-          rej();
-        }
-
-      });
-
-    })
+    return resolveFBHandle()
+      .then($fb => {
+        $fb.login(function(response) {
+          console.log(response);
+          if (response.status === 'connected') {
+            let {accessToken} = response.authResponse;
+            console.log('TODO...get a bb access token from the API!');
+            ful();
+          } else {
+            rej();
+          }
+        });
+      })
 
   }
 

@@ -14,6 +14,7 @@ import ForgotPassword from 'client/components/pages/ForgotPassword'
 import Login from 'client/components/pages/Login'
 import LoginOptions from 'client/components/pages/LoginOptions'
 import Signup from 'client/components/pages/Signup'
+import Campaign from 'client/components/pages/Campaign'
 
 require('client/style/app');
 
@@ -36,6 +37,7 @@ render(
         <Route path="/" component={App}>
           <Route path="forgot" component={ForgotPassword}/>
           <Route path="login/options" component={LoginOptions}/>
+          <Route path="campaign" component={Campaign}/>
           <Route path="login" component={Login}/>
           <Route path="signup" component={Signup}/>
         </Route>
