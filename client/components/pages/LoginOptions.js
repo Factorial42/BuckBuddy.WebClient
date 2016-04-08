@@ -1,27 +1,43 @@
 import React from 'react'
 import { Row, Col, Button } from 'bootstrap'
 import { Link } from 'react-router'
+import { fbLoginCheck, fbLogin } from 'client/actions/login'
+import { connect } from 'react-redux'
 
+const LoginOptionsPage = React.createClass({
 
-export default function LoginOptionsPage() {
-  return (
-    <Row>
-      <Col xs={12} className="text-center">
-        <h3>Create an account</h3>
-        <h5>Donec sit amet quam ac justo euismod vehicula. Ut enim nisl, aliquam eu libero sit amet, pellentesque sodales dui. </h5>
-      </Col>
-      <Col xs={12} lg={2} lgOffset={5} className="text-center">
-        <FacebookButton />
-      </Col>
-      <Col xs={12} lg={2} lgOffset={5} className="text-center">
-        <SignupButton />
-      </Col>
-      <Col xs={12} lg={2} lgOffset={5} className="text-center">
-        <LoginButton />
-      </Col>
-    </Row>
-  )
-}
+  render() {
+
+    return (
+      <Row>
+        <Col xs={12} className="text-center">
+          <h3>Create an account</h3>
+          <h5>Donec sit amet quam ac justo euismod vehicula. Ut enim nisl, aliquam eu libero sit amet, pellentesque sodales dui. </h5>
+        </Col>
+        <Col xs={12} lg={2} lgOffset={5} className="text-center">
+          <FacebookButton onClick={this._handleFbLoginClick}/>
+        </Col>
+        <Col xs={12} lg={2} lgOffset={5} className="text-center">
+          <SignupButton />
+        </Col>
+        <Col xs={12} lg={2} lgOffset={5} className="text-center">
+          <LoginButton />
+        </Col>
+      </Row>
+    )
+
+  },
+
+  _handleFbLoginClick() {
+
+    this.props.fbLogin();
+
+  },
+
+  componentDidMount() {
+    this.props.fbLoginCheck();
+  }
+});
 
 const LoginButton = () => {
   return (
@@ -35,8 +51,10 @@ const SignupButton = () => {
   )
 }
 
-const FacebookButton = () => {
+const FacebookButton = ({onClick}) => {
   return (
-    <Button>Connect with Facebook</Button>
+    <Button onClick={onClick}>Connect with Facebook</Button>
   )
 }
+
+export default connect(null, {fbLoginCheck, fbLogin})(LoginOptionsPage)
