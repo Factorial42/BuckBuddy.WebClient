@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import App from 'client/components/App'
 import reducers from 'client/reducers'
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, Redirect, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
@@ -35,6 +35,7 @@ import Campaign from 'client/components/pages/Campaign'
 import StripeConnect from 'client/components/pages/StripeConnect'
 import StripeIncoming from 'client/components/pages/StripeIncoming'
 import FacebookIncoming from 'client/components/pages/FacebookIncoming'
+import NotFound from 'client/components/pages/NotFound'
 
 const rootElement = document.getElementById('root')
 
@@ -53,6 +54,8 @@ render(
           <Route path="signup/stripe" component={StripeConnect}/>
           <Route path="signup/stripe/incoming" component={StripeIncoming}/>
           <Route path="signup/facebook/incoming" component={FacebookIncoming}/>
+          <Route path="404" component={NotFound}/>
+          <Redirect from="*" to="/404" />
         </Route>
       </Router>
     </Provider>,

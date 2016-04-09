@@ -7,7 +7,7 @@ const App = ({children}) => (
   <Grid fluid>
     <Header />
     <div className="content">
-      {children}
+      {children || 'TODO...landing page component'}
     </div>
     {/*
 
