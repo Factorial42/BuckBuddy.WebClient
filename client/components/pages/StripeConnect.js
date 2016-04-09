@@ -4,6 +4,10 @@ import { connect } from 'react-redux'
 import { Row, Col } from 'bootstrap'
 import { Link } from 'react-router'
 
+/**
+ * This page is where users kick off the Stripe Connect (standalone account) flow
+ * 
+ */
 const StripeConnectPage = React.createClass({
 
   render() {
