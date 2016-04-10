@@ -31,6 +31,7 @@ import ForgotPassword from 'client/components/pages/ForgotPassword'
 import Login from 'client/components/pages/Login'
 import LoginOptions from 'client/components/pages/LoginOptions'
 import Signup from 'client/components/pages/Signup'
+import UserPhotoEditPage from 'client/components/pages/UserPhotoEdit'
 import Campaign from 'client/components/pages/Campaign'
 import StripeConnect from 'client/components/pages/StripeConnect'
 import StripeIncoming from 'client/components/pages/StripeIncoming'
@@ -54,6 +55,7 @@ render(
           <Route path="signup/stripe" component={StripeConnect}/>
           <Route path="signup/stripe/incoming" component={StripeIncoming}/>
           <Route path="signup/facebook/incoming" component={FacebookIncoming}/>
+          <Route path="profile/photo/edit" component={UserPhotoEditPage}/>
           <Route path="404" component={NotFound}/>
           <Redirect from="*" to="/404" />
         </Route>
