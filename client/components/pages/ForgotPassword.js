@@ -1,5 +1,4 @@
 import React from 'react'
-import { login } from 'client/actions'
 import { connect } from 'react-redux'
 import { Input } from 'bootstrap'
 import { Link } from 'react-router'
@@ -43,4 +42,4 @@ const SubmitButton = ({onClick}) => {
   )
 }
 
-export default connect(null, {login})(ForgotPasswordPage)
+export default connect(null, {})(ForgotPasswordPage)

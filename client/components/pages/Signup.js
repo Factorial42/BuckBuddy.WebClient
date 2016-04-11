@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { signup } from 'client/actions/signup'
-import { fbLoginCheck } from 'client/actions/login'
+import { fbLoginCheck } from 'client/actions/session'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Button } from 'bootstrap'
 import { Link } from 'react-router'
-import { fbLoginCheck, fbLogin } from 'client/actions/login'
+import { fbLoginCheck, fbLogin } from 'client/actions/session'
 import { connect } from 'react-redux'
 
 const LoginOptionsPage = React.createClass({

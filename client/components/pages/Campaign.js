@@ -1,5 +1,4 @@
 import React from 'react'
-import { login } from 'client/actions'
 import { connect } from 'react-redux'
 import { Row, Col } from 'bootstrap'
 import { Link } from 'react-router'
@@ -37,4 +36,4 @@ const SubmitButton = ({onClick}) => {
   )
 }
 
-export default connect(null, {login})(CampaignPage)
+export default connect(null, {})(CampaignPage)
