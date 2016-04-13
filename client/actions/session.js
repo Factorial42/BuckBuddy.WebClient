@@ -1,7 +1,7 @@
-import {login as apiLogin} from 'client/data/user'
-import {resolveFBHandle} from 'client/lib/fb'
-import LocalStorageKeys from 'client/constants/LocalStorageKeys'
-import { Router} from 'react-router'
+import { login as apiLogin } from 'client/data/user'
+import { resolveFBHandle } from 'client/lib/fb'
+import { browserHistory } from 'react-router'
+import { hasSession, clearSession, isFbSession, setToken } from 'client/data/userLocalSession'
 
 export function loginError(error) {
   return dispatch => {
@@ -11,11 +11,25 @@ export function loginError(error) {
 /*
  * Should add the route like parameter in this method
 */
-export function loginSuccess(response) {
+export function loginSuccess(user) {
   return dispatch => {
-    dispatch({ response, type: 'LOGGED_SUCCESSFULLY' });
-    Router.transitionTo('/campaign'); // will fire CHANGE_ROUTE in its change handler
+
+    let token = user.token;
+    setToken(token);
+
+    dispatch({ user, type: 'LOGGED_SUCCESSFULLY' });
+    browserHistory.push('/campaign'); // will fire CHANGE_ROUTE in its change handler
   };
+}
+
+export function logoutSuccess() {
+  return dispatch => {
+
+    browserHistory.push("/")
+
+    dispatch({ type: 'LOGGED_OUT_SUCCESSFULLY' });
+
+  }
 }
 
 export function login(credentials) {
@@ -25,6 +39,23 @@ export function login(credentials) {
       dispatch(loginSuccess(user));
     })
     .catch(error => { dispatch(loginError(error)) });
+}
+
+export function loginFb(accessToken) {
+  return dispatch =>
+    apiLoginFb(accessToken)
+    .then(user => {
+      dispatch(loginSuccess(user));
+    })
+    .catch(error => { dispatch(loginError(error)) });
+}
+
+export function redirectAuthedUsers() {
+  return dispatch => {
+    if (hasSession()) {
+      browserHistory.push('/campaign');
+    }
+  }
 }
 
 /**
@@ -51,7 +82,7 @@ export function fbLoginCheck() {
             // Logged into your app and Facebook.
             //TODO: use an action, or a redux-router call or something, not window.location.href
             //window.location.href = "/campaign";
-            Router.transitionTo('/campaign');
+            browserHistory.push('/campaign');
           }
         })
     }
@@ -74,7 +105,7 @@ export function fbLogin() {
            * If connected, resolve w/ accessToken
            */
           if (response.status === 'connected') {
-            window.localStorage.setItem(LocalStorageKeys.fbUser, true)
+            userLocalSession.setFb();
             ful(response.authResponse.accessToken);
           } else {
             rej();
@@ -82,44 +113,49 @@ export function fbLogin() {
         });
       })
       .then(accessToken => {
-        /**
-         * Then get an accessToken from our API
-         */
-        return apiLoginFb(acessToken)
-          .then(user => {
-            dispatch(loginSuccess(user));
-          })
-          .catch(error => { dispatch(loginError(error)) });
+        dispatch(loginFb(accessToken));
       })
 
   }
 
 }
 
+
+
 /**
- * Log the user out (just remove their tokens)
+ * Logout helper
+ */
+const _logout = dispatch => {
+
+  let isFb = isFbSession();
+
+  clearSession();
+
+  if (!isFb) {
+    return Promise.resolve();
+  }
+
+  return resolveFBHandle()
+    .then($fb => {
+      $fb.logout(function(response) {
+
+        ful();
+
+      });
+    })
+}
+
+/**
+ * Log the user out and redirect
+ *
  * @return {[type]} [description]
  */
 export function logout() {
 
   return dispatch => {
 
-    window.localStorage.removeItem(LocalStorageKeys.bbAccessToken);
-
-    if (!window.localStorage.getItem(LocalStorageKeys.fbUser)) {
-      return Promise.resolve();
-    }
-
-    return resolveFBHandle()
-      .then($fb => {
-        $fb.logout(function(response) {
-
-          window.localStorage.removeItem(LocalStorageKeys.fbUser);
-
-          ful();
-
-        });
-      })
+    _logout()
+      .then(() => dispatch(logoutSuccess()))
 
   }
 

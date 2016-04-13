@@ -1,4 +1,6 @@
 import {signup as apiSignup} from 'client/data/user'
+import { browserHistory } from 'react-router'
+import {setToken} from 'client/data/userLocalSession'
 
 export function signupError(error) {
   return dispatch => {
@@ -9,10 +11,16 @@ export function signupError(error) {
 /*
  * Should add the route like parameter in this method
 */
-export function signupSuccess(response) {
+export function signupSuccess(user) {
   return dispatch => {
-    dispatch({ response, type: 'SIGNUP_SUCCESS' });
-    // router.transitionTo('/dashboard'); // will fire CHANGE_ROUTE in its change handler
+
+    let token = user.token;
+    setToken(token);
+
+    browserHistory.push('/profile/photo/edit')
+
+    dispatch({user, type: 'SIGNUP_SUCCESS' });
+
   };
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { signup } from 'client/actions/signup'
-import { fbLoginCheck } from 'client/actions/session'
+import { redirectAuthedUsers } from 'client/actions/session'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
@@ -25,7 +25,6 @@ const SignupPage = React.createClass({
         <Col {...colProps}>
           <Input ref="txtName" type='text' placeholder={'Jane Smith'} />
         </Col>
-
         <Col {...colProps}>
           <Input ref="txtEmail" type='text' placeholder={'Email Address'} />
         </Col>
@@ -52,12 +51,12 @@ const SignupPage = React.createClass({
 
     //TODO: verify pass match
 
-    this.props.signup({name, email, password});
+    this.props.signup({firstName: name, lastName: name, email, password});
 
   },
 
   componentDidMount() {
-    this.props.fbLoginCheck();
+    this.props.redirectAuthedUsers();
   }
 
 });
@@ -68,4 +67,4 @@ const SubmitButton = ({onClick}) => {
   )
 }
 
-export default connect(null, {signup, fbLoginCheck})(SignupPage)
+export default connect(null, {signup, redirectAuthedUsers})(SignupPage)

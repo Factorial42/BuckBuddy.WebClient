@@ -1,4 +1,6 @@
-var Joi = require('joi'),
+'use strict'
+
+let Joi = require('joi'),
   _ = require('underscore'),
   path = require('path'),
   envCfg = require('../env'),
@@ -10,7 +12,7 @@ module.exports = function(server) {
 
 };
 
-var commonLocals = {
+let commonLocals = {
   environment: envCfg.environment
 };
 
@@ -76,6 +78,35 @@ function _applyRoutes(server) {
     handler: apiController.logout,
     config: {}
   });
+
+
+  server.route([
+  {
+    method: 'POST',
+    path: '/api/{param*}',
+    handler: {
+      proxy: {
+        passThrough: true,
+        mapUri: function (request, next) {
+          let path = request.url.path.replace("/api", "");
+          let apiUri = envCfg.bbApiEndpoint + path;
+          next(null, apiUri);
+        }
+            // ,
+            // onResponse: function (err, res, request, reply, settings, ttl) {
+            //
+            //     console.log('receiving the response from the upstream.');
+            //     Wreck.read(res, { json: true }, function (err, payload) {
+            //
+            //         console.log('some payload manipulation if you want to.')
+            //         reply(payload).headers = res.headers;
+            //     });
+            // }
+      }
+    }
+  }
+]);
+
 
   /**
    * END Routes

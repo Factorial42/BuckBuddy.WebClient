@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { login, fbLoginCheck } from 'client/actions/session'
+import { login, redirectAuthedUsers } from 'client/actions/session'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
@@ -42,13 +42,12 @@ const LoginPage = React.createClass({
 
     let email = this.refs.txtEmail.getInputDOMNode().value;
     let password = this.refs.txtPassword.getInputDOMNode().value;
-
     this.props.login({email, password});
 
   },
 
   componentDidMount() {
-    this.props.fbLoginCheck();
+    this.props.redirectAuthedUsers();
   }
 
 });
@@ -59,4 +58,4 @@ const SubmitButton = ({onClick}) => {
   )
 }
 
-export default connect(null, {login, fbLoginCheck})(LoginPage)
+export default connect(null, {login, redirectAuthedUsers})(LoginPage)
