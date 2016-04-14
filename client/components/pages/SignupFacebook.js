@@ -56,7 +56,7 @@ const SignupPage = React.createClass({
 
 const SubmitButton = ({onClick}) => {
   return (
-    <Button onClick={onClick}>Continue</Button>
+    <Button onClick={onClick} className="button-action button-blue">Continue</Button>
   )
 }
 
