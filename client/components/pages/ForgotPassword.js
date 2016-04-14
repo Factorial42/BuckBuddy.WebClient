@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Input } from 'bootstrap'
+import { Input, Row, Col, Button } from 'bootstrap'
 import { Link } from 'react-router'
 
 const ForgotPasswordPage = React.createClass({
@@ -38,7 +38,7 @@ const ForgotPasswordPage = React.createClass({
 
 const SubmitButton = ({onClick}) => {
   return (
-    <Button onClick={onClick}>Submit</Button>
+    <Button onClick={onClick} className="button-action button-grey">Submit</Button>
   )
 }
 

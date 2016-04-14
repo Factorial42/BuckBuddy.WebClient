@@ -2,6 +2,7 @@ import React from 'react'
 import { Navbar, Nav, NavItem, MenuItem  } from 'bootstrap'
 import { logout } from 'client/actions/session'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 
 let Header = React.createClass({
 
@@ -18,9 +19,11 @@ let Header = React.createClass({
 
       <Navbar inverse>
        <Navbar.Header>
-         <Navbar.Brand>
-           <img src="/static/img/buck.png" />
-         </Navbar.Brand>
+         <Link to="/">
+           <Navbar.Brand>
+              <img src="/static/img/buck.png" />
+           </Navbar.Brand>
+         </Link>
          <Navbar.Toggle />
        </Navbar.Header>
        <Navbar.Collapse>
