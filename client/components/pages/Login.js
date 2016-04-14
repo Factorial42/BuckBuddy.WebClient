@@ -54,7 +54,7 @@ const LoginPage = React.createClass({
 
 const SubmitButton = ({onClick}) => {
   return (
-    <Button onClick={onClick}>Login</Button>
+    <Button className="button-action button-grey" onClick={onClick}>Login</Button>
   )
 }
 

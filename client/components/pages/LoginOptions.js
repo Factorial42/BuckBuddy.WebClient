@@ -41,19 +41,19 @@ const LoginOptionsPage = React.createClass({
 
 const LoginButton = () => {
   return (
-    <Link to="/login"><Button>Log in with email</Button></Link>
+    <Link to="/login"><Button className="button-action button-grey">Log in with email</Button></Link>
   )
 }
 
 const SignupButton = () => {
   return (
-    <Link to="/signup"><Button>Sign up with email</Button></Link>
+    <Link to="/signup"><Button className="button-action button-green">Sign up with email</Button></Link>
   )
 }
 
 const FacebookButton = ({onClick}) => {
   return (
-    <Button onClick={onClick}>Connect with Facebook</Button>
+    <Button onClick={onClick} className="button-action button-fb">Connect with Facebook</Button>
   )
 }
 
