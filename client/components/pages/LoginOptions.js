@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Button } from 'bootstrap'
 import { Link } from 'react-router'
-import { redirectAuthedUsers, fbLogin } from 'client/actions/session'
+import { redirectAuthedUsers, fbConnect } from 'client/actions/session'
 import { connect } from 'react-redux'
 
 const LoginOptionsPage = React.createClass({
@@ -30,7 +30,7 @@ const LoginOptionsPage = React.createClass({
 
   _handleFbLoginClick() {
 
-    this.props.fbLogin();
+    this.props.fbConnect();
 
   },
 
@@ -57,4 +57,4 @@ const FacebookButton = ({onClick}) => {
   )
 }
 
-export default connect(null, {redirectAuthedUsers, fbLogin})(LoginOptionsPage)
+export default connect(null, {redirectAuthedUsers, fbConnect})(LoginOptionsPage)

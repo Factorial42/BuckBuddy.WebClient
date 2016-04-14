@@ -1,9 +1,9 @@
 import { hasSession } from 'client/data/userLocalSession'
 import {fromJS} from 'immutable'
 
-const login = (state = hasSession(), action) => {
+const reducer = (state = hasSession(), action) => {
   switch (action.type) {
-    case 'LOGGED_OUT_SUCCESSFULLY': 
+    case 'LOGGED_OUT_SUCCESSFULLY':
       return false;
     case 'LOGGED_SUCCESSFULLY':
       return true;
@@ -14,4 +14,4 @@ const login = (state = hasSession(), action) => {
   }
 }
 
-export default login
+export default reducer

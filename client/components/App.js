@@ -1,13 +1,14 @@
 import React from 'react'
 import {Grid} from 'bootstrap'
 import Header from 'client/components/Header'
+import LandingPage from 'client/components/pages/LandingPage'
 //import Checkout from 'react-stripe-checkout'
 
 const App = ({children}) => (
   <Grid fluid>
     <Header />
     <div className="content">
-      {children || 'TODO...landing page component'}
+      {children || <LandingPage />}
     </div>
     {/*
 

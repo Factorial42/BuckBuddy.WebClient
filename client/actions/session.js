@@ -1,16 +1,14 @@
-import { login as apiLogin } from 'client/data/user'
+import { login as apiLogin, loginFb as apiLoginFb, getFbProfile } from 'client/data/user'
 import { resolveFBHandle } from 'client/lib/fb'
 import { browserHistory } from 'react-router'
-import { hasSession, clearSession, isFbSession, setToken } from 'client/data/userLocalSession'
+import { hasSession, clearSession, isFbSession, setToken , setFb} from 'client/data/userLocalSession'
 
 export function loginError(error) {
   return dispatch => {
     dispatch({ error, type: 'LOGGED_FAILED' });
   };
 }
-/*
- * Should add the route like parameter in this method
-*/
+
 export function loginSuccess(user) {
   return dispatch => {
 
@@ -18,9 +16,10 @@ export function loginSuccess(user) {
     setToken(token);
 
     dispatch({ user, type: 'LOGGED_SUCCESSFULLY' });
-    browserHistory.push('/campaign'); // will fire CHANGE_ROUTE in its change handler
+    browserHistory.push('/campaign');
   };
 }
+
 
 export function logoutSuccess() {
   return dispatch => {
@@ -32,6 +31,9 @@ export function logoutSuccess() {
   }
 }
 
+/**
+ * Log in a 'native' user
+ */
 export function login(credentials) {
   return dispatch =>
     apiLogin(credentials)
@@ -41,15 +43,57 @@ export function login(credentials) {
     .catch(error => { dispatch(loginError(error)) });
 }
 
+/**
+ * Log in a fb user using an access token from fb
+ */
 export function loginFb(accessToken) {
   return dispatch =>
     apiLoginFb(accessToken)
     .then(user => {
       dispatch(loginSuccess(user));
     })
-    .catch(error => { dispatch(loginError(error)) });
+    .catch(error => {
+      dispatch(loginError(error))
+     });
 }
 
+
+const loginOrGoToSignupFb = (accessToken) => {
+
+  return dispatch => {
+
+    apiLoginFb(accessToken)
+    .then(user => dispatch(loginSuccess(user)))
+    .catch(error => {
+
+      /**
+       * Making a (possibly bad) assumption that failure means the user does not exist yet..
+       */
+        getFbProfile(accessToken)
+          .then(fbProfileData => {
+            let signupSuggestedValues = {
+              suggestedName: `${fbProfileData.firstName} ${fbProfileData.lastName}`,
+              suggestedEmail: fbProfileData.email
+            }
+
+            dispatch({
+              signupSuggestedValues,
+              fbToken: accessToken,
+              type: 'FB_CONNECTED_SUCCESSFULLY'
+            });
+
+            browserHistory.push('/signup/facebook');
+
+          })
+
+     });
+
+  }
+}
+
+/**
+ * Redirect users that have a session
+ */
 export function redirectAuthedUsers() {
   return dispatch => {
     if (hasSession()) {
@@ -58,11 +102,11 @@ export function redirectAuthedUsers() {
   }
 }
 
-/**
- * FB Login Check
- *
- * @return Function
- */
+// /**
+//  * FB Login Check
+//  *
+//  * @return Function
+//  */
 export function fbLoginCheck() {
 
   return dispatch =>
@@ -94,26 +138,31 @@ export function fbLoginCheck() {
  *
  * @return Function
  */
-export function fbLogin() {
+export function fbConnect() {
 
   return dispatch => {
     return resolveFBHandle()
       .then($fb => {
-        $fb.login(function(response) {
-          console.log(response);
-          /**
-           * If connected, resolve w/ accessToken
-           */
-          if (response.status === 'connected') {
-            userLocalSession.setFb();
-            ful(response.authResponse.accessToken);
-          } else {
-            rej();
-          }
+
+        return new Promise((ful, rej) => {
+          $fb.login(function(response) {
+            console.log(response);
+            /**
+             * If connected, resolve w/ accessToken
+             */
+            if (response.status === 'connected') {
+              setFb();
+              ful(response.authResponse.accessToken);
+            } else {
+              rej();
+            }
+          }, {scope: 'email,public_profile'});
+
         });
       })
-      .then(accessToken => {
-        dispatch(loginFb(accessToken));
+      .then(accessToken => dispatch(loginOrGoToSignupFb(accessToken)))
+      .catch(e => {
+        //swallow for now..
       })
 
   }

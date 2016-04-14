@@ -6,11 +6,7 @@ import { connect } from 'react-redux'
 let Header = React.createClass({
 
   render() {
-
-
     let logoutNode = null;
-
-    console.log(this.props)
 
     if (this.props.authenticated) {
       logoutNode = (

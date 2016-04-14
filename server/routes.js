@@ -23,24 +23,7 @@ function _applyRoutes(server) {
    * BEGIN Routes
    */
 
-  /**
-   * The general app route
-   */
-  server.route({
-    method: 'GET',
-    path: '/{param*}',
-    handler: function (request, reply) {
 
-      reply.view('main', _.extend(commonLocals, {
-        user: {}, //TODO: remove this?
-        stripeKey: envCfg.stripePublicKey,
-        stripeClientId: envCfg.bbStripeClientId,
-        fbAppId: envCfg.bbFbAppId,
-        packageVersion: require('../package.json').version
-      }));
-
-    }
-  });
 
   server.route({
     method: 'GET',
@@ -82,7 +65,7 @@ function _applyRoutes(server) {
 
   server.route([
   {
-    method: 'POST',
+    method: ['GET', 'POST'],
     path: '/api/{param*}',
     handler: {
       proxy: {
@@ -106,6 +89,26 @@ function _applyRoutes(server) {
     }
   }
 ]);
+
+
+/**
+ * The general app route
+ */
+server.route({
+  method: 'GET',
+  path: '/{param*}',
+  handler: function (request, reply) {
+
+    reply.view('main', _.extend(commonLocals, {
+      user: {}, //TODO: remove this?
+      stripeKey: envCfg.stripePublicKey,
+      stripeClientId: envCfg.bbStripeClientId,
+      fbAppId: envCfg.bbFbAppId,
+      packageVersion: require('../package.json').version
+    }));
+
+  }
+});
 
 
   /**

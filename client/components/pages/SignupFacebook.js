@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { signup } from 'client/actions/signup'
+import { signupFb } from 'client/actions/signup'
 import { redirectAuthedUsers } from 'client/actions/session'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
@@ -17,16 +17,18 @@ const SignupPage = React.createClass({
       className: 'text-center'
     }
 
+    let {defaultName, defaultEmail} = this.props;
+
     return (
       <Row>
         <Col xs={12} className="text-center">
           <h3>Create an account</h3>
         </Col>
         <Col {...colProps}>
-          <Input ref="txtName" type='text' placeholder={'Jane Smith'} />
+          <Input ref="txtName" type='text' placeholder={'Jane Smith'} defaultValue={defaultName} />
         </Col>
         <Col {...colProps}>
-          <Input ref="txtEmail" type='text' placeholder={'Email Address'} />
+          <Input ref="txtEmail" type='text' placeholder={'Email Address'} defaultValue={defaultEmail} />
         </Col>
         <Col {...colProps}>
           <SubmitButton onClick={this._handleSubmitClick} />
@@ -40,9 +42,9 @@ const SignupPage = React.createClass({
 
     let name = this.refs.txtName.getInputDOMNode().value;
     let email = this.refs.txtEmail.getInputDOMNode().value;
-    //TODO: verify pass match
 
-    this.props.signup({firstName: name, lastName: name, email, password});
+    console.log(this.props)
+    this.props.signupFb({name, email, fbToken: this.props.fbToken});
 
   },
 
@@ -58,4 +60,15 @@ const SubmitButton = ({onClick}) => {
   )
 }
 
-export default connect(null, {signup, redirectAuthedUsers})(SignupPage)
+const mapStateToProps = (state) => {
+
+  let {signupFbToken, signupSuggestedValues} = state;
+
+  return {
+    fbToken: signupFbToken,
+    defaultEmail: signupSuggestedValues ? signupSuggestedValues.suggestedEmail : null,
+    defaultName: signupSuggestedValues ? signupSuggestedValues.suggestedName : null
+  };
+}
+
+export default connect(mapStateToProps, {signupFb, redirectAuthedUsers})(SignupPage)

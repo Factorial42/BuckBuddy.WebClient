@@ -1,6 +1,14 @@
-import {signup as apiSignup} from 'client/data/user'
+import { signup as apiSignup, signupFb as apiSignupFb } from 'client/data/user'
 import { browserHistory } from 'react-router'
-import {setToken} from 'client/data/userLocalSession'
+import { setToken } from 'client/data/userLocalSession'
+
+
+export function setCampaignGoal(target, reason) {
+  return dispatch => {
+    dispatch({ target, reason, type: 'SET_CAMPAIGN_GOAL' });
+    browserHistory.push("/login/options")
+  };
+}
 
 export function signupError(error) {
   return dispatch => {
@@ -31,4 +39,18 @@ export function signup(userData) {
       dispatch(signupSuccess(user));
     })
     .catch(error => { dispatch(signupError(error)) });
+}
+
+
+export function signupFb(userData) {
+
+  return dispatch => {
+    apiSignupFb(userData)
+    .then(user => {
+      dispatch(signupSuccess(user));
+    })
+    .catch(error => { dispatch(signupError(error)) });
+
+  }
+
 }
