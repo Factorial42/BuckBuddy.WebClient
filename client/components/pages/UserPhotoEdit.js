@@ -49,7 +49,7 @@ const UserPhotoEditPage = React.createClass({
         onDrop={this._onDrop}
         className="dropzone"
         activeStyle={activeStyle}>
-        <h4>Drop Photo Here</h4>
+        <img src={this.props.profilePic} />
       </Dropzone>
     );
 
