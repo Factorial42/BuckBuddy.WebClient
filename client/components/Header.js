@@ -17,7 +17,7 @@ let Header = React.createClass({
 
     return (
 
-      <Navbar inverse>
+      <Navbar>
        <Navbar.Header>
          {/*<Link to="/">
            <Navbar.Brand>
