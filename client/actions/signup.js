@@ -69,7 +69,9 @@ export function setPhoto(userId, file) {
 
   return dispatch => {
     apiUpdatePhoto(userId, getToken(), file)
-      .then(() => browserHistory.push('/signup/stripe'))
+      .then(() => {
+        //TODO: dispatch the new photo URL ...
+      })
       .catch(error => { dispatch(setPhotoError(error)) });
   }
 

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { setPhoto } from 'client/actions/signup'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
+import { Link } from 'react-router'
 import Dropzone from 'react-dropzone'
 
 const UserPhotoEditPage = React.createClass({
@@ -29,7 +30,7 @@ const UserPhotoEditPage = React.createClass({
 
           {this._getFileUploadStatusNode()}
 
-          {/*this._getInputNode()*/}
+          <SubmitButton />
 
         </Col>
       </Row>
@@ -54,25 +55,13 @@ const UserPhotoEditPage = React.createClass({
       </Dropzone>
     );
 
-
   },
 
   _getFileUploadStatusNode() {
 
   },
 
-  _getInputNode() {
-
-    return (
-      <div className="btn-file-upload">
-        <span>Upload</span>
-        <Input
-          className='input-upload'
-          ref='docInput'
-          type='file'
-          onChange={this._handleFileChange} />
-      </div>
-    );
+  _handleContinueClick() {
 
   },
 
@@ -98,7 +87,7 @@ const UserPhotoEditPage = React.createClass({
 
 const SubmitButton = ({onClick}) => {
   return (
-    <Button onClick={onClick}>Continue</Button>
+    <Link to="/signup/stripe"><Button className="button-action button-blue">Continue</Button></Link>
   )
 }
 
