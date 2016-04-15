@@ -6,7 +6,7 @@ import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
 import Dropzone from 'react-dropzone'
 
-const UserPhotoEditPage = React.createClass({
+const SignupPhotoPage = React.createClass({
 
   render() {
 
@@ -54,6 +54,16 @@ const UserPhotoEditPage = React.createClass({
         <img src={this.props.profilePic} />
       </Dropzone>
     );
+
+  },
+
+  _getExistingPhotoNode() {
+
+    let {profilePic} = this.props;
+
+    if (!profilePic) return null;
+
+    return (<img src={profilePic} />)
 
   },
 
@@ -105,4 +115,4 @@ const mapStateToProps = state => {
 
 }
 
-export default connect(mapStateToProps, {setPhoto})(UserPhotoEditPage)
+export default connect(mapStateToProps, {setPhoto})(SignupPhotoPage)

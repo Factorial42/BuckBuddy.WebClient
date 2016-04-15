@@ -35,7 +35,7 @@ export function signupSuccess(user) {
     let token = user.token;
     setToken(token);
 
-    browserHistory.push('/profile/photo/edit')
+    browserHistory.push('/signup/photo')
 
     dispatch({user, type: 'SIGNUP_SUCCESS' });
 
