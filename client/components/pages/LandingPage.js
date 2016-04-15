@@ -10,31 +10,45 @@ const LandingPage = React.createClass({
   render() {
 
     let colProps = {
-      xs: 12,
-      lg: 2,
-      lgOffset: 5,
+      xs: 10,
+      xsOffset: 1,
+      md: 6,
+      mdOffset: 3,
+      sm: 8,
+      smOffset: 2,
+      lg: 4,
+      lgOffset: 4,
       className: 'text-center'
     }
 
     return (
-      <Row className="page-landing">
-        <Col xs={12} className="text-left">
-          <label>If I had</label>
-        </Col>
-        <Col xs={12} className="text-center">
-          <Input ref="txtCampaignTarget" type='text' placeholder={'$1000000'} />
-        </Col>
-        <Col xs={12} className="text-left">
-          <label>I would</label>
-        </Col>
-        <Col xs={12} className="text-center">
-          <Input ref="txtCampaignReason" type='text' placeholder={'Buy an Island'} />
-        </Col>
-        <Col {...colProps}>
-          <SubmitButton onClick={this._handleSubmitClick} />
-        </Col>
-
-      </Row>
+      <div className="page-landing">
+        <Row>
+          <Col {...colProps} className="text-left">
+            <label>If I had</label>
+          </Col>
+        </Row>
+        <Row>
+          <Col {...colProps} className="text-center">
+            <Input ref="txtCampaignTarget" type='text' placeholder={'$1000000'} />
+          </Col>
+        </Row>
+        <Row>
+          <Col {...colProps} className="text-left">
+            <label>I would</label>
+          </Col>
+        </Row>
+        <Row>
+          <Col {...colProps} className="text-center">
+            <Input ref="txtCampaignReason" type='text' placeholder={'Buy an Island'} />
+          </Col>
+        </Row>
+        <Row>
+          <Col {...colProps} className="text-center">
+            <SubmitButton onClick={this._handleSubmitClick} />
+          </Col>
+        </Row>
+      </div>
     )
 
   },

@@ -19,11 +19,11 @@ let Header = React.createClass({
 
       <Navbar inverse>
        <Navbar.Header>
-         <Link to="/">
+         {/*<Link to="/">
            <Navbar.Brand>
               <img src="/static/img/buck.png" />
            </Navbar.Brand>
-         </Link>
+         </Link>*/}
          <Navbar.Toggle />
        </Navbar.Header>
        <Navbar.Collapse>
