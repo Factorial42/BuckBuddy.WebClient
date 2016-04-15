@@ -1,4 +1,5 @@
 import axios from 'axios'
+import fileHelper from './fileHelper'
 
 export function login(credentials) {
   //Req: curl -i -XPOST 'localhost:4567/users/login' -d '{"email":"test1@buckbuddy.com", "password":"test"}'
@@ -28,6 +29,17 @@ export function signupFb(userData) {
 
 export function getUser() {
 
+}
+
+export function updatePhoto(userId, accessToken, file) {
+  //'localhost:4567/users/782159708e9bb3e3af5c9bdf1ff77f70823418d16970eb82fe4d7e1ca5ca69ac/uploadProfilePic' \
+  //-F "filecomment=This is an image file" 
+  //-F "image=@/Users/jtandalai/Downloads/Fresh_Brothers_65x35.png"
+
+  return fileHelper.upload(
+    `/api/users/${userId}/uploadProfilePic?token=${accessToken}`,
+    file,
+    'image')
 }
 
 export function getFbProfile(token) {

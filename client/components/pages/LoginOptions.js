@@ -9,13 +9,16 @@ const LoginOptionsPage = React.createClass({
   render() {
 
     return (
-      <Row>
+      <Row className="page-login-options">
         <Col xs={12} className="text-center">
           <h3>Create an account</h3>
           <h5>Donec sit amet quam ac justo euismod vehicula. Ut enim nisl, aliquam eu libero sit amet, pellentesque sodales dui. </h5>
         </Col>
         <Col xs={12} lg={2} lgOffset={5} className="text-center">
           <FacebookButton onClick={this._handleFbLoginClick}/>
+        </Col>
+        <Col xs={12} lg={2} lgOffset={5} className="text-center divider">
+          Or
         </Col>
         <Col xs={12} lg={2} lgOffset={5} className="text-center">
           <SignupButton />

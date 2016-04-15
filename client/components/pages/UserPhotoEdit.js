@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { signup } from 'client/actions/signup'
+import { setPhoto } from 'client/actions/signup'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import Dropzone from 'react-dropzone'
@@ -15,6 +15,8 @@ const UserPhotoEditPage = React.createClass({
       lgOffset: 5,
       className: 'text-center'
     }
+
+    if (this.props.loading) return <span>Loading...</span>
 
     return (
       <Row>
@@ -87,7 +89,7 @@ const UserPhotoEditPage = React.createClass({
 
   _submitPhoto(file) {
 
-    console.log('TODO...call API/action', file);
+    this.props.setPhoto(this.props.userId, file)
 
   }
 
@@ -99,4 +101,18 @@ const SubmitButton = ({onClick}) => {
   )
 }
 
-export default connect(null, {signup})(UserPhotoEditPage)
+const mapStateToProps = state => {
+
+  if (!state.user)
+
+  return {
+    loading: true
+  }
+
+  let {userId, profilePic} = state.user;
+
+  return {userId, profilePic};
+
+}
+
+export default connect(mapStateToProps, {setPhoto})(UserPhotoEditPage)

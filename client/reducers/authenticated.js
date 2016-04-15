@@ -4,7 +4,7 @@ import {fromJS} from 'immutable'
 const reducer = (state = hasSession(), action) => {
   switch (action.type) {
     case 'SIGNUP_SUCCESS':
-      return false;
+      return true;
     case 'LOGGED_OUT_SUCCESSFULLY':
       return false;
     case 'LOGGED_SUCCESSFULLY':

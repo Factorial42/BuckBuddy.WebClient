@@ -1,6 +1,10 @@
-import { signup as apiSignup, signupFb as apiSignupFb } from 'client/data/user'
+import {
+  signup as apiSignup,
+  signupFb as apiSignupFb,
+  updatePhoto as apiUpdatePhoto
+} from 'client/data/user'
 import { browserHistory } from 'react-router'
-import { setToken } from 'client/data/userLocalSession'
+import { setToken, getToken } from 'client/data/userLocalSession'
 
 
 export function setCampaignGoal(target, reason) {
@@ -13,6 +17,12 @@ export function setCampaignGoal(target, reason) {
 export function signupError(error) {
   return dispatch => {
     dispatch({ error, type: 'SIGNUP_FAILED' });
+  };
+}
+
+export function setPhotoError(error) {
+  return dispatch => {
+    dispatch({ error, type: 'SIGNUP_PHOTO_FAILED' });
   };
 }
 
@@ -51,6 +61,16 @@ export function signupFb(userData) {
     })
     .catch(error => { dispatch(signupError(error)) });
 
+  }
+
+}
+
+export function setPhoto(userId, file) {
+
+  return dispatch => {
+    apiUpdatePhoto(userId, getToken(), file)
+      .then(() => browserHistory.push('/signup/stripe'))
+      .catch(error => { dispatch(setPhotoError(error)) });
   }
 
 }
