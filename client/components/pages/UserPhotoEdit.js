@@ -21,7 +21,7 @@ const UserPhotoEditPage = React.createClass({
     return (
       <Row>
         <Col xs={12} className="text-center">
-          <h3>Update Photo</h3>
+          <h3>Add Your Photo</h3>
         </Col>
         <Col {...colProps}>
 
@@ -29,7 +29,7 @@ const UserPhotoEditPage = React.createClass({
 
           {this._getFileUploadStatusNode()}
 
-          {this._getInputNode()}
+          {/*this._getInputNode()*/}
 
         </Col>
       </Row>
@@ -49,6 +49,7 @@ const UserPhotoEditPage = React.createClass({
         onDrop={this._onDrop}
         className="dropzone"
         activeStyle={activeStyle}>
+        <div className="dropzone-plus">+</div>
         <img src={this.props.profilePic} />
       </Dropzone>
     );
