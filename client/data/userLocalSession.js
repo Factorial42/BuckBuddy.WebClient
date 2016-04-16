@@ -10,10 +10,7 @@ export function setToken(token) {
   storage.setItem(LocalStorageKeys.bbAccessToken, token)
 }
 
-export function getToken() {
-  storage.getItem(LocalStorageKeys.bbAccessToken)
-}
-
+export const getToken = () => storage.getItem(LocalStorageKeys.bbAccessToken)
 
 export function clearSession() {
   storage.removeItem(LocalStorageKeys.bbAccessToken);

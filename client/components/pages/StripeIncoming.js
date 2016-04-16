@@ -1,5 +1,5 @@
 import React from 'react'
-import { login } from 'client/actions'
+import { setStripeConnection } from 'client/actions/signup'
 import { connect } from 'react-redux'
 import { Row, Col } from 'bootstrap'
 import { Link } from 'react-router'
@@ -15,12 +15,33 @@ const StripeIncomingPage = React.createClass({
     return (
       <Row>
         <Col xs={12} className="text-center">
-          OK todo something...(stripe incoming..)
+          Working...
         </Col>
       </Row>
     )
+  },
+
+  componentWillReceiveProps(nextProps) {
+
+    if (nextProps.userId && !this.props.userId) {
+      let { query } = this.props.location
+      let { userId } = nextProps;
+
+      if (query && query.code && userId) {
+        this.props.setStripeConnection(userId, query.code);
+      }
+    }
+
   }
 });
 
+const mapStateToProps = (state) => {
+  if (!state.user) return {};
 
-export default connect(null, {login})(StripeIncomingPage)
+  let userId = state.user.userId;
+//console.log(userId)
+  return {userId};
+}
+
+
+export default connect(mapStateToProps, {setStripeConnection})(StripeIncomingPage)

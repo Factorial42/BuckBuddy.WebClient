@@ -1,11 +1,23 @@
-import { login as apiLogin, loginFb as apiLoginFb, getFbProfile } from 'client/data/user'
+import {
+  login as apiLogin,
+  loginFb as apiLoginFb,
+  getFbProfile,
+  getUserByToken
+} from 'client/data/user'
 import { resolveFBHandle } from 'client/lib/fb'
 import { browserHistory } from 'react-router'
-import { hasSession, clearSession, isFbSession, setToken , setFb} from 'client/data/userLocalSession'
+import {
+  hasSession,
+  clearSession,
+  isFbSession,
+  setToken,
+  getToken,
+  setFb} from 'client/data/userLocalSession'
 
 export function loginError(error) {
   return dispatch => {
     dispatch({ error, type: 'LOGGED_FAILED' });
+    dispatch({type: 'LOADING_STOPPED' });
   };
 }
 
@@ -16,6 +28,7 @@ export function loginSuccess(user) {
     setToken(token);
 
     dispatch({ user, type: 'LOGGED_SUCCESSFULLY' });
+    dispatch({type: 'LOADING_STOPPED' });
     browserHistory.push('/campaign');
   };
 }
@@ -27,8 +40,23 @@ export function logoutSuccess() {
     browserHistory.push("/")
 
     dispatch({ type: 'LOGGED_OUT_SUCCESSFULLY' });
+    dispatch({ type: 'LOADING_STOPPED' });
 
   }
+}
+
+export function loadUserFromSession() {
+
+  return dispatch => {
+
+    if (!hasSession()) return;
+
+    getUserByToken(getToken())
+      .then(user => {
+        dispatch({ user, type: 'LOAD_USER_SUCCESSFULLY' });
+      })
+  }
+
 }
 
 /**
@@ -36,18 +64,25 @@ export function logoutSuccess() {
  */
 export function login(credentials) {
   return dispatch =>
-    apiLogin(credentials)
-    .then(user => {
-      dispatch(loginSuccess(user));
-    })
-    .catch(error => { dispatch(loginError(error)) });
+    {
+      dispatch({type: 'LOADING_STARTED' });
+      apiLogin(credentials)
+      .then(user => {
+        dispatch(loginSuccess(user));
+      })
+      .catch(error => { dispatch(loginError(error)) });
+    }
+
 }
 
 /**
  * Log in a fb user using an access token from fb
  */
 export function loginFb(accessToken) {
-  return dispatch =>
+  return dispatch => {
+
+    dispatch({type: 'LOADING_STARTED' });
+
     apiLoginFb(accessToken)
     .then(user => {
       dispatch(loginSuccess(user));
@@ -55,12 +90,16 @@ export function loginFb(accessToken) {
     .catch(error => {
       dispatch(loginError(error))
      });
+  }
+
 }
 
 
 const loginOrGoToSignupFb = (accessToken) => {
 
   return dispatch => {
+
+    dispatch({type: 'LOADING_STARTED' });
 
     apiLoginFb(accessToken)
     .then(user => dispatch(loginSuccess(user)))
@@ -82,8 +121,13 @@ const loginOrGoToSignupFb = (accessToken) => {
               type: 'FB_CONNECTED_SUCCESSFULLY'
             });
 
+            dispatch({type: 'LOADING_STOPPED' });
+
             browserHistory.push('/signup/facebook');
 
+          }).catch(e => {
+            //TODO?
+            dispatch({type: 'LOADING_STOPPED' });
           })
 
      });
@@ -200,12 +244,10 @@ const _logout = dispatch => {
  * @return {[type]} [description]
  */
 export function logout() {
-
   return dispatch => {
 
     _logout()
       .then(() => dispatch(logoutSuccess()))
 
   }
-
 }

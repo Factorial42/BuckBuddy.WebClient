@@ -10,6 +10,8 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 
+import { loadUserFromSession } from 'client/actions/session'
+
 require('client/style/app');
 
 /**
@@ -63,3 +65,8 @@ render(
     </Provider>,
     rootElement
 );
+
+/**
+ * Load the user into state, if they have a session
+ */
+store.dispatch(loadUserFromSession());

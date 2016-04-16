@@ -1,13 +1,16 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import {Grid} from 'bootstrap'
 import Header from 'client/components/Header'
 import LandingPage from 'client/components/pages/LandingPage'
+import LoadingIndicator from 'client/components/LoadingIndicator'
 //import Checkout from 'react-stripe-checkout'
 
-const App = ({children}) => (
+const App = ({children, loading}) => (
   <Grid fluid>
     <Header />
     <div className="content">
+      {loading ? <LoadingIndicator/> : null}
       {children || <LandingPage />}
     </div>
     {/*
@@ -21,4 +24,10 @@ const App = ({children}) => (
   </Grid>
 )
 
-export default App
+//export default App
+
+const mapStateToProps = (state) => {
+  return {loading: state.loading}
+}
+
+export default connect(mapStateToProps, {})(App)
