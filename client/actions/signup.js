@@ -26,6 +26,11 @@ export function setPhotoError(error) {
   };
 }
 
+export function setPhotoSuccess(profilePic) {
+  return dispatch => {
+    dispatch({profilePic, type: 'SIGNUP_PHOTO_SUCCESS' });
+  };
+}
 /*
  * Should add the route like parameter in this method
 */
@@ -69,8 +74,9 @@ export function setPhoto(userId, file) {
 
   return dispatch => {
     apiUpdatePhoto(userId, getToken(), file)
-      .then(() => {
+      .then((res) => {
         //TODO: dispatch the new photo URL ...
+        dispatch(setPhotoSuccess(res.profilePic));
       })
       .catch(error => { dispatch(setPhotoError(error)) });
   }

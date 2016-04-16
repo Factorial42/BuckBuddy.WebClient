@@ -3,6 +3,8 @@ import {fromJS} from 'immutable'
 
 const reducer = (state = null, action) => {
   switch (action.type) {
+    case 'SIGNUP_PHOTO_SUCCESS':
+      return Object.assign({}, state, {profilePic: action.profilePic})
     case 'SIGNUP_SUCCESS':
       return action.user;
     case 'LOGGED_OUT_SUCCESSFULLY':
