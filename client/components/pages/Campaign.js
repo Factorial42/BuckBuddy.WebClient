@@ -34,14 +34,20 @@ const CampaignPage = React.createClass({
         </Col>
 
         <Col xs={12} className="text-center">
-          {this._getEditCampaignButtonNode()}
+          {this._getCampaignButtonNode()}
         </Col>
       </Row>
     )
 
   },
 
-  _getSaveCampaignButtonNode() {
+  _getCampaignButtonNode() {
+
+    let {campaignEditing} = this.props
+
+    if (!campaignEditing) {
+      return this._getEditCampaignButtonNode()
+    }
 
     return (
       <SaveButton onClick={this._handleSaveClick} />
@@ -89,9 +95,9 @@ const mapStateToProps = state => {
   }
 
   let {userId, profilePic} = state.user
-  let {editingCampaign, campaign} = state
+  let {campaignEditing, campaign} = state
 
-  return {userId, profilePic, editingCampaign, campaign};
+  return {userId, profilePic, campaignEditing, campaign};
 
 }
 
