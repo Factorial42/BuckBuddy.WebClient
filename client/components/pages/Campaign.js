@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
+import { startEditingCampaign, cancelEditingCampaign, saveCampaign } from 'client/actions/campaign'
 import Dropzone from 'react-dropzone'
 import UserPhoto from 'client/components/UserPhoto'
 
@@ -31,59 +32,53 @@ const CampaignPage = React.createClass({
           If I had...
           I would...
         </Col>
+
+        <Col xs={12} className="text-center">
+          {this._getEditCampaignButtonNode()}
+        </Col>
       </Row>
     )
 
   },
 
-  _getDropzoneNode() {
-
-    let activeStyle = {
-      borderStyle: 'solid',
-      backgroundColor: '#eee'
-    };
+  _getSaveCampaignButtonNode() {
 
     return (
-      <Dropzone
-        onDrop={this._onDrop}
-        className="dropzone"
-        activeStyle={activeStyle}>
-        <div className="dropzone-plus">+</div>
-        <img src={this.props.profilePic} />
-      </Dropzone>
+      <SaveButton onClick={this._handleSaveClick} />
+    )
+
+  },
+
+  _handleSaveClick() {
+
+    //TODO...
+
+    //this.props.saveCampaign();
+
+  },
+
+  _getEditCampaignButtonNode() {
+
+    return (
+      <a onClick={this._handleEditClick}>Edit campaign</a>
     );
 
   },
 
-  _getExistingPhotoNode() {
+  _handleEditClick() {
 
-    let {profilePic} = this.props;
-
-    if (!profilePic) return null;
-
-    return (<img src={profilePic} />)
-
-  },
-
-  _onDrop(files) {
-
-    this._submitPhoto(files[0]);
-
-  },
-
-  _handleFileChange(e) {
-
-    this._submitPhoto(e.target.files[0]);
-
-  },
-
-  _submitPhoto(file) {
-
-    this.props.setPhoto(this.props.userId, file)
+    this.props.startEditingCampaign()
 
   }
 
 });
+
+const SaveButton = ({onClick}) => {
+  return (
+    <Button onClick={onClick} className="button-action button-blue">Save</Button>
+  )
+}
+
 
 const mapStateToProps = state => {
 
@@ -93,12 +88,18 @@ const mapStateToProps = state => {
     loading: true
   }
 
-  let {userId, profilePic} = state.user;
+  let {userId, profilePic} = state.user
+  let {editingCampaign, campaign} = state
 
-  return {userId, profilePic};
+  return {userId, profilePic, editingCampaign, campaign};
 
 }
 
 const setPhoto = () => console.log('TODO....add handler')
 
-export default connect(mapStateToProps, {setPhoto})(CampaignPage)
+export default connect(mapStateToProps, {
+  setPhoto,
+  startEditingCampaign,
+  cancelEditingCampaign,
+  saveCampaign
+})(CampaignPage)

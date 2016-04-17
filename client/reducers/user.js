@@ -2,7 +2,7 @@ import { hasSession } from 'client/data/userLocalSession'
 
 const reducer = (state = null, action) => {
   switch (action.type) {
-    case 'SIGNUP_PHOTO_SUCCESS':
+    case 'EDIT_PHOTO_SUCCESS':
       return Object.assign({}, state, {profilePic: action.profilePic})
     case 'LOAD_USER_SUCCESSFULLY':
       return action.user;

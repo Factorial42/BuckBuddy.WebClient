@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
 import Dropzone from 'react-dropzone'
+import { setPhoto } from 'client/actions/user'
 
 const UserPhoto = React.createClass({
 
@@ -28,7 +29,7 @@ const UserPhoto = React.createClass({
         className="dropzone"
         activeStyle={activeStyle}>
         <div className="dropzone-plus">+</div>
-        <img src={this.props.profilePic} />
+        {this._getExistingPhotoNode()}
       </Dropzone>
     );
 
@@ -63,27 +64,19 @@ const UserPhoto = React.createClass({
   }
 
 });
-//
-// const SubmitButton = ({onClick}) => {
-//   return (
-//     <Link to="/signup/stripe"><Button className="button-action button-blue">Continue</Button></Link>
-//   )
-// }
 
-export default UserPhoto
+const mapStateToProps = state => {
 
-// const mapStateToProps = state => {
-//
-//   if (!state.user)
-//
-//   return {
-//     loading: true
-//   }
-//
-//   let {userId, profilePic} = state.user;
-//
-//   return {userId, profilePic};
-//
-// }
+  if (!state.user) return {}
+
+  let {userId, profilePic} = state.user;
+
+  return {userId, profilePic};
+
+}
+
+export default connect(mapStateToProps, { setPhoto })(UserPhoto)
+
+
 //
 // export default connect(mapStateToProps, {setPhoto})(SignupPhotoPage)

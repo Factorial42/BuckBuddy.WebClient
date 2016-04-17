@@ -1,9 +1,9 @@
 import {
   signup as apiSignup,
   signupFb as apiSignupFb,
-  signupStripe as apiSignupStripe,
-  updatePhoto as apiUpdatePhoto
+  signupStripe as apiSignupStripe
 } from 'client/data/user'
+
 import { browserHistory } from 'react-router'
 import { setToken, getToken } from 'client/data/userLocalSession'
 
