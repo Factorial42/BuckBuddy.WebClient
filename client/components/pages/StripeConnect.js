@@ -1,12 +1,12 @@
 import React from 'react'
 import { login } from 'client/actions'
 import { connect } from 'react-redux'
-import { Row, Col } from 'bootstrap'
+import { Row, Col, Button } from 'bootstrap'
 import { Link } from 'react-router'
 
 /**
  * This page is where users kick off the Stripe Connect (standalone account) flow
- * 
+ *
  */
 const StripeConnectPage = React.createClass({
 
@@ -22,6 +22,9 @@ const StripeConnectPage = React.createClass({
     return (
       <Row>
         <Col xs={12} className="text-center">
+          Donec sit amet quam ac justo euismod vehicula. Ut enim nisl, aliquam eu libero sit amet, pellentesque sodales dui.
+        </Col>
+        <Col xs={12} className="text-center">
           <StripeButton onClick={this._handleStripeConnectClick} />
         </Col>
       </Row>
@@ -32,10 +35,11 @@ const StripeConnectPage = React.createClass({
   _handleStripeConnectClick() {
 
     let clientId = window.stripeClientId;
-    let stripeConnectEndpoint =  `https://connect.stripe.com/oauth/authorize?response_type=code&client_id=${clientId}&scope=read_write`;
+    let stripeRedirectUrl = window.stripeRedirectUrl;
+    let stripeConnectEndpoint =
+      `https://connect.stripe.com/oauth/authorize?response_type=code&client_id=${clientId}&scope=read_write&redirect_uri=${stripeRedirectUrl}`;
 
     window.location.href = stripeConnectEndpoint;
-
 
   }
 
@@ -43,10 +47,9 @@ const StripeConnectPage = React.createClass({
 
 const StripeButton = ({onClick}) => {
   return (
-    <input
-      onClick={onClick}
-      type="image"
-      id="myimage" src="/static/img/stripe-connect@2x.png" />
+    <Button
+      className="button-action button-blue"
+      onClick={onClick}>Connect to Stripe</Button>
   )
 }
 

@@ -103,6 +103,7 @@ server.route({
       user: {}, //TODO: remove this?
       stripeKey: envCfg.stripePublicKey,
       stripeClientId: envCfg.bbStripeClientId,
+      stripeRedirectUrl: envCfg.bbStripeRedirectUrl,
       fbAppId: envCfg.bbFbAppId,
       packageVersion: require('../package.json').version
     }));
