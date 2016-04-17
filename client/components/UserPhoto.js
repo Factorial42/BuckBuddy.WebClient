@@ -1,37 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-//import { setPhoto } from 'client/actions/signup'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
 import Dropzone from 'react-dropzone'
-import UserPhoto from 'client/components/UserPhoto'
 
-const CampaignPage = React.createClass({
+const UserPhoto = React.createClass({
 
   render() {
 
-    let colProps = {
-      xs: 12,
-      lg: 2,
-      lgOffset: 5,
-      className: 'text-center'
-    }
-
-    if (this.props.loading) return <span>Loading...</span>
-
     return (
-      <Row>
-        <Col {...colProps}>
-
-          <UserPhoto {...this.props} />
-
-        </Col>
-        <Col xs={12} className="text-center">
-          If I had...
-          I would...
-        </Col>
-      </Row>
+      this._getDropzoneNode()
     )
 
   },
@@ -84,21 +63,27 @@ const CampaignPage = React.createClass({
   }
 
 });
+//
+// const SubmitButton = ({onClick}) => {
+//   return (
+//     <Link to="/signup/stripe"><Button className="button-action button-blue">Continue</Button></Link>
+//   )
+// }
 
-const mapStateToProps = state => {
+export default UserPhoto
 
-  if (!state.user)
-
-  return {
-    loading: true
-  }
-
-  let {userId, profilePic} = state.user;
-
-  return {userId, profilePic};
-
-}
-
-const setPhoto = () => console.log('TODO....add handler')
-
-export default connect(mapStateToProps, {setPhoto})(CampaignPage)
+// const mapStateToProps = state => {
+//
+//   if (!state.user)
+//
+//   return {
+//     loading: true
+//   }
+//
+//   let {userId, profilePic} = state.user;
+//
+//   return {userId, profilePic};
+//
+// }
+//
+// export default connect(mapStateToProps, {setPhoto})(SignupPhotoPage)

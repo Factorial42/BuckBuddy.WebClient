@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
 import Dropzone from 'react-dropzone'
+import UserPhoto from 'client/components/UserPhoto'
 
 const SignupPhotoPage = React.createClass({
 
@@ -26,9 +27,7 @@ const SignupPhotoPage = React.createClass({
         </Col>
         <Col {...colProps}>
 
-          {this._getDropzoneNode()}
-
-          {this._getFileUploadStatusNode()}
+          <UserPhoto {...this.props} />
 
           <SubmitButton />
 
