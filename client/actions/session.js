@@ -190,7 +190,7 @@ export function fbConnect() {
 
         return new Promise((ful, rej) => {
           $fb.login(function(response) {
-            console.log(response);
+            //console.log(response);
             /**
              * If connected, resolve w/ accessToken
              */

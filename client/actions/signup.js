@@ -4,6 +4,11 @@ import {
   signupStripe as apiSignupStripe
 } from 'client/data/user'
 
+import {
+  createCampaign as apiCreateCampaign
+} from 'client/data/campaign'
+
+
 import { browserHistory } from 'react-router'
 import { setToken, getToken } from 'client/data/userLocalSession'
 
@@ -11,6 +16,18 @@ export function setCampaignGoal(target, reason) {
   return dispatch => {
     dispatch({ target, reason, type: 'SET_CAMPAIGN_GOAL' });
     browserHistory.push("/login/options")
+  };
+}
+
+export function createCampaignSuccess(campaign) {
+  return dispatch => {
+    dispatch({campaign, type: 'CAMPAIGN_CREATE_SUCCESS' });
+  };
+}
+
+export function createCampaignFailure(error) {
+  return dispatch => {
+    dispatch({ error, type: 'CAMPAIGN_CREATE_FAILURE' });
   };
 }
 
@@ -58,16 +75,39 @@ export function signupSuccess(user) {
   };
 }
 
-export function signup(userData) {
-  return dispatch => {
+const _afterSignup = (promise, dispatch, getState) => {
 
-    dispatch({type: 'LOADING_STARTED' });
 
-    return apiSignup(userData)
+  promise
     .then(user => {
       dispatch(signupSuccess(user));
+
+      let {campaignNew} = getState();
+      if (!campaignNew) return;
+
+      let {reason, target} = campaignNew;
+
+      return apiCreateCampaign({
+        userId: user.userId,
+        name: reason,
+        amount: target})
+          .then(campaign => dispatch(createCampaignSuccess(campaign)))
+          .catch(err => createCampaignFailure(error))
+
     })
     .catch(error => { dispatch(signupError(error)) });
+
+}
+
+export function signup(userData) {
+  return (dispatch, getState) => {
+
+    dispatch({type: 'LOADING_STARTED' });
+    return _afterSignup(
+      apiSignup(userData),
+      dispatch,
+      getState)
+
   }
 
 }
@@ -75,14 +115,14 @@ export function signup(userData) {
 
 export function signupFb(userData) {
 
-  return dispatch => {
-    dispatch({type: 'LOADING_STARTED' });
-    apiSignupFb(userData)
-    .then(user => {
-      dispatch(signupSuccess(user));
-    })
-    .catch(error => { dispatch(signupError(error)) });
+  return (dispatch, getState) => {
 
+    dispatch({type: 'LOADING_STARTED' });
+
+    return _afterSignup(
+      apiSignupFb(userData),
+      dispatch,
+      getState)
   }
 
 }

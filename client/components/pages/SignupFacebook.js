@@ -43,7 +43,6 @@ const SignupPage = React.createClass({
     let name = this.refs.txtName.getInputDOMNode().value;
     let email = this.refs.txtEmail.getInputDOMNode().value;
 
-    console.log(this.props)
     this.props.signupFb({name, email, fbToken: this.props.fbToken});
 
   },

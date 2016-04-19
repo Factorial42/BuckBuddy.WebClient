@@ -30,7 +30,7 @@ const LandingPage = React.createClass({
         </Row>
         <Row>
           <Col {...colProps} className="text-center">
-            <Input ref="txtCampaignTarget" type='text' placeholder={'$1000000'} />
+            <Input ref="txtCampaignTarget" type='text' placeholder={'$1000000'} onKeyPress={this._handleTargetKeyPress} />
           </Col>
         </Row>
         <Row>
@@ -53,10 +53,22 @@ const LandingPage = React.createClass({
 
   },
 
+  _handleTargetKeyPress(e) {
+
+    //this.props.setPendingCampaignTarget
+
+    console.log(e.charCode)
+    return e.charCode >= 48 && e.charCode <= 57
+  },
+
   _handleSubmitClick() {
 
     let target = this.refs.txtCampaignTarget.getInputDOMNode().value;
     let reason = this.refs.txtCampaignReason.getInputDOMNode().value;
+
+    target = parseInt(target, 10);
+
+    //TODO...validate here?
 
     this.props.setCampaignGoal(target, reason);
 

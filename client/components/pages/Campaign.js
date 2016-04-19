@@ -1,23 +1,28 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-//import { setPhoto } from 'client/actions/signup'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
-import { startEditingCampaign, cancelEditingCampaign, saveCampaign } from 'client/actions/campaign'
+import {
+  startEditingCampaign,
+  cancelEditingCampaign,
+  saveCampaign,
+  loadCampaign,
+  addCampaignPhoto
+} from 'client/actions/campaign'
 import Dropzone from 'react-dropzone'
 import UserPhoto from 'client/components/UserPhoto'
+
+const colProps = {
+  xs: 12,
+  lg: 2,
+  lgOffset: 5,
+  className: 'text-center'
+}
 
 const CampaignPage = React.createClass({
 
   render() {
-
-    let colProps = {
-      xs: 12,
-      lg: 2,
-      lgOffset: 5,
-      className: 'text-center'
-    }
 
     if (this.props.loading) return <span>Loading...</span>
 
@@ -28,16 +33,114 @@ const CampaignPage = React.createClass({
           <UserPhoto {...this.props} />
 
         </Col>
-        <Col xs={12} className="text-center">
-          If I had...
-          I would...
-        </Col>
 
+        {this._getCampaignDetailsNode()}
+      </Row>
+    )
+
+  },
+
+  _getCampaignDetailsNode() {
+
+    let {campaign, campaignEditing} = this.props
+    if (!campaign) return null
+
+    if (campaignEditing) {
+
+    }
+
+    let nameNode = (
+      <Input
+        ref="txtCampaignReason"
+        type='text'
+        placeholder={'Buy an Island'}
+        onChange={e => this.props.startEditingCampaign()}
+        defaultValue={campaign.name} />
+      ),
+    amountNode = (
+      <Input
+        ref="txtCampaignTarget"
+        type='text'
+        placeholder={'$1000000'}
+        onChange={e => this.props.startEditingCampaign()}
+        defaultValue={campaign.amount} />
+    );
+
+    return (
+      <div>
+        <Col {...colProps} className="text-left">
+          <label>If I had</label>
+        </Col>
+        <Col {...colProps} className="text-center">
+          {amountNode}
+        </Col>
+        <Col {...colProps} className="text-left">
+          <label>I would</label>
+        </Col>
+        <Col {...colProps} className="text-center">
+          {nameNode}
+        </Col>
         <Col xs={12} className="text-center">
           {this._getCampaignButtonNode()}
         </Col>
-      </Row>
+
+        <Col xs={12} className="text-center">
+          {this._getCampaignPhototListNode()}
+        </Col>
+
+      </div>
     )
+
+  },
+
+  _getCampaignPhototListNode() {
+
+    let {campaign} = this.props;
+
+    let listNodes = [];
+
+    if (campaign.profilePics) {
+
+      listNodes = campaign.profilePics.map(pic => {
+        return (
+          <div key={`campaign-photo-${pic.url}`} className="campaign-photo">
+            <img src={pic.url} />
+          </div>
+        )
+      })
+
+    }
+
+    return (
+      <div>
+        {listNodes}
+        {this._getCampaignPhotoDropzoneNode()}
+      </div>
+    )
+
+  },
+
+  _getCampaignPhotoDropzoneNode() {
+
+    let activeStyle = {
+      borderStyle: 'solid',
+      backgroundColor: '#eee'
+    };
+
+    return (
+      <Dropzone
+        onDrop={this._onDropPhoto}
+        className="dropzone dropzone-square dropzone-campaign-photo"
+        activeStyle={activeStyle}>
+        <div className="dropzone-plus">+</div>
+      </Dropzone>
+    );
+
+  },
+
+  _onDropPhoto(files) {
+
+    this.props.addCampaignPhoto(files[0])
 
   },
 
@@ -45,9 +148,7 @@ const CampaignPage = React.createClass({
 
     let {campaignEditing} = this.props
 
-    if (!campaignEditing) {
-      return this._getEditCampaignButtonNode()
-    }
+    if (!campaignEditing) return null
 
     return (
       <SaveButton onClick={this._handleSaveClick} />
@@ -57,9 +158,14 @@ const CampaignPage = React.createClass({
 
   _handleSaveClick() {
 
-    //TODO...
+    let target = this.refs.txtCampaignTarget.getInputDOMNode().value;
+    let reason = this.refs.txtCampaignReason.getInputDOMNode().value;
 
-    //this.props.saveCampaign();
+    target = parseInt(target, 10);
+
+    //TODO...validate here?
+
+    this.props.saveCampaign({amount: target, name: reason});
 
   },
 
@@ -75,6 +181,10 @@ const CampaignPage = React.createClass({
 
     this.props.startEditingCampaign()
 
+  },
+
+  componentDidMount() {
+    this.props.loadCampaign()
   }
 
 });
@@ -107,5 +217,7 @@ export default connect(mapStateToProps, {
   setPhoto,
   startEditingCampaign,
   cancelEditingCampaign,
-  saveCampaign
+  saveCampaign,
+  loadCampaign,
+  addCampaignPhoto
 })(CampaignPage)

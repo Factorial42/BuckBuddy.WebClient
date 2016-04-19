@@ -23,8 +23,6 @@ function _applyRoutes(server) {
    * BEGIN Routes
    */
 
-
-
   server.route({
     method: 'GET',
     path: '/static/{param*}',
@@ -63,32 +61,34 @@ function _applyRoutes(server) {
   });
 
 
-  server.route([
-  {
-    method: ['GET', 'POST'],
-    path: '/api/{param*}',
-    handler: {
-      proxy: {
-        passThrough: true,
-        mapUri: function (request, next) {
-          let path = request.url.path.replace("/api", "");
-          let apiUri = envCfg.bbApiEndpoint + path;
-          next(null, apiUri);
+  let resources = ['user', 'campaign'];
+
+  resources.forEach(key => {
+
+    let capitalizedKey = key[0].toUpperCase() + key.slice(1)
+    let basePath = `/api-${key}`;
+    let endpoint = envCfg[`bb${capitalizedKey}ApiEndpoint`];
+
+    console.log(`Setting ${endpoint} for API with base path ${basePath}`)
+    server.route(
+    {
+      method: ['GET', 'POST', 'PUT'],
+      path: `${basePath}/{param*}`,
+      handler: {
+        proxy: {
+          passThrough: true,
+          mapUri: function (request, next) {
+            let path = request.url.path.replace(basePath, "");
+            let apiUri = endpoint + path;
+            console.log(`Handing API request for ${key} - API URL - ${apiUri}`)
+            next(null, apiUri);
+          }
         }
-            // ,
-            // onResponse: function (err, res, request, reply, settings, ttl) {
-            //
-            //     console.log('receiving the response from the upstream.');
-            //     Wreck.read(res, { json: true }, function (err, payload) {
-            //
-            //         console.log('some payload manipulation if you want to.')
-            //         reply(payload).headers = res.headers;
-            //     });
-            // }
       }
-    }
-  }
-]);
+    })
+
+  })
+
 
 
 /**
