@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Row, Col, Input, Button } from 'bootstrap'
+import { Row, Col, Button, Input } from 'bootstrap'
 import { Link } from 'react-router'
 import {
   startEditingCampaign,
@@ -45,10 +45,6 @@ const CampaignPage = React.createClass({
     let {campaign, campaignEditing} = this.props
     if (!campaign) return null
 
-    if (campaignEditing) {
-
-    }
-
     let nameNode = (
       <Input
         ref="txtCampaignReason"
@@ -64,7 +60,18 @@ const CampaignPage = React.createClass({
         placeholder={'$1000000'}
         onChange={e => this.props.startEditingCampaign()}
         defaultValue={campaign.amount} />
+    ),
+    descriptionNode = (
+      <Input
+        ref="txtCampaignDescription"
+        type="textarea"
+        placeholder={'No description yet...'}
+        onChange={e => this.props.startEditingCampaign()}
+        defaultValue={campaign.description || ''}
+         />
     );
+
+    //if (campaign.description)
 
     return (
       <div>
@@ -79,6 +86,9 @@ const CampaignPage = React.createClass({
         </Col>
         <Col {...colProps} className="text-center">
           {nameNode}
+        </Col>
+        <Col {...colProps} className="text-center">
+          {descriptionNode}
         </Col>
         <Col xs={12} className="text-center">
           {this._getCampaignButtonNode()}
@@ -160,12 +170,13 @@ const CampaignPage = React.createClass({
 
     let target = this.refs.txtCampaignTarget.getInputDOMNode().value;
     let reason = this.refs.txtCampaignReason.getInputDOMNode().value;
+    let description = this.refs.txtCampaignDescription.getInputDOMNode().value;
 
     target = parseInt(target, 10);
 
     //TODO...validate here?
 
-    this.props.saveCampaign({amount: target, name: reason});
+    this.props.saveCampaign({amount: target, name: reason, description});
 
   },
 
@@ -184,6 +195,8 @@ const CampaignPage = React.createClass({
   },
 
   componentDidMount() {
+
+    //TODO: use the slug...
     this.props.loadCampaign()
   }
 
@@ -207,7 +220,13 @@ const mapStateToProps = state => {
   let {userId, profilePic} = state.user
   let {campaignEditing, campaign} = state
 
-  return {userId, profilePic, campaignEditing, campaign};
+  return {
+    userId,
+    profilePic,
+    campaignEditing,
+    campaign,
+    owner: true //TODO: get the `owner` value from state...
+  };
 
 }
 

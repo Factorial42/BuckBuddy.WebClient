@@ -81,7 +81,7 @@ export function saveCampaign(changes) {
     let mutatedCampaign = Object.assign({}, campaign, changes);
 
     apiUpdateCampaign(getToken(), mutatedCampaign)
-      .then(campaign => dispatch(campaignSavedSuccess(campaign)))
+      .then(campaign => dispatch(campaignSavedSuccess(mutatedCampaign)))
       .catch(error => dispatch(campaignSavedFailure(error)))
   }
 }
