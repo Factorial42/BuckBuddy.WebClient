@@ -12,13 +12,11 @@ import {
 } from 'client/actions/campaign'
 import Dropzone from 'react-dropzone'
 import UserPhoto from 'client/components/UserPhoto'
+import CampaignReadOnly from 'client/components/CampaignReadOnly'
+import CampaignEditable from 'client/components/CampaignEditable'
+import { ColumnProps } from 'client/constants/Layout'
 
-const colProps = {
-  xs: 12,
-  lg: 2,
-  lgOffset: 5,
-  className: 'text-center'
-}
+const colProps = ColumnProps.General
 
 const CampaignPage = React.createClass({
 
@@ -26,106 +24,54 @@ const CampaignPage = React.createClass({
 
     if (this.props.loading) return <span>Loading...</span>
 
+    let {user, loading, campaignEditing} = this.props
+
     return (
       <Row>
         <Col {...colProps}>
-
-          <UserPhoto {...this.props} />
-
+          <UserPhoto />
         </Col>
 
-        {this._getCampaignDetailsNode()}
+        <Col {...colProps}>
+          <h5>{user.firstName} {user.lastName}</h5>
+        </Col>
+
+        <Col {...colProps}>
+          {this._getCampaignDetailsNode()}
+        </Col>
+
+        <Col {...colProps}>
+          {this._getCampaignEditButtonNode()}
+        </Col>
       </Row>
+    )
+
+  },
+
+  _getCampaignEditButtonNode() {
+
+    let {owner, campaignEditing} = this.props;
+
+    if (!owner || campaignEditing) return null;
+
+    return (
+      <a onClick={e => this.props.startEditingCampaign()}><span className="fa fa-pencil"></span>Edit Campaign</a>
     )
 
   },
 
   _getCampaignDetailsNode() {
 
-    let {campaign, campaignEditing} = this.props
-    if (!campaign) return null
+    let {campaignEditing} = this.props;
 
-    let nameNode = (
-      <Input
-        ref="txtCampaignReason"
-        type='text'
-        placeholder={'Buy an Island'}
-        onChange={e => this.props.startEditingCampaign()}
-        defaultValue={campaign.name} />
-      ),
-    amountNode = (
-      <Input
-        ref="txtCampaignTarget"
-        type='text'
-        placeholder={'$1000000'}
-        onChange={e => this.props.startEditingCampaign()}
-        defaultValue={campaign.amount} />
-    ),
-    descriptionNode = (
-      <Input
-        ref="txtCampaignDescription"
-        type="textarea"
-        placeholder={'No description yet...'}
-        onChange={e => this.props.startEditingCampaign()}
-        defaultValue={campaign.description || ''}
-         />
-    );
-
-    //if (campaign.description)
-
-    return (
-      <div>
-        <Col {...colProps} className="text-left">
-          <label>If I had</label>
-        </Col>
-        <Col {...colProps} className="text-center">
-          {amountNode}
-        </Col>
-        <Col {...colProps} className="text-left">
-          <label>I would</label>
-        </Col>
-        <Col {...colProps} className="text-center">
-          {nameNode}
-        </Col>
-        <Col {...colProps} className="text-center">
-          {descriptionNode}
-        </Col>
-        <Col xs={12} className="text-center">
-          {this._getCampaignButtonNode()}
-        </Col>
-
-        <Col xs={12} className="text-center">
-          {this._getCampaignPhototListNode()}
-        </Col>
-
-      </div>
-    )
-
-  },
-
-  _getCampaignPhototListNode() {
-
-    let {campaign} = this.props;
-
-    let listNodes = [];
-
-    if (campaign.profilePics) {
-
-      listNodes = campaign.profilePics.map(pic => {
-        return (
-          <div key={`campaign-photo-${pic.url}`} className="campaign-photo">
-            <img src={pic.url} />
-          </div>
-        )
-      })
-
+    if (campaignEditing) {
+      return (
+        <CampaignEditable />
+      )
     }
 
     return (
-      <div>
-        {listNodes}
-        {this._getCampaignPhotoDropzoneNode()}
-      </div>
+      <CampaignReadOnly />
     )
 
   },
@@ -217,12 +163,10 @@ const mapStateToProps = state => {
     loading: true
   }
 
-  let {userId, profilePic} = state.user
-  let {campaignEditing, campaign} = state
+  let {campaignEditing, campaign, user} = state
 
   return {
-    userId,
-    profilePic,
+    user,
     campaignEditing,
     campaign,
     owner: true //TODO: get the `owner` value from state...
