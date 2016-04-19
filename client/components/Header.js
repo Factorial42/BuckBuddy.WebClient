@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Nav, NavItem, MenuItem  } from 'bootstrap'
+import { Navbar, Nav, NavItem, MenuItem, DropdownButton  } from 'bootstrap'
 import { logout } from 'client/actions/session'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
@@ -7,73 +7,50 @@ import { Link } from 'react-router'
 let Header = React.createClass({
 
   render() {
-    let logoutNode = null;
+    let settingsNode = null;
 
     if (this.props.authenticated) {
-      logoutNode = (
-        <NavItem eventKey={2} href="#" onClick={() => this.props.logout()}>Logout</NavItem>
-      );
+
+      let cog = (<span className="fa fa-2x fa-gear"/>)
+
+      settingsNode = (
+        <DropdownButton title={cog} className="nav-menu-dropdown">
+          <MenuItem eventKey="1">Settings</MenuItem>
+          <MenuItem divider />
+          <MenuItem eventKey={2} href="#" onClick={() => this.props.logout()}>Logout</MenuItem>
+        </DropdownButton>
+
+      )
+    }
+
+    let shareNode = null;
+
+    if (this.props.shareable) {
+      shareNode = (
+        <NavItem className="pull-right"><span className="fa fa-share"/></NavItem>
+      )
     }
 
     return (
 
       <Navbar>
-       <Navbar.Header>
-         <Navbar.Toggle />
-       </Navbar.Header>
-       <Navbar.Collapse>
-         <Nav pullRight>
-           {logoutNode}
-         </Nav>
-       </Navbar.Collapse>
+        <Nav>
+          {settingsNode}
+        </Nav>
+        <Nav pullRight>
+          {shareNode}
+        </Nav>
      </Navbar>
     )
-
-
-
-
   }
 
 });
 
-// const Header = ({logout}) => {
-//
-//   let logoutNode = null;
-//
-//
-//
-//   return (
-//
-//     <Navbar inverse>
-//      <Navbar.Header>
-//        <Navbar.Brand>
-//          <img src="/static/img/buck.png" />
-//        </Navbar.Brand>
-//        <Navbar.Toggle />
-//      </Navbar.Header>
-//      <Navbar.Collapse>
-//        <Nav>
-//          <NavItem eventKey={1} href="#">Link</NavItem>
-//          <NavItem eventKey={2} href="#">Link</NavItem>
-//          {/*<NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-//            <MenuItem eventKey={3.1}>Action</MenuItem>
-//            <MenuItem eventKey={3.2}>Another action</MenuItem>
-//            <MenuItem eventKey={3.3}>Something else here</MenuItem>
-//            <MenuItem divider />
-//            <MenuItem eventKey={3.3}>Separated link</MenuItem>
-//          </NavDropdown>*/}
-//        </Nav>
-//        <Nav pullRight>
-//          <NavItem eventKey={2} href="#" onClick={() => logout()}>Logout</NavItem>
-//        </Nav>
-//      </Navbar.Collapse>
-//    </Navbar>
-//   )
-//
-// }
-
-const mapStateToProps = ({authenticated}) => {
-  return {authenticated}
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.authenticated,
+    shareable: state.routing.locationBeforeTransitions.pathname.indexOf("/campaign") >= 0
+  }
 }
 
 export default connect(mapStateToProps, {logout})(Header)
