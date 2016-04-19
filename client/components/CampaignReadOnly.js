@@ -37,7 +37,7 @@ const CampaignReadOnly = React.createClass({
 
         <Carousel.Item key={`campaign-photo-${pic.url}-${k}`}>
           <div className="text-center">
-            <img height={200} src={pic.url}/>
+            <img height={120} src={pic.url}/>
           </div>
         </Carousel.Item>
       )
