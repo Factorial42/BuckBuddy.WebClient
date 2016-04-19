@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Nav, NavItem, MenuItem, DropdownButton  } from 'bootstrap'
+import { Navbar, Nav, NavItem, MenuItem, DropdownButton, Grid  } from 'bootstrap'
 import { logout } from 'client/actions/session'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
@@ -27,24 +27,38 @@ let Header = React.createClass({
 
     if (this.props.shareable) {
       shareNode = (
-        <NavItem className="pull-right"><span className="fa fa-share"/></NavItem>
+        <span className="fa fa-2x fa-share" style={{paddingTop: 5}}/>
       )
     }
 
     return (
 
-      <Navbar>
-        <Nav>
-          {settingsNode}
-        </Nav>
-        <Nav pullRight>
-          {shareNode}
-        </Nav>
-     </Navbar>
+      <header>
+        <Grid>
+          <div className="pull-left">
+            {settingsNode}
+          </div>
+
+          <div className="pull-right">
+            {shareNode}
+          </div>
+
+        </Grid>
+      </header>
+
     )
   }
 
 });
+
+{/*<Navbar>
+  <Nav pullLeft>
+    {settingsNode}
+  </Nav>
+  <Nav pullRight>
+  </Nav>
+</Navbar>*/}
+
 
 const mapStateToProps = (state) => {
   return {
