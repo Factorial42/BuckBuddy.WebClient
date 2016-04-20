@@ -76,18 +76,20 @@ const CampaignEditable = React.createClass({
 
     let {campaign} = this.props;
 
-    if (!campaign.profilePics) return null;
+    let photoNodes = [];
 
-    const photoNodes = campaign.profilePics.map((pic, k) => {
-      return (
-        <div key={`campaign-photo-${pic.url}-${k}`} className="campaign-photo">
-          <div className="btn-delete" onClick={() => {}}>
-            <span className="fa fa-trash"  />
+    if (campaign.profilePics) {
+      photoNodes = campaign.profilePics.map((pic, k) => {
+        return (
+          <div key={`campaign-photo-${pic.url}-${k}`} className="campaign-photo">
+            <div className="btn-delete" onClick={() => {}}>
+              <span className="fa fa-trash"  />
+            </div>
+            <img height={200} src={pic.url}/>
           </div>
-          <img height={200} src={pic.url}/>
-        </div>
-      )
-    })
+        )
+      })
+    }
 
     return (
       <div>{photoNodes} {this._getCampaignPhotoDropzoneNode()}</div>
