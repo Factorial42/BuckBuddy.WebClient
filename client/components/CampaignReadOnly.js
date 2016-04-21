@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Row, Col, Input, Button, Carousel } from 'bootstrap'
+import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
 import CampaignStats from 'client/components/CampaignStats'
+import Slider from 'react-slick'
 
 const CampaignReadOnly = React.createClass({
 
@@ -23,6 +24,8 @@ const CampaignReadOnly = React.createClass({
 
         {this._getPhotoCarouselNode()}
 
+        <br/>
+
         <CampaignStats campaign={campaign} />
 
       </div>
@@ -37,23 +40,36 @@ const CampaignReadOnly = React.createClass({
     if (!campaign.profilePics) return null;
 
     const carouselItemNodes = campaign.profilePics.map((pic, k) => {
-      return (
 
-        <Carousel.Item key={`campaign-photo-${pic.url}-${k}`}>
-          <div className="text-center">
-            <img height={120} src={pic.url}/>
-          </div>
-        </Carousel.Item>
+      return (
+        <div className="text-center" key={`campaign-photo-${pic.url}-${k}`}>
+          <img height={120} width={120} src={pic.url}/>
+        </div>
+
       )
     })
 
-    const carouselNode = (
-      <Carousel indicators={false}>
+
+    var settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 3
+    };
+    return (
+      <Slider {...settings}>
         {carouselItemNodes}
-      </Carousel>
+      </Slider>
     );
 
-    return carouselNode;
+    // const carouselNode = (
+    //   <Carousel indicators={false}>
+    //     {carouselItemNodes}
+    //   </Carousel>
+    // );
+    //
+    // return carouselNode;
 
   },
 
