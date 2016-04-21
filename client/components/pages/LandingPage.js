@@ -4,73 +4,27 @@ import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
 import { redirectAuthedUsers } from 'client/actions/session'
 import { setCampaignGoal } from 'client/actions/signup'
+import CampaignForm from 'client/components/CampaignForm'
 
 const LandingPage = React.createClass({
 
   render() {
-
-    let colProps = {
-      xs: 10,
-      xsOffset: 1,
-      md: 6,
-      mdOffset: 3,
-      sm: 8,
-      smOffset: 2,
-      lg: 4,
-      lgOffset: 4,
-      className: 'text-center'
-    }
-
     return (
       <div className="page-landing">
-        <Row>
-          <Col {...colProps} className="text-left">
-            <label>If I had</label>
-          </Col>
-        </Row>
-        <Row>
-          <Col {...colProps} className="text-center">
-            <Input ref="txtCampaignTarget" type='text' placeholder={'$1000000'} onKeyPress={this._handleTargetKeyPress} />
-          </Col>
-        </Row>
-        <Row>
-          <Col {...colProps} className="text-left">
-            <label>I would</label>
-          </Col>
-        </Row>
-        <Row>
-          <Col {...colProps} className="text-center">
-            <Input ref="txtCampaignReason" type='text' placeholder={'Buy an Island'} />
-          </Col>
-        </Row>
-        <Row>
-          <Col {...colProps} className="text-center">
-            <SubmitButton onClick={this._handleSubmitClick} />
-          </Col>
-        </Row>
+        <CampaignForm
+          onSubmit={this._onSubmit}
+          submitting={false}
+          />
       </div>
     )
 
   },
 
-  _handleTargetKeyPress(e) {
+  _onSubmit(fields) {
 
-    //this.props.setPendingCampaignTarget
+    let {amount, name} = fields
 
-    console.log(e.charCode)
-    return e.charCode >= 48 && e.charCode <= 57
-  },
-
-  _handleSubmitClick() {
-
-    let target = this.refs.txtCampaignTarget.getInputDOMNode().value;
-    let reason = this.refs.txtCampaignReason.getInputDOMNode().value;
-
-    target = parseInt(target, 10);
-
-    //TODO...validate here?
-
-    this.props.setCampaignGoal(target, reason);
+    this.props.setCampaignGoal(amount, name);
 
   },
 
@@ -79,11 +33,5 @@ const LandingPage = React.createClass({
   }
 
 });
-
-const SubmitButton = ({onClick}) => {
-  return (
-    <Button className="button-action button-blue" onClick={onClick}>Continue<span className="fa fa-arrow-right pull-right"/></Button>
-  )
-}
 
 export default connect(null, {redirectAuthedUsers, setCampaignGoal})(LandingPage)

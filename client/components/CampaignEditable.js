@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { Row, Col, Input, Button, Carousel } from 'bootstrap'
 import { Link } from 'react-router'
 import Dropzone from 'react-dropzone'
+import CampaignForm from 'client/components/CampaignForm'
+
 import {
   saveCampaign,
   addCampaignPhoto
@@ -13,57 +15,33 @@ import { ColumnProps } from 'client/constants/Layout'
 
 const colProps = ColumnProps.General
 
-
 const CampaignEditable = React.createClass({
 
   render() {
 
-    let {campaign, loading} = this.props;
+    let {campaign: {amount, name, description}, loading} = this.props;
 
     if (loading) return <span/>
-
-
-    let nameNode = (
-      <Input
-        ref="txtCampaignReason"
-        type='text'
-        placeholder={'Buy an Island'}
-        defaultValue={campaign.name} />
-      ),
-    amountNode = (
-      <Input
-        ref="txtCampaignTarget"
-        type='text'
-        placeholder={'$1000000'}
-        defaultValue={campaign.amount} />
-    ),
-    descriptionNode = (
-      <Input
-        ref="txtCampaignDescription"
-        type="textarea"
-        placeholder={'No description yet...'}
-        defaultValue={campaign.description || ''}
-         />
-    );
+    let formColProps = {
+      xs: 12,
+      md: 12,
+      sm: 12,
+      lg: 12,
+      className: 'text-center'
+    }
 
     return (
       <div className="campaign-editable">
-        <div className="text-left">
-          <label>If I had</label>
-          <br/>
-          {amountNode}
-          <br/>
-          <label>I would</label>
-          <br/>
-          {nameNode}
-          <br/>
-          <label>Description</label>
-          {descriptionNode}
-        </div>
 
-        <div className="text-center">
-          <SaveButton onClick={this._handleSaveClick} />
-        </div>
+      <CampaignForm
+        saveButtonText='Save'
+        colProps={formColProps}
+        initialValues={{amount, name, description}}
+        showDescription
+        onSubmit={this._onSubmit}
+        submitting={false}
+        />
+
         <br/>
 
         {this._getCampaignPhotoListNode()}
@@ -96,17 +74,11 @@ const CampaignEditable = React.createClass({
     );
   },
 
-  _handleSaveClick() {
+  _onSubmit(fields) {
 
-    let target = this.refs.txtCampaignTarget.getInputDOMNode().value;
-    let reason = this.refs.txtCampaignReason.getInputDOMNode().value;
-    let description = this.refs.txtCampaignDescription.getInputDOMNode().value;
+    let {amount, name, description} = fields
 
-    target = parseInt(target, 10);
-
-    //TODO...validate here?
-
-    this.props.saveCampaign({amount: target, name: reason, description});
+    this.props.saveCampaign({amount, name, description});
 
   },
 
@@ -134,12 +106,6 @@ const CampaignEditable = React.createClass({
 
   },
 });
-
-const SaveButton = ({onClick}) => {
-  return (
-    <Button onClick={onClick} className="button-action button-blue">Save</Button>
-  )
-}
 
 const mapStateToProps = state => {
 
