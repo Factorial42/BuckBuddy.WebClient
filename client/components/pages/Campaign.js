@@ -112,28 +112,6 @@ const CampaignPage = React.createClass({
 
   },
 
-  _handleSaveClick() {
-
-    let target = this.refs.txtCampaignTarget.getInputDOMNode().value;
-    let reason = this.refs.txtCampaignReason.getInputDOMNode().value;
-    let description = this.refs.txtCampaignDescription.getInputDOMNode().value;
-
-    target = parseInt(target, 10);
-
-    //TODO...validate here?
-
-    this.props.saveCampaign({amount: target, name: reason, description});
-
-  },
-
-  _getEditCampaignButtonNode() {
-
-    return (
-      <a onClick={this._handleEditClick}>Edit campaign</a>
-    );
-
-  },
-
   _handleEditClick() {
 
     this.props.startEditingCampaign()
@@ -141,7 +119,6 @@ const CampaignPage = React.createClass({
   },
 
   componentDidMount() {
-    //TODO: use the slug...
     this.props.loadCampaign(this.props.params.campaignSlug)
   }
 

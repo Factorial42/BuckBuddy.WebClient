@@ -8,7 +8,8 @@ import CampaignForm from 'client/components/CampaignForm'
 
 import {
   saveCampaign,
-  addCampaignPhoto
+  addCampaignPhoto,
+  deleteCampaignPhoto
  } from 'client/actions/campaign'
 
 import { ColumnProps } from 'client/constants/Layout'
@@ -60,7 +61,7 @@ const CampaignEditable = React.createClass({
       photoNodes = campaign.profilePics.map((pic, k) => {
         return (
           <div key={`campaign-photo-${pic.url}-${k}`} className="campaign-photo">
-            <div className="btn-delete" onClick={() => {}}>
+            <div className="btn-delete" onClick={() => this.props.deleteCampaignPhoto(pic.profilePicId)}>
               <span className="fa fa-trash"  />
             </div>
             <img height={200} src={pic.url}/>
@@ -124,4 +125,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, {saveCampaign, addCampaignPhoto})(CampaignEditable)
+export default connect(mapStateToProps, {saveCampaign, addCampaignPhoto, deleteCampaignPhoto})(CampaignEditable)

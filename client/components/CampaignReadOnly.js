@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button, Carousel } from 'bootstrap'
 import { Link } from 'react-router'
+import CampaignStats from 'client/components/CampaignStats'
 
 const CampaignReadOnly = React.createClass({
 
@@ -21,6 +22,9 @@ const CampaignReadOnly = React.createClass({
         {this._getDescriptionNode()}
 
         {this._getPhotoCarouselNode()}
+
+        <CampaignStats campaign={campaign} />
+
       </div>
     )
 

@@ -3,6 +3,7 @@ import {fromJS} from 'immutable'
 const reducer = (state = null, action) => {
 
   if ([
+    'CAMPAIGN_DELETE_PHOTO_SUCCESS',
     'CAMPAIGN_ADD_PHOTO_SUCCESS',
     'CAMPAIGN_CREATE_SUCCESS',
     'CAMPAIGN_LOADED_SUCCESS',
@@ -11,14 +12,6 @@ const reducer = (state = null, action) => {
   }
 
   return state;
-  // switch (action.type) {
-  //   case 'CAMPAIGN_CREATE_SUCCESS':
-  //     return action.campaign;
-  //   case 'CAMPAIGN_LOADED_SUCCESS':
-  //     return action.campaign;
-  //   default:
-  //     return state
-  // }
 }
 
 export default reducer

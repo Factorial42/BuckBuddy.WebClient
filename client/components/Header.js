@@ -51,19 +51,10 @@ let Header = React.createClass({
 
 });
 
-{/*<Navbar>
-  <Nav pullLeft>
-    {settingsNode}
-  </Nav>
-  <Nav pullRight>
-  </Nav>
-</Navbar>*/}
-
-
 const mapStateToProps = (state) => {
   return {
     authenticated: state.authenticated,
-    shareable: state.routing.locationBeforeTransitions.pathname.indexOf("/campaign") >= 0
+    shareable: state.routing.locationBeforeTransitions.pathname.indexOf("/c/") >= 0
   }
 }
 

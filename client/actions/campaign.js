@@ -9,7 +9,8 @@ import {
   getCampaign as apiGetCampaign,
   getCampaignBySlug as apiGetCampaignBySlug,
   updateCampaign as apiUpdateCampaign,
-  addCampaignPhoto as apiAddCampaignPhoto
+  addCampaignPhoto as apiAddCampaignPhoto,
+  deleteCampaignPhoto as apiDeleteCampaignPhoto
 } from 'client/data/campaign'
 
 import { setToken, getToken } from 'client/data/userLocalSession'
@@ -50,6 +51,18 @@ export function campaignAddPhotoFailure(error) {
   };
 }
 
+export function campaignDeletePhotoSuccess(campaign) {
+  return dispatch => {
+    dispatch({ campaign, type: 'CAMPAIGN_DELETE_PHOTO_SUCCESS' });
+  };
+}
+
+export function campaignDeletePhotoFailure(error) {
+  return dispatch => {
+    dispatch({ error, type: 'CAMPAIGN_DELETE_PHOTO_FAILURE' });
+  };
+}
+
 export function startEditingCampaign() {
   return dispatch => {
     dispatch({ type: 'START_EDITING_CAMPAIGN' });
@@ -72,6 +85,20 @@ export function addCampaignPhoto(file) {
       .catch(error => dispatch(campaignAddPhotoFailure(error)))
 
   }
+}
+
+export function deleteCampaignPhoto(profilePicId) {
+
+  return (dispatch, getState) => {
+    let {campaign} = getState()
+    let {campaignId} = campaign;
+
+    apiDeleteCampaignPhoto(getToken(), campaignId, profilePicId)
+      .then(campaign => dispatch(campaignDeletePhotoSuccess(campaign)))
+      .catch(error => dispatch(campaignDeletePhotoFailure(error)))
+
+  }
+
 }
 
 export function saveCampaign(changes) {
