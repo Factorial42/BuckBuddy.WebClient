@@ -7,6 +7,7 @@ import {
 
 import {
   getCampaign as apiGetCampaign,
+  getCampaignBySlug as apiGetCampaignBySlug,
   updateCampaign as apiUpdateCampaign,
   addCampaignPhoto as apiAddCampaignPhoto
 } from 'client/data/campaign'
@@ -86,9 +87,10 @@ export function saveCampaign(changes) {
   }
 }
 
-export function loadCampaign() {
+export function loadCampaign(slug) {
   return dispatch => {
-    apiGetCampaign(getToken())
+
+    (slug ? apiGetCampaignBySlug(slug, getToken()) : apiGetCampaign(getToken()))
       .then(campaign => dispatch(campaignLoadedSuccess(campaign)))
       .catch(error => dispatch(campaignLoadedFailure(error)))
   }

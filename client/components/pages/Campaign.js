@@ -141,9 +141,8 @@ const CampaignPage = React.createClass({
   },
 
   componentDidMount() {
-
     //TODO: use the slug...
-    this.props.loadCampaign()
+    this.props.loadCampaign(this.props.params.campaignSlug)
   }
 
 });
