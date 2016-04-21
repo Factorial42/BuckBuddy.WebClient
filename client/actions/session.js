@@ -29,7 +29,7 @@ export function loginSuccess(user) {
 
     dispatch({ user, type: 'LOGGED_SUCCESSFULLY' });
     dispatch({type: 'LOADING_STOPPED' });
-    browserHistory.push('/campaign');
+    browserHistory.push('/campaign/loading');
   };
 }
 
@@ -139,9 +139,9 @@ const loginOrGoToSignupFb = (accessToken) => {
  * Redirect users that have a session
  */
 export function redirectAuthedUsers() {
-  return dispatch => {
+  return () => {
     if (hasSession()) {
-      browserHistory.push('/campaign');
+      browserHistory.push('/campaign/loading');
     }
   }
 }
@@ -170,7 +170,7 @@ export function fbLoginCheck() {
             // Logged into your app and Facebook.
             //TODO: use an action, or a redux-router call or something, not window.location.href
             //window.location.href = "/campaign";
-            browserHistory.push('/campaign');
+            browserHistory.push('/campaign/loading');
           }
         })
     }
