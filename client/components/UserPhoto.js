@@ -41,7 +41,7 @@ const UserPhoto = React.createClass({
 
     if (!profilePic) return null;
 
-    return (<img src={profilePic} />)
+    return (<img src={profilePic} className="user-photo" />)
 
   },
 

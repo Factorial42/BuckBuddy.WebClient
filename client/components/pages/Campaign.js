@@ -55,7 +55,10 @@ const CampaignPage = React.createClass({
     if (!owner || campaignEditing) return null;
 
     return (
-      <a onClick={e => this.props.startEditingCampaign()}><span className="fa fa-pencil"></span>Edit Campaign</a>
+      <a onClick={e => this.props.startEditingCampaign()}>Edit Campaign
+        &nbsp;
+        <span className="fa fa-pencil"/>
+      </a>
     )
 
   },
