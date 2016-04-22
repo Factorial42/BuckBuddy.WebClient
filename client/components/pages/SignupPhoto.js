@@ -28,7 +28,10 @@ const SignupPhotoPage = React.createClass({
 
           <UserPhoto {...this.props} />
 
-          <SubmitButton />
+          <Link to="/signup/stripe/tos">
+            <Button
+              className="button-action button-blue">Continue</Button>
+          </Link>
 
         </Col>
       </Row>
@@ -36,14 +39,6 @@ const SignupPhotoPage = React.createClass({
 
   }
 });
-
-const SubmitButton = ({onClick}) => {
-  return (
-    <Link to="/campaign/loading">
-      <Button className="button-action button-blue">Continue</Button>
-    </Link>
-  )
-}
 
 const mapStateToProps = state => {
 

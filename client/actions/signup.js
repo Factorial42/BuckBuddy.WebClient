@@ -5,7 +5,8 @@ import {
 } from 'client/data/user'
 
 import {
-  createCampaign as apiCreateCampaign
+  createCampaign as apiCreateCampaign,
+  goToCampaign
 } from 'client/data/campaign'
 
 
@@ -146,7 +147,7 @@ export function setStripeConnection(userId, code) {
     dispatch({type: 'LOADING_STARTED' });
     apiSignupStripe(userId, getToken(), code)
       .then((res) => {
-        browserHistory.push("/campaign/loading")
+        dispatch(goToCampaign())
         dispatch({type: 'LOADING_STOPPED' });
       })
       .catch(error => { dispatch(setStripeConnectionError(error)) });

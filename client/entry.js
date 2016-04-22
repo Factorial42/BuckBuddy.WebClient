@@ -39,6 +39,7 @@ import CampaignStartPage from 'client/components/pages/CampaignStart'
 import CampaignLoading from 'client/components/pages/CampaignLoading'
 import Campaign from 'client/components/pages/Campaign'
 import StripeConnect from 'client/components/pages/StripeConnect'
+import StripeTos from 'client/components/pages/StripeTos'
 import StripeIncoming from 'client/components/pages/StripeIncoming'
 import NotFound from 'client/components/pages/NotFound'
 
@@ -62,6 +63,7 @@ render(
           <Route path="signup/stripe/incoming" component={StripeIncoming}/>
           <Route path="signup/facebook" component={SignupFacebook}/>
           <Route path="signup/photo" component={SignupPhotoPage}/>
+          <Route path="signup/stripe/tos" component={StripeTos}/>
           <Route path="404" component={NotFound}/>
           <Redirect from="*" to="/404" />
         </Route>

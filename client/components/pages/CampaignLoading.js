@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {
-  loadCampaign,
   goToCampaign
 } from 'client/actions/campaign'
 

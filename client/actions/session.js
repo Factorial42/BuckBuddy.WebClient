@@ -4,6 +4,11 @@ import {
   getFbProfile,
   getUserByToken
 } from 'client/data/user'
+
+import {
+  goToCampaign
+} from 'client/data/campaign'
+
 import { resolveFBHandle } from 'client/lib/fb'
 import { browserHistory } from 'react-router'
 import {
@@ -139,9 +144,9 @@ const loginOrGoToSignupFb = (accessToken) => {
  * Redirect users that have a session
  */
 export function redirectAuthedUsers() {
-  return () => {
+  return dispatch => {
     if (hasSession()) {
-      browserHistory.push('/campaign/loading');
+      dispatch(goToCampaign())
     }
   }
 }
@@ -170,7 +175,7 @@ export function fbLoginCheck() {
             // Logged into your app and Facebook.
             //TODO: use an action, or a redux-router call or something, not window.location.href
             //window.location.href = "/campaign";
-            browserHistory.push('/campaign/loading');
+            goToCampaign()
           }
         })
     }
