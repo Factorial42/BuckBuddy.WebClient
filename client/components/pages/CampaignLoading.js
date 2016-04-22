@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {
-  loadCampaign
+  loadCampaign,
+  goToCampaign
 } from 'client/actions/campaign'
 
 import { browserHistory } from 'react-router'
@@ -19,50 +20,28 @@ const CampaignLoadingPage = React.createClass({
 
   componentDidMount() {
 
-    this.props.loadCampaign()
+    this.props.goToCampaign()
 
     // let {userSlug, campaignSlug} = this.props
     //
     // this._redirectCampaign(userSlug, campaignSlug)
 
-  },
-
-  componentDidUpdate(prevProps) {
-
-    let {userSlug, campaignSlug} = this.props;
-
-    if (
-      prevProps.userSlug !== userSlug ||
-      prevProps.campaignSlug !== campaignSlug) {
-
-        this._redirectCampaign(userSlug, campaignSlug);
-
-    }
-
-  },
-
-  _redirectCampaign(userSlug, campaignSlug) {
-
-    if (userSlug && campaignSlug) {
-      browserHistory.push(`/u/${userSlug}/c/${campaignSlug}`)
-    }
-
   }
 
 });
 
-const mapStateToProps = ({user, campaign}) => {
+// const mapStateToProps = ({user, campaign}) => {
+//
+//   if (user && campaign) {
+//     return {
+//       userSlug: user.userSlug,
+//       campaignSlug: campaign.campaignSlug
+//     }
+//   }
+//
+//   return {};
+//
+// }
 
-  if (user && campaign) {
-    return {
-      userSlug: user.userSlug,
-      campaignSlug: campaign.campaignSlug
-    }
-  }
 
-  return {};
-
-}
-
-
-export default connect(mapStateToProps, {loadCampaign})(CampaignLoadingPage)
+export default connect(null, {goToCampaign})(CampaignLoadingPage)

@@ -1,11 +1,4 @@
 import {
-  signup as apiSignup,
-  signupFb as apiSignupFb,
-  signupStripe as apiSignupStripe,
-  updatePhoto as apiUpdatePhoto
-} from 'client/data/user'
-
-import {
   getCampaign as apiGetCampaign,
   getCampaignBySlug as apiGetCampaignBySlug,
   updateCampaign as apiUpdateCampaign,
@@ -13,7 +6,12 @@ import {
   deleteCampaignPhoto as apiDeleteCampaignPhoto
 } from 'client/data/campaign'
 
+import {
+  getUserByToken
+} from 'client/data/user'
+
 import { setToken, getToken } from 'client/data/userLocalSession'
+import { browserHistory } from 'react-router'
 
 export function campaignLoadedSuccess(campaign) {
   return dispatch => {
@@ -123,3 +121,26 @@ export function loadCampaign(slug) {
   }
 
 }
+
+
+export function goToCampaign() {
+  return (dispatch, getState) => {
+
+    Promise.all(
+      [
+        apiGetCampaign(getToken()),
+        getUserByToken(getToken())
+      ])
+      .then(([campaign, user]) => {
+        browserHistory.push(`/u/${user.userSlug}/c/${campaign.campaignSlug}`)
+      })
+
+  }
+}
+
+
+const _getSessionUser = () => {
+
+}
+
+const _getSessionCampaign = () => apiGetCampaign(getToken())

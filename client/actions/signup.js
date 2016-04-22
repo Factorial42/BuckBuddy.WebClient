@@ -22,6 +22,7 @@ export function setCampaignGoal(target, reason) {
 export function createCampaignSuccess(campaign) {
   return dispatch => {
     dispatch({campaign, type: 'CAMPAIGN_CREATE_SUCCESS' });
+    goToCampaign()
   };
 }
 
@@ -76,8 +77,6 @@ export function signupSuccess(user) {
 }
 
 const _afterSignup = (promise, dispatch, getState) => {
-
-
   promise
     .then(user => {
       dispatch(signupSuccess(user));

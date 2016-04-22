@@ -39,7 +39,9 @@ const SignupPhotoPage = React.createClass({
 
 const SubmitButton = ({onClick}) => {
   return (
-    <Link to="/signup/stripe"><Button className="button-action button-blue">Continue</Button></Link>
+    <Link to="/campaign/loading">
+      <Button className="button-action button-blue">Continue</Button>
+    </Link>
   )
 }
 
