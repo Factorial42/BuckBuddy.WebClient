@@ -24,8 +24,8 @@ const validate = values => {
   }
 
   if (values.description) {
-    if (values.description.length > 200) {
-      errors.description = 'Must be less than 200 characters'
+    if (values.description.length > 2000) {
+      errors.description = 'Must be less than 2000 characters'
     }
   }
 
@@ -77,7 +77,6 @@ const CampaignForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-
       <Row>
         <Col {...colProps} className="text-left">
           <label>If I had</label>
@@ -85,7 +84,7 @@ const CampaignForm = (props) => {
       </Row>
       <Row>
         <Col {...colProps} className="text-center">
-          <Input type="text" placeholder="$1000000" {...amount}/>
+          <Input type="text" placeholder="$40" {...amount}/>
           {amount.touched && amount.error && <div>{amount.error}</div>}
         </Col>
       </Row>
@@ -96,7 +95,7 @@ const CampaignForm = (props) => {
       </Row>
       <Row>
         <Col {...colProps} className="text-center">
-          <Input type="text" placeholder="buy an island" {...name}/>
+          <Input type="text" placeholder="buy a bus ticket to see my brother" {...name}/>
           {name.touched && name.error && <div>{name.error}</div>}
         </Col>
       </Row>

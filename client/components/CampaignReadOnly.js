@@ -1,10 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Row, Col, Input, Button } from 'bootstrap'
+import { Row, Col, Input, Button, Modal } from 'bootstrap'
 import { Link } from 'react-router'
 import CampaignStats from 'client/components/CampaignStats'
+import CampaignShare from 'client/components/CampaignShare'
 import Slider from 'react-slick'
+
+import {
+  cancelSharingCampaign
+} from 'client/actions/campaign'
 
 const CampaignReadOnly = React.createClass({
 
@@ -28,7 +33,26 @@ const CampaignReadOnly = React.createClass({
 
         <CampaignStats campaign={campaign} />
 
+        {this._getCampaignSharingModalNode()}
+
       </div>
+    )
+
+  },
+
+  _getCampaignSharingModalNode() {
+
+    let {campaign} = this.props;
+
+    return (
+      <Modal show={this.props.campaignSharing} onHide={e => this.props.cancelSharingCampaign()}>
+        <Modal.Header closeButton>
+          <Modal.Title>Share</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <CampaignShare campaign={campaign} />
+        </Modal.Body>
+      </Modal>
     )
 
   },
@@ -105,13 +129,14 @@ const mapStateToProps = state => {
     }
   }
 
-  let {campaign} = state
+  let {campaign, campaignSharing} = state
 
   return {
-    campaign
+    campaign,
+    campaignSharing
   };
 
 }
 
 
-export default connect(mapStateToProps, {})(CampaignReadOnly)
+export default connect(mapStateToProps, {cancelSharingCampaign})(CampaignReadOnly)

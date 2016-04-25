@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
-import { redirectAuthedUsers, fbConnect } from 'client/actions/session'
+import { redirectAuthedUsers, fbLoginCheck } from 'client/actions/session'
 
 import { ColumnProps } from 'client/constants/Layout'
 
@@ -19,7 +19,7 @@ const LandingPage = React.createClass({
             <br/>
             <Link to="/login"><Button className="button-action button-grey">Login</Button></Link>
             <br/>
-            <Button onClick={e => this.props.fbConnect()} className="button-action button-fb">Login FB</Button>
+            <Button onClick={e => this.props.fbLoginCheck()} className="button-action button-fb">Login FB</Button>
 
           </Col>
         </Row>
@@ -32,4 +32,4 @@ const LandingPage = React.createClass({
   }
 });
 
-export default connect(null, {redirectAuthedUsers, fbConnect})(LandingPage)
+export default connect(null, {redirectAuthedUsers, fbLoginCheck})(LandingPage)

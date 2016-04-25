@@ -36,7 +36,6 @@ import Signup from 'client/components/pages/Signup'
 import SignupFacebook from 'client/components/pages/SignupFacebook'
 import SignupPhotoPage from 'client/components/pages/SignupPhoto'
 import CampaignStartPage from 'client/components/pages/CampaignStart'
-import CampaignLoading from 'client/components/pages/CampaignLoading'
 import Campaign from 'client/components/pages/Campaign'
 import StripeConnect from 'client/components/pages/StripeConnect'
 import StripeTos from 'client/components/pages/StripeTos'
@@ -55,7 +54,6 @@ render(
           <Route path="forgot" component={ForgotPassword}/>
           <Route path="login/options" component={LoginOptions}/>
           <Route path="u/:userSlug/c/:campaignSlug" component={Campaign}/>
-          <Route path="campaign/loading" component={CampaignLoading}/>
           <Route path="campaign/start" component={CampaignStartPage}/>
           <Route path="login" component={Login}/>
           <Route path="signup" component={Signup}/>

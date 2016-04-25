@@ -1,5 +1,6 @@
 import axios from 'axios'
 import fileHelper from './fileHelper'
+import {get as getUser} from './user'
 
 export function createCampaign(campaignObj) {
   return axios.post('/api-campaign/campaigns', campaignObj)
@@ -13,13 +14,26 @@ export function updateCampaign(accessToken, campaignObj) {
 
 
 export function getCampaign(accessToken) {
-  return axios.get(`/api-campaign/campaigns/byToken/${accessToken}`)
-    .then(res => res.data.data);
+
+  return _getCampaign(`/api-campaign/campaigns/byToken/${accessToken}`)
+
 }
 
 export function getCampaignBySlug(slug, accessToken) {
-  return axios.get(`/api-campaign/campaigns/bySlug/${slug}?token=${accessToken}`)
-    .then(res => res.data);
+
+  return _getCampaign(`/api-campaign/campaigns/bySlug/${slug}/minified?token=${accessToken}`)
+
+}
+
+const _getCampaign = (path) => {
+
+  return axios.get(path)
+    .then(res => res.data)
+    .then(data => {//because sometimes there is a data property...
+      if (data.data) return data.data;
+      return data;
+    })
+
 }
 
 export function addCampaignPhoto(accessToken, campaignId, file) {

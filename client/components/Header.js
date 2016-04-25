@@ -4,6 +4,10 @@ import { logout } from 'client/actions/session'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
+import {
+  startSharingCampaign
+} from 'client/actions/campaign'
+
 let Header = React.createClass({
 
   render() {
@@ -27,7 +31,10 @@ let Header = React.createClass({
 
     if (this.props.shareable) {
       shareNode = (
-        <span className="fa fa-2x fa-share" style={{paddingTop: 5}}/>
+        <span
+          onClick={e => this.props.startSharingCampaign()}
+          className="fa fa-2x fa-share"
+          style={{paddingTop: 5}}/>
       )
     }
 
@@ -58,4 +65,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {logout})(Header)
+export default connect(mapStateToProps, {logout, startSharingCampaign})(Header)

@@ -23,6 +23,11 @@ export function signupFb(userData) {
     .then(res => res.data.data);
 }
 
+export function get(id) {
+  return axios.get(`/api-user/users/${id}`)
+    .then(res => res.data.data);
+}
+
 export function getUserByToken(accessToken) {
 
   //curl -XGET 'localhost:4567/users/byToken/eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjMzYzNGI5MTU0MzgwMmZmYjYxMzk1ZDkxYTgzYWViYTU0ZTEyMGRiMmZlYmI4ZmFkN2M5YjEzZGViOTcxYTEyIn0.m0BiopdId3pf-mTpIeztMSPBHm41-cYVAY-Qhaj4Q4cEAkPOz4cdJrlr4pAgs9xvtFtre8hr7rNJEo_Jbl1GYg'

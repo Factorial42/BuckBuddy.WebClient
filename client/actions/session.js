@@ -7,7 +7,7 @@ import {
 
 import {
   goToCampaign
-} from 'client/data/campaign'
+} from 'client/actions/campaign'
 
 import { resolveFBHandle } from 'client/lib/fb'
 import { browserHistory } from 'react-router'
@@ -34,7 +34,7 @@ export function loginSuccess(user) {
 
     dispatch({ user, type: 'LOGGED_SUCCESSFULLY' });
     dispatch({type: 'LOADING_STOPPED' });
-    browserHistory.push('/campaign/loading');
+    dispatch(goToCampaign())
   };
 }
 
@@ -109,7 +109,6 @@ const loginOrGoToSignupFb = (accessToken) => {
     apiLoginFb(accessToken)
     .then(user => dispatch(loginSuccess(user)))
     .catch(error => {
-
       /**
        * Making a (possibly bad) assumption that failure means the user does not exist yet..
        */
@@ -151,11 +150,11 @@ export function redirectAuthedUsers() {
   }
 }
 
-// /**
-//  * FB Login Check
-//  *
-//  * @return Function
-//  */
+/**
+ * FB Login Check
+ *
+ * @return Function
+ */
 export function fbLoginCheck() {
 
   return dispatch =>
@@ -170,14 +169,12 @@ export function fbLoginCheck() {
         })
         .then(response => {
 
-          console.log(response);
           if (response.status === 'connected') {
-            // Logged into your app and Facebook.
-            //TODO: use an action, or a redux-router call or something, not window.location.href
-            //window.location.href = "/campaign";
-            goToCampaign()
+            return apiLoginFb(response.authResponse.accessToken)
+              .then(user => dispatch(loginSuccess(user)))
           }
         })
+
     }
 
 }

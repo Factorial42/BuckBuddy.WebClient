@@ -73,6 +73,18 @@ export function cancelEditingCampaign() {
   };
 }
 
+export function startSharingCampaign() {
+  return dispatch => {
+    dispatch({ type: 'START_SHARING_CAMPAIGN' });
+  };
+}
+
+export function cancelSharingCampaign() {
+  return dispatch => {
+    dispatch({ type: 'CANCEL_SHARING_CAMPAIGN' });
+  };
+}
+
 export function addCampaignPhoto(file) {
   return (dispatch, getState) => {
     let {campaign} = getState()

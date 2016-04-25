@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button, Carousel } from 'bootstrap'
 import { Link } from 'react-router'
+
 const leftColProps = {
   xs: 4,
   xsOffset: 2,
