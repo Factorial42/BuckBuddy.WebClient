@@ -1,5 +1,4 @@
 import { hasSession } from 'client/data/userLocalSession'
-import {fromJS} from 'immutable'
 
 const reducer = (state = hasSession(), action) => {
   switch (action.type) {

@@ -1,14 +1,14 @@
 import {
   signup as apiSignup,
   signupFb as apiSignupFb,
-  signupStripe as apiSignupStripe
+  signupStripe as apiSignupStripe,
+  activate as apiActivate
 } from 'client/data/user'
 
 import {
   createCampaign as apiCreateCampaign,
   goToCampaign
 } from 'client/data/campaign'
-
 
 import { browserHistory } from 'react-router'
 import { setToken, getToken } from 'client/data/userLocalSession'
@@ -54,12 +54,37 @@ export function setPhotoSuccess(profilePic) {
   };
 }
 
+export function activateError(error) {
+  return dispatch => {
+    dispatch({ error, type: 'ACTIVATE_FAILED' });
+  };
+}
+
+export function activateSuccess() {
+  return dispatch => {
+    dispatch({ type: 'ACTIVATE_SUCCESS' });
+  };
+}
+
 export function setStripeConnectionError(error) {
   return dispatch => {
     dispatch({type: 'LOADING_STOPPED' });
     dispatch({ error, type: 'SIGNUP_STRIPE_FAILED' });
   };
 }
+
+export function activate(token) {
+  return dispatch => {
+    apiActivate(token)
+      .then(() => {
+        dispatch(activateSuccess())
+      })
+      .catch(() => {
+        dispatch(activateFailure())
+      })
+  }
+}
+
 /*
  * Should add the route like parameter in this method
 */

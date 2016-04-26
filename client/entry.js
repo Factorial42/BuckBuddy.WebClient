@@ -33,6 +33,7 @@ import ForgotPassword from 'client/components/pages/ForgotPassword'
 import Login from 'client/components/pages/Login'
 import LoginOptions from 'client/components/pages/LoginOptions'
 import Signup from 'client/components/pages/Signup'
+import SignupActivate from 'client/components/pages/SignupActivate'
 import SignupFacebook from 'client/components/pages/SignupFacebook'
 import SignupPhotoPage from 'client/components/pages/SignupPhoto'
 import CampaignStartPage from 'client/components/pages/CampaignStart'
@@ -54,6 +55,7 @@ render(
           <Route path="forgot" component={ForgotPassword}/>
           <Route path="login/options" component={LoginOptions}/>
           <Route path="u/:userSlug/c/:campaignSlug" component={Campaign}/>
+          <Route path="u/:token/activate" component={SignupActivate}/>
           <Route path="campaign/start" component={CampaignStartPage}/>
           <Route path="login" component={Login}/>
           <Route path="signup" component={Signup}/>

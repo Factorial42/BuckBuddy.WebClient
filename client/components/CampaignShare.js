@@ -19,7 +19,7 @@ const CampaignShare = React.createClass({
         <Row>
           <Col {...colProps} className="text-center">
             <h4>Shareable Link</h4>
-            {this._getShareLinkNode()}
+            {this._getShareLink()}
             <br/>
             &nbsp;
           </Col>
@@ -27,12 +27,12 @@ const CampaignShare = React.createClass({
             <ShareButton
               onClick={() => {}}
               icon="facebook" />
+            {/*<a href="sms:">
+            </a>*/}
             <ShareButton
               onClick={() => {}}
-              icon="linkedin" />
-            <ShareButton
-              onClick={() => {}}
-              icon="twitter" />
+              icon="envelope" />
+
             <ShareButton
               onClick={() => {}}
               icon="whatsapp" />
@@ -44,7 +44,7 @@ const CampaignShare = React.createClass({
 
   },
 
-  _getShareLinkNode() {
+  _getShareLink() {
 
     let loc = window.location,
     campaign = this.props.campaign;

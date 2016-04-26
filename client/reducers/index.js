@@ -9,6 +9,7 @@ import campaign from 'client/reducers/campaign'
 import campaignEditing from 'client/reducers/campaignEditing'
 import campaignSharing from 'client/reducers/campaignSharing'
 import loading from 'client/reducers/loading'
+import activate from 'client/reducers/activate'
 import { reducer as formReducer } from 'redux-form'
 
 const reducers = combineReducers({
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   signupFbToken,
   signupSuggestedValues,
   loading,
+  activate,
   form: formReducer,
   routing: routerReducer
 })

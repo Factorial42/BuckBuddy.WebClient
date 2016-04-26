@@ -12,6 +12,11 @@ export function loginFb(token) {
     .then(res => res.data.data);
 }
 
+export function activate(token) {
+  return axios.patch(`/api-user/users/${token}/activate`)
+    .then(res => res.data.data);
+}
+
 export function signup(userData) {
 
   return axios.post('/api-user/users/signup', userData)

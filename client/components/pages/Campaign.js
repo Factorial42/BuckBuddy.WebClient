@@ -155,8 +155,6 @@ const mapStateToProps = state => {
 
   let {campaignEditing, campaign} = state
 
-  console.log(user, campaign);
-
   return {
     campaignEditing,
     campaign,
