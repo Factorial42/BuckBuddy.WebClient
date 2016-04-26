@@ -26,7 +26,7 @@ const SignupPhotoPage = React.createClass({
         </Col>
         <Col {...colProps}>
 
-          <UserPhoto {...this.props} />
+          <UserPhoto user={this.props.user} editable />
 
           <Link to="/signup/stripe/tos">
             <Button
@@ -49,7 +49,8 @@ const mapStateToProps = state => {
   }
 
   return {
-    loading: false
+    loading: false,
+    user: state.user
   }
 
 }

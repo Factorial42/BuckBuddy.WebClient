@@ -24,16 +24,16 @@ const CampaignPage = React.createClass({
 
     if (this.props.loading) return <span>Loading...</span>
 
-    let {user, loading, campaignEditing} = this.props
+    let { loading, campaignEditing, campaign, owner, user } = this.props
 
     return (
       <Row>
         <Col {...colProps}>
-          <UserPhoto />
+          <UserPhoto user={user} editable={owner} />
         </Col>
 
         <Col {...colProps}>
-          <h5>{user.firstName} {user.lastName}</h5>
+          <h5>{user.name}</h5>
         </Col>
 
         <Col {...colProps}>
@@ -136,19 +136,32 @@ const SaveButton = ({onClick}) => {
 
 const mapStateToProps = state => {
 
-  if (!state.user)
-
-  return {
-    loading: true
+  if (!state.campaign || !state.campaign.user) {
+    return {
+      loading: true
+    }
   }
 
-  let {campaignEditing, campaign, user} = state
+  let user = state.campaign.user;
+
+  let owner = false;
+
+  if (state.user) {
+    if (state.user.userId === state.campaign.userId) {
+      owner = true;
+      user = state.user
+    }
+  }
+
+  let {campaignEditing, campaign} = state
+
+  console.log(user, campaign);
 
   return {
-    user,
     campaignEditing,
     campaign,
-    owner: true //TODO: get the `owner` value from state...
+    user,
+    owner
   };
 
 }

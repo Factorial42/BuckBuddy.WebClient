@@ -141,10 +141,9 @@ export function goToCampaign() {
     Promise.all(
       [
         apiGetCampaign(getToken()),
-        getUserByToken(getToken())
       ])
       .then(([campaign, user]) => {
-        browserHistory.push(`/u/${user.userSlug}/c/${campaign.campaignSlug}`)
+        browserHistory.push(`/u/${campaign.userSlug}/c/${campaign.campaignSlug}`)
       })
 
   }

@@ -18,17 +18,28 @@ const UserPhoto = React.createClass({
 
   _getDropzoneNode() {
 
+    let {editable} = this.props;
+
     let activeStyle = {
       borderStyle: 'solid',
       backgroundColor: '#eee'
     };
+
+    let plusNode = null;
+
+    if (editable) {
+      plusNode = (
+        <div className="dropzone-plus">+</div>
+      )
+    }
+
 
     return (
       <Dropzone
         onDrop={this._onDrop}
         className="dropzone"
         activeStyle={activeStyle}>
-        <div className="dropzone-plus">+</div>
+        {plusNode}
         {this._getExistingPhotoNode()}
       </Dropzone>
     );
@@ -37,7 +48,7 @@ const UserPhoto = React.createClass({
 
   _getExistingPhotoNode() {
 
-    let {profilePic} = this.props;
+    let {profilePic} = this.props.user;
 
     if (!profilePic) return null;
 
@@ -59,23 +70,18 @@ const UserPhoto = React.createClass({
 
   _submitPhoto(file) {
 
-    this.props.setPhoto(this.props.userId, file)
+    let {editable} = this.props;
+
+    if (!editable) return null; 
+
+    this.props.setPhoto(this.props.user.userId, file)
 
   }
 
 });
 
-const mapStateToProps = state => {
 
-  if (!state.user) return {}
-
-  let {userId, profilePic} = state.user;
-
-  return {userId, profilePic};
-
-}
-
-export default connect(mapStateToProps, { setPhoto })(UserPhoto)
+export default connect(null, { setPhoto })(UserPhoto)
 
 
 //
