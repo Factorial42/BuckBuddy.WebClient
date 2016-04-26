@@ -20,18 +20,20 @@ const UserPhoto = React.createClass({
 
     let {editable} = this.props;
 
+    if (!editable) {
+
+      return (
+        <div className="dropzone">
+          {this._getExistingPhotoNode()}
+        </div>
+      )
+    }
+
+
     let activeStyle = {
       borderStyle: 'solid',
       backgroundColor: '#eee'
     };
-
-    let plusNode = null;
-
-    if (editable) {
-      plusNode = (
-        <div className="dropzone-plus">+</div>
-      )
-    }
 
 
     return (
@@ -39,7 +41,7 @@ const UserPhoto = React.createClass({
         onDrop={this._onDrop}
         className="dropzone"
         activeStyle={activeStyle}>
-        {plusNode}
+        <div className="dropzone-plus">+</div>
         {this._getExistingPhotoNode()}
       </Dropzone>
     );
@@ -72,7 +74,7 @@ const UserPhoto = React.createClass({
 
     let {editable} = this.props;
 
-    if (!editable) return null; 
+    if (!editable) return null;
 
     this.props.setPhoto(this.props.user.userId, file)
 
