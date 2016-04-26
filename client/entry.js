@@ -40,7 +40,6 @@ import CampaignStartPage from 'client/components/pages/CampaignStart'
 import Campaign from 'client/components/pages/Campaign'
 import StripeConnect from 'client/components/pages/StripeConnect'
 import StripeTos from 'client/components/pages/StripeTos'
-import StripeIncoming from 'client/components/pages/StripeIncoming'
 import NotFound from 'client/components/pages/NotFound'
 
 const rootElement = document.getElementById('root')
@@ -60,7 +59,6 @@ render(
           <Route path="login" component={Login}/>
           <Route path="signup" component={Signup}/>
           <Route path="signup/stripe" component={StripeConnect}/>
-          <Route path="signup/stripe/incoming" component={StripeIncoming}/>
           <Route path="signup/facebook" component={SignupFacebook}/>
           <Route path="signup/photo" component={SignupPhotoPage}/>
           <Route path="signup/stripe/tos" component={StripeTos}/>

@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
 import {
-  goToCampaign
-} from 'client/actions/campaign'
+  signupStripe
+} from 'client/actions/signup'
 
 import { ColumnProps } from 'client/constants/Layout'
 
@@ -25,7 +25,7 @@ const StripeTOSPage = React.createClass({
             <br/>
             <br/>
 
-            <Button onClick={e => this.props.goToCampaign()} className="button-action button-grey">Agree and Continue</Button>
+            <Button onClick={e => this.props.signupStripe()} className="button-action button-grey">Agree and Continue</Button>
 
 
           </Col>
@@ -35,4 +35,4 @@ const StripeTOSPage = React.createClass({
   }
 });
 
-export default connect(null, {goToCampaign})(StripeTOSPage)
+export default connect(null, {signupStripe})(StripeTOSPage)

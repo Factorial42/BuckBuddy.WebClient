@@ -28,6 +28,12 @@ export function signupFb(userData) {
     .then(res => res.data.data);
 }
 
+export function signupStripe(userId, accessToken) {
+  let ts = new Date().getTime();
+  return axios.post(`/api-user/users/${userId}/paymentProfile?tosTimestampInMillis=${ts}&token=${accessToken}`);
+  //Req: curl -i -XPOST 'localhost:4567/users/1a6a7a830f86c7b36c299494eb5e3a92118037d5d5fecc0f6acba80a93aae61b/paymentProfile?tosTimestampInMillis=1461622327000&tosIP=75.82.205.237'
+}
+
 export function get(id) {
   return axios.get(`/api-user/users/${id}`)
     .then(res => res.data.data);
@@ -54,14 +60,6 @@ export function updatePhoto(userId, accessToken, file) {
 export function getFbProfile(fbToken) {
 
   return axios.get(`/api-user/users/fb/profile?fbToken=${fbToken}`)
-    .then(res => res.data.data);
-
-}
-
-export function signupStripe(userId, accessToken, code) {
-
-  //POST 'localhost:4567/users/782159708e9bb3e3af5c9bdf1ff77f70823418d16970eb82fe4d7e1ca5ca69ac/paymentProfile?code=ac_8HN3KMoW6NHdwvCZuWEtBBtbySE8wGeT'
-  return axios.post(`/api-user/users/${userId}/paymentProfile?code=${code}&token=${accessToken}`)
     .then(res => res.data.data);
 
 }

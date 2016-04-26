@@ -7,8 +7,11 @@ import {
 
 import {
   createCampaign as apiCreateCampaign,
-  goToCampaign
 } from 'client/data/campaign'
+
+import {
+  goToCampaign
+} from 'client/actions/campaign'
 
 import { browserHistory } from 'react-router'
 import { setToken, getToken } from 'client/data/userLocalSession'
@@ -66,7 +69,7 @@ export function activateSuccess() {
   };
 }
 
-export function setStripeConnectionError(error) {
+export function signupStripeError(error) {
   return dispatch => {
     dispatch({type: 'LOADING_STOPPED' });
     dispatch({ error, type: 'SIGNUP_STRIPE_FAILED' });
@@ -75,6 +78,20 @@ export function setStripeConnectionError(error) {
 
 export function activate(token) {
   return dispatch => {
+    apiActivate(token)
+      .then(() => {
+        dispatch(activateSuccess())
+      })
+      .catch(() => {
+        dispatch(activateFailure())
+      })
+  }
+}
+
+export function agreeStripe() {
+  return (dispatch, getState) => {
+    let {user} = getState();
+
     apiActivate(token)
       .then(() => {
         dispatch(activateSuccess())
@@ -166,16 +183,20 @@ export function setPhoto(userId, file) {
 
 }
 
-export function setStripeConnection(userId, code) {
+export function signupStripe() {
 
-  return dispatch => {
+  return (dispatch, getState) => {
+
     dispatch({type: 'LOADING_STARTED' });
-    apiSignupStripe(userId, getToken(), code)
+
+    let {user} = getState();
+
+    apiSignupStripe(user.userId, getToken())
       .then((res) => {
         dispatch(goToCampaign())
         dispatch({type: 'LOADING_STOPPED' });
       })
-      .catch(error => { dispatch(setStripeConnectionError(error)) });
+      .catch(error => { dispatch(signupStripeError(error)) });
   }
 
 }
