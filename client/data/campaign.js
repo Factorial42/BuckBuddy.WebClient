@@ -8,7 +8,7 @@ export function createCampaign(campaignObj) {
 }
 
 export function updateCampaign(accessToken, campaignObj) {
-  return axios.put(`/api-campaign/campaigns/${campaignObj.campaignId}?token=${accessToken}`, campaignObj)
+  return axios.patch(`/api-campaign/campaigns/${campaignObj.campaignId}?token=${accessToken}`, campaignObj)
     .then(res => res.data.data);
 }
 

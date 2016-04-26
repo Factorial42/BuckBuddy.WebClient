@@ -72,7 +72,7 @@ function _applyRoutes(server) {
     console.log(`Setting ${endpoint} for API with base path ${basePath}`)
     server.route(
     {
-      method: ['GET', 'POST', 'PUT', 'DELETE'],
+      method: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
       path: `${basePath}/{param*}`,
       handler: {
         proxy: {
