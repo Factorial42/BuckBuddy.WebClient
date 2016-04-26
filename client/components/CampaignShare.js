@@ -4,6 +4,12 @@ import { connect } from 'react-redux'
 import { Row, Col, Input, Button, Carousel } from 'bootstrap'
 import { Link } from 'react-router'
 import { ColumnProps } from 'client/constants/Layout'
+import { resolveFBHandle } from 'client/lib/fb'
+import isMobile from 'client/lib/isMobile'
+import isiOS from 'client/lib/isiOS'
+
+const showMobileShareButtons = isMobile()
+const usingiOS = isiOS()
 
 const colProps = ColumnProps.OneHundred
 
@@ -25,23 +31,64 @@ const CampaignShare = React.createClass({
           </Col>
           <Col {...colProps} className="text-center">
             <ShareButton
-              onClick={() => {}}
+              onClick={this._shareFb}
               icon="facebook" />
-            {/*<a href="sms:">
-            </a>*/}
-            <ShareButton
-              onClick={() => {}}
-              icon="envelope" />
-
-            <ShareButton
-              onClick={() => {}}
-              icon="whatsapp" />
+            {this._getSmsShareButton()}
+            {this._getWhatsAppShareButton()}
           </Col>
         </Row>
 
       </div>
     )
+  },
 
+  _shareFb() {
+
+    resolveFBHandle()
+      .then($fb => {
+
+        $fb.ui({
+          method: 'share',
+          href: this._getShareLink(),
+        }, response => {
+
+        });
+
+      });
+
+  },
+
+  _getShareMessage() {
+    return `Check it out: ${this._getShareLink()}`;
+  },
+
+  _getSmsShareButton() {
+
+    if (!showMobileShareButtons) return null;
+
+    let message = this._getShareMessage();
+    let href = `sms:${usingiOS ? '&' : '?'}body=${message}`
+
+    return (
+      <a href={href}>
+        <ShareButton
+          onClick={() => {}}
+          icon="envelope" />
+      </a>
+    )
+
+  },
+
+  _getWhatsAppShareButton() {
+    if (!showMobileShareButtons) return null;
+
+    return (
+      <a href={`whatsapp://send?text=${this._getShareMessage()}`}>
+        <ShareButton
+          onClick={() => {}}
+          icon="whatsapp" />
+      </a>
+    )
   },
 
   _getShareLink() {
@@ -61,7 +108,5 @@ const ShareButton = ({onClick, icon}) => {
     </div>
   )
 }
-
-
 
 export default CampaignShare

@@ -150,10 +150,4 @@ export function goToCampaign() {
 
   }
 }
-
-
-const _getSessionUser = () => {
-
-}
-
 const _getSessionCampaign = () => apiGetCampaign(getToken())
