@@ -73,7 +73,7 @@ const CampaignShare = React.createClass({
       <a href={href}>
         <ShareButton
           onClick={() => {}}
-          icon="envelope" />
+          icon="comment" />
       </a>
     )
 

@@ -73,8 +73,7 @@ const CampaignReadOnly = React.createClass({
       )
     })
 
-
-    var settings = {
+    let settings = {
       dots: true,
       infinite: true,
       speed: 500,
