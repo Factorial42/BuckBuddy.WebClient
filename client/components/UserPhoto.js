@@ -29,12 +29,10 @@ const UserPhoto = React.createClass({
       )
     }
 
-
     let activeStyle = {
       borderStyle: 'solid',
       backgroundColor: '#eee'
     };
-
 
     return (
       <Dropzone

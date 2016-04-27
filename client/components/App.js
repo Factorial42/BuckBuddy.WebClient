@@ -4,7 +4,6 @@ import {Grid} from 'bootstrap'
 import Header from 'client/components/Header'
 import LandingPage from 'client/components/pages/Landing'
 import LoadingIndicator from 'client/components/LoadingIndicator'
-//import Checkout from 'react-stripe-checkout'
 
 const App = ({children, loading}) => (
   <Grid fluid>
@@ -13,14 +12,6 @@ const App = ({children, loading}) => (
       {loading ? <LoadingIndicator/> : null}
       {children || <LandingPage />}
     </div>
-    {/*
-
-      <Checkout
-            token={() => {}}
-            name={"BuckBuddy"}
-            image={"/static/img/buck.png"}
-            stripeKey="pk_test_6pRNASCoBOKtIshFeQd4XMUh" />
-    */}
   </Grid>
 )
 

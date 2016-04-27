@@ -85,6 +85,30 @@ export function cancelSharingCampaign() {
   };
 }
 
+export function startContribCampaign() {
+  return dispatch => {
+    dispatch({ type: 'START_CONTRIB_CAMPAIGN' });
+  };
+}
+
+export function cancelContribCampaign() {
+  return dispatch => {
+    dispatch({ type: 'CANCEL_CONTRIB_CAMPAIGN' });
+  };
+}
+
+export function startContribCampaignCheckout() {
+  return dispatch => {
+    dispatch({ type: 'START_CONTRIB_CAMPAIGN_CHECKOUT' });
+  };
+}
+
+export function cancelContribCampaignCheckout() {
+  return dispatch => {
+    dispatch({ type: 'CANCEL_CONTRIB_CAMPAIGN_CHECKOUT' });
+  };
+}
+
 export function addCampaignPhoto(file) {
   return (dispatch, getState) => {
     let {campaign} = getState()

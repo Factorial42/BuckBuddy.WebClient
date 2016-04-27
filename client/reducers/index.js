@@ -8,6 +8,8 @@ import campaignNew from 'client/reducers/campaignNew'
 import campaign from 'client/reducers/campaign'
 import campaignEditing from 'client/reducers/campaignEditing'
 import campaignSharing from 'client/reducers/campaignSharing'
+import campaignContributing from 'client/reducers/campaignContributing'
+import campaignContributingCheckout from 'client/reducers/campaignContributingCheckout'
 import loading from 'client/reducers/loading'
 import activate from 'client/reducers/activate'
 import { reducer as formReducer } from 'redux-form'
@@ -17,6 +19,8 @@ const reducers = combineReducers({
   campaign,
   campaignEditing,
   campaignSharing,
+  campaignContributing,
+  campaignContributingCheckout,
   authenticated,
   user,
   signupFbToken,

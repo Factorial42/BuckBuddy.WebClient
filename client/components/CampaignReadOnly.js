@@ -5,19 +5,19 @@ import { Row, Col, Input, Button, Modal } from 'bootstrap'
 import { Link } from 'react-router'
 import CampaignStats from 'client/components/CampaignStats'
 import CampaignShare from 'client/components/CampaignShare'
+import CampaignContribute from 'client/components/CampaignContribute'
 import Slider from 'react-slick'
 
 import {
-  cancelSharingCampaign
+  cancelSharingCampaign,
+  cancelContribCampaign
 } from 'client/actions/campaign'
 
 const CampaignReadOnly = React.createClass({
 
   render() {
 
-    let {campaign, loading} = this.props;
-
-    if (loading) return <span/>
+    let {campaign} = this.props
 
     return (
       <div className="campaign-readonly">
@@ -35,6 +35,8 @@ const CampaignReadOnly = React.createClass({
 
         {this._getCampaignSharingModalNode()}
 
+        {this._getCampaignContributingModalNode()}
+
       </div>
     )
 
@@ -50,7 +52,24 @@ const CampaignReadOnly = React.createClass({
           <Modal.Title>Share</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CampaignShare campaign={campaign} />
+          <CampaignShare campaign={campaign}  />
+        </Modal.Body>
+      </Modal>
+    )
+
+  },
+
+  _getCampaignContributingModalNode() {
+
+    let {campaign} = this.props;
+
+    return (
+      <Modal show={this.props.campaignContributing} onHide={e => this.props.cancelContribCampaign()}>
+        <Modal.Header closeButton>
+          <Modal.Title>Contribute</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <CampaignContribute campaign={campaign} />
         </Modal.Body>
       </Modal>
     )
@@ -86,14 +105,6 @@ const CampaignReadOnly = React.createClass({
       </Slider>
     );
 
-    // const carouselNode = (
-    //   <Carousel indicators={false}>
-    //     {carouselItemNodes}
-    //   </Carousel>
-    // );
-    //
-    // return carouselNode;
-
   },
 
   _getDescriptionNode() {
@@ -113,8 +124,6 @@ const CampaignReadOnly = React.createClass({
 
     let {amount} = campaign;
 
-//TODO format
-
     return amount;
   }
 
@@ -122,20 +131,14 @@ const CampaignReadOnly = React.createClass({
 
 const mapStateToProps = state => {
 
-  if (!state.campaign) {
-    return {
-      loading: true
-    }
-  }
-
-  let {campaign, campaignSharing} = state
+  let {campaignContributing, campaignSharing} = state
 
   return {
-    campaign,
-    campaignSharing
+    campaignSharing,
+    campaignContributing
   };
 
 }
 
 
-export default connect(mapStateToProps, {cancelSharingCampaign})(CampaignReadOnly)
+export default connect(mapStateToProps, {cancelSharingCampaign, cancelContribCampaign})(CampaignReadOnly)

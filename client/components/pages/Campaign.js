@@ -6,6 +6,7 @@ import { Link } from 'react-router'
 import {
   startEditingCampaign,
   cancelEditingCampaign,
+  startContribCampaign,
   saveCampaign,
   loadCampaign,
   addCampaignPhoto
@@ -42,8 +43,23 @@ const CampaignPage = React.createClass({
 
         <Col {...colProps}>
           {this._getCampaignEditButtonNode()}
+          {this._getContributeButtonNode()}
         </Col>
       </Row>
+    )
+
+  },
+
+  _getContributeButtonNode() {
+
+    let {owner} = this.props;
+
+    if (owner) return null;
+
+    return (
+      <Button
+        onClick={() => this.props.startContribCampaign()}
+        className="button-action button-blue">Contribute</Button>
     )
 
   },
@@ -74,7 +90,7 @@ const CampaignPage = React.createClass({
     }
 
     return (
-      <CampaignReadOnly />
+      <CampaignReadOnly {...this.props} />
     )
 
   },
@@ -170,6 +186,7 @@ export default connect(mapStateToProps, {
   setPhoto,
   startEditingCampaign,
   cancelEditingCampaign,
+  startContribCampaign,
   saveCampaign,
   loadCampaign,
   addCampaignPhoto
