@@ -15,10 +15,16 @@ const CampaignContribute = React.createClass({
 
   render() {
 
-    if (this.props.campaignContributingCheckout) {
+    let {
+      campaignContributingCheckout,
+      campaignDonation,
+      startContribCampaignCheckout
+    } = this.props
+
+    if (campaignContributingCheckout) {
       return (
         <div className="text-center">
-          <StripeCheckout onToken={this._handleStripeToken}/>
+          <StripeCheckout amount={campaignDonation.amount} onToken={this._handleStripeToken}/>
         </div>
       )
     }
@@ -26,9 +32,7 @@ const CampaignContribute = React.createClass({
     return (
       <div>
         <CampaignContributeAnonymous
-          onSubmit={donation => {
-            this.props.startContribCampaignCheckout(donation)
-          }} />
+          onSubmit={donation => startContribCampaignCheckout(donation)} />
       </div>
     )
 
@@ -44,11 +48,16 @@ const CampaignContribute = React.createClass({
 
 const mapStateToProps = state => {
 
-  let {campaignContributing, campaignContributingCheckout} = state
+  let {
+    campaignContributing,
+    campaignContributingCheckout,
+    campaignDonation
+  } = state
 
   return {
     campaignContributing,
-    campaignContributingCheckout
+    campaignContributingCheckout,
+    campaignDonation
   };
 
 }
