@@ -30,7 +30,7 @@ const CampaignStats = React.createClass({
           </Col>
 
           <Col {...leftColProps} className="text-left">
-            <span style={{fontSize: 20}}>$0</span>
+            <span style={{fontSize: 20}}>${campaign.collectedAmount / 100}</span>
           </Col>
         </Row>
 
