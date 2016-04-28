@@ -61,7 +61,7 @@ function _applyRoutes(server) {
   });
 
 
-  let resources = ['user', 'campaign'];
+  let resources = ['user', 'campaign', 'donations'];
 
   resources.forEach(key => {
 

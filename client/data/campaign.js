@@ -2,6 +2,20 @@ import axios from 'axios'
 import fileHelper from './fileHelper'
 import {get as getUser} from './user'
 
+
+export function donate(userSlug, campaignSlug, amountInCents, paymentToken, currencyString, firstName) {
+  //Req: curl -i -XPOST 'localhost:4569/donations' -d '{"userSlug":"test-user-1461137856", "campaignSlug":"testcampaign-1461734320", "amountInCents":100, "paymentToken":"tok_184yPYHngV6Dzl2IwVR7ng1w","currencyString":"usd", "firstName":"testuser1"}'
+  //
+  return axios.post('/api-donations/donations', {
+    userSlug,
+    campaignSlug,
+    amountInCents,
+    paymentToken,
+    currencyString,
+    firstName
+  })
+}
+
 export function createCampaign(campaignObj) {
   return axios.post('/api-campaign/campaigns', campaignObj)
     .then(res => res.data.data);

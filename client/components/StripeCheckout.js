@@ -5,10 +5,10 @@ export default ({onToken}) => {
 
   return (
     <Checkout
-          token={onToken}
-          name={"BuckBuddy"}
-          image={"/static/img/buck.png"}
-          stripeKey="pk_test_6pRNASCoBOKtIshFeQd4XMUh" />
+        token={onToken}
+        name={"BuckBuddy"}
+        image={"/static/img/buck.png"}
+        stripeKey="pk_test_E1OSSlsm3ARYd8FgwyWHAl1m" />
   )
 
 }

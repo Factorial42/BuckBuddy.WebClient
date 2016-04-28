@@ -138,7 +138,7 @@ const CampaignPage = React.createClass({
   },
 
   componentDidMount() {
-    this.props.loadCampaign(this.props.params.campaignSlug)
+    this.props.loadCampaign(this.props.params.campaignSlug, this.props.params.userSlug)
   }
 
 });

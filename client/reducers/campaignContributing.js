@@ -5,6 +5,8 @@ const reducer = (state = false, action) => {
       return true
     // case 'CAMPAIGN_SAVED_SUCCESS':
     //   return false
+    case 'CAMPAIGN_DONATION_SUCCESS':
+      return false
     case 'CANCEL_CONTRIB_CAMPAIGN':
       return false
     default:

@@ -8,6 +8,7 @@ import campaignNew from 'client/reducers/campaignNew'
 import campaign from 'client/reducers/campaign'
 import campaignEditing from 'client/reducers/campaignEditing'
 import campaignSharing from 'client/reducers/campaignSharing'
+import campaignDonation from 'client/reducers/campaignDonation'
 import campaignContributing from 'client/reducers/campaignContributing'
 import campaignContributingCheckout from 'client/reducers/campaignContributingCheckout'
 import loading from 'client/reducers/loading'
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   campaignSharing,
   campaignContributing,
   campaignContributingCheckout,
+  campaignDonation,
   authenticated,
   user,
   signupFbToken,

@@ -3,7 +3,8 @@ import {
   getCampaignBySlug as apiGetCampaignBySlug,
   updateCampaign as apiUpdateCampaign,
   addCampaignPhoto as apiAddCampaignPhoto,
-  deleteCampaignPhoto as apiDeleteCampaignPhoto
+  deleteCampaignPhoto as apiDeleteCampaignPhoto,
+  donate as apiDonate
 } from 'client/data/campaign'
 
 import {
@@ -12,6 +13,40 @@ import {
 
 import { setToken, getToken } from 'client/data/userLocalSession'
 import { browserHistory } from 'react-router'
+
+export function donate(paymentTokenId) {
+
+  return (dispatch, getState) => {
+
+    let { campaign, campaignDonation, routing } = getState();
+    let { amount, currency, name } = campaignDonation
+    let { userSlug, campaignSlug } = campaign;
+
+    apiDonate(
+      userSlug,
+      campaignSlug,
+      amount * 100,
+      paymentTokenId,
+      currency || 'USD',
+      name)
+      .then(error => dispatch(donateSuccess()))
+      .catch(error => dispatch(donateFailure(error)))
+  }
+
+}
+
+export function donateSuccess() {
+  return dispatch => {
+    dispatch({type: 'CAMPAIGN_DONATION_SUCCESS' });
+  };
+}
+
+export function donateFailure(error) {
+  return dispatch => {
+    dispatch({ error, type: 'CAMPAIGN_DONATION_FAILURE' });
+  };
+}
+
 
 export function campaignLoadedSuccess(campaign) {
   return dispatch => {
@@ -97,9 +132,9 @@ export function cancelContribCampaign() {
   };
 }
 
-export function startContribCampaignCheckout() {
+export function startContribCampaignCheckout(donation) {
   return dispatch => {
-    dispatch({ type: 'START_CONTRIB_CAMPAIGN_CHECKOUT' });
+    dispatch({ donation, type: 'START_CONTRIB_CAMPAIGN_CHECKOUT' });
   };
 }
 
@@ -150,11 +185,14 @@ export function saveCampaign(changes) {
   }
 }
 
-export function loadCampaign(slug) {
+export function loadCampaign(slug, userSlug) {
   return dispatch => {
 
     (slug ? apiGetCampaignBySlug(slug, getToken()) : apiGetCampaign(getToken()))
-      .then(campaign => dispatch(campaignLoadedSuccess(campaign)))
+      .then(campaign => {
+        Object.assign(campaign, {campaignSlug: slug, userSlug})
+        dispatch(campaignLoadedSuccess(campaign))
+      })
       .catch(error => dispatch(campaignLoadedFailure(error)))
   }
 

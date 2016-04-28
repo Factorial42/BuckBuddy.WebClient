@@ -6,7 +6,8 @@ import CampaignContributeAnonymous from 'client/components/CampaignContributeAno
 import StripeCheckout from 'client/components/StripeCheckout'
 
 import {
-  startContribCampaignCheckout
+  startContribCampaignCheckout,
+  donate
 } from 'client/actions/campaign'
 
 
@@ -16,14 +17,18 @@ const CampaignContribute = React.createClass({
 
     if (this.props.campaignContributingCheckout) {
       return (
-        <StripeCheckout onToken={this._handleStripeToken}/>
+        <div className="text-center">
+          <StripeCheckout onToken={this._handleStripeToken}/>
+        </div>
       )
     }
 
     return (
       <div>
         <CampaignContributeAnonymous
-          onSubmit={e => this.props.startContribCampaignCheckout()} />
+          onSubmit={donation => {
+            this.props.startContribCampaignCheckout(donation)
+          }} />
       </div>
     )
 
@@ -31,7 +36,7 @@ const CampaignContribute = React.createClass({
 
   _handleStripeToken(token) {
 
-    console.log(token)
+    this.props.donate(token.id)
 
   }
 
@@ -49,4 +54,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, {startContribCampaignCheckout})(CampaignContribute)
+export default connect(mapStateToProps, {startContribCampaignCheckout, donate})(CampaignContribute)
