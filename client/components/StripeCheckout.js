@@ -9,7 +9,7 @@ export default ({ onToken, amount }) => {
       token={onToken}
       name={"BuckBuddy"}
       image={"/static/img/buck.png"}
-      stripeKey="pk_test_E1OSSlsm3ARYd8FgwyWHAl1m" />
+      stripeKey={window.stripeKey} />
   )
 
 }

@@ -101,7 +101,7 @@ server.route({
 
     reply.view('main', _.extend(commonLocals, {
       user: {}, //TODO: remove this?
-      stripeKey: envCfg.stripePublicKey,
+      stripeKey: envCfg.bbStripePublicKey,
       stripeClientId: envCfg.bbStripeClientId,
       stripeRedirectUrl: envCfg.bbStripeRedirectUrl,
       fbAppId: envCfg.bbFbAppId,
