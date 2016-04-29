@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Row, Col, Input, Button, Modal } from 'bootstrap'
 import { Link } from 'react-router'
 import CampaignStats from 'client/components/CampaignStats'
+import CampaignDonationList from 'client/components/CampaignDonationList'
 import CampaignShare from 'client/components/CampaignShare'
 import CampaignContribute from 'client/components/CampaignContribute'
 import Slider from 'react-slick'
@@ -36,6 +37,10 @@ const CampaignReadOnly = React.createClass({
         {this._getCampaignSharingModalNode()}
 
         {this._getCampaignContributingModalNode()}
+
+        <h5>Contributors</h5>
+        
+        <CampaignDonationList />
 
       </div>
     )

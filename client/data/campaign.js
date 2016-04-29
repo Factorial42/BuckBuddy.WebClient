@@ -3,6 +3,12 @@ import fileHelper from './fileHelper'
 import {get as getUser} from './user'
 
 
+export function getDonations(campaignSlug, pageNum, pageSize) {
+  //Req: curl -i -XGET 'localhost:4569/donations/byCampaignSlug/testcampaign-1461734320?pageNumber=2&pageSize=4'
+  return axios.get(`/api-donations/donations/byCampaignSlug/${campaignSlug}?pageNumber=${pageNum}&pageSize=${pageSize}`)
+    .then(res => res.data)
+}
+
 export function donate(userSlug, campaignSlug, amountInCents, paymentToken, currencyString, firstName) {
   //Req: curl -i -XPOST 'localhost:4569/donations' -d '{"userSlug":"test-user-1461137856", "campaignSlug":"testcampaign-1461734320", "amountInCents":100, "paymentToken":"tok_184yPYHngV6Dzl2IwVR7ng1w","currencyString":"usd", "firstName":"testuser1"}'
   //

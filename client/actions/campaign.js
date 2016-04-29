@@ -4,7 +4,8 @@ import {
   updateCampaign as apiUpdateCampaign,
   addCampaignPhoto as apiAddCampaignPhoto,
   deleteCampaignPhoto as apiDeleteCampaignPhoto,
-  donate as apiDonate
+  donate as apiDonate,
+  getDonations as apiGetDonations
 } from 'client/data/campaign'
 
 import {
@@ -13,6 +14,34 @@ import {
 
 import { setToken, getToken } from 'client/data/userLocalSession'
 import { browserHistory } from 'react-router'
+
+export function getMoreDonations(campaignSlug) {
+
+  return (dispatch, getState) => {
+
+    let { campaignDonationList: {pageNumber} } = getState()
+    pageNumber = pageNumber ? pageNumber + 1 : 1;
+    apiGetDonations(campaignSlug, pageNumber, 10)
+      .then(donations => dispatch(getDonationsSuccess({
+        pageNumber,
+        donations
+      })))
+      .catch(error => dispatch(getDonationsFailure(error)))
+  }
+}
+
+export function getDonationsSuccess(page) {
+  return dispatch => {
+    dispatch({page, type: 'CAMPAIGN_GET_DONATIONS_SUCCESS' });
+  };
+}
+
+export function getDonationsFailure(error) {
+  return dispatch => {
+    dispatch({ error, type: 'CAMPAIGN_GET_DONATIONS_FAILURE' });
+  };
+}
+
 
 export function donate(paymentTokenId) {
 
@@ -29,7 +58,7 @@ export function donate(paymentTokenId) {
       paymentTokenId,
       currency || 'USD',
       name)
-      .then(error => dispatch(donateSuccess()))
+      .then(() => dispatch(donateSuccess()))
       .catch(error => dispatch(donateFailure(error)))
   }
 
@@ -192,6 +221,7 @@ export function loadCampaign(slug, userSlug) {
       .then(campaign => {
         Object.assign(campaign, {campaignSlug: slug, userSlug})
         dispatch(campaignLoadedSuccess(campaign))
+        dispatch(getMoreDonations(slug))
       })
       .catch(error => dispatch(campaignLoadedFailure(error)))
   }

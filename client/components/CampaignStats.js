@@ -34,7 +34,6 @@ const CampaignStats = React.createClass({
           </Col>
         </Row>
 
-
         <Row>
           <Col {...leftColProps} className="text-left">
             <label>Contributors</label>
