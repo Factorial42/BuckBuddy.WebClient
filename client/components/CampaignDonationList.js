@@ -46,9 +46,9 @@ const mapStateToProps = state => {
     campaignDonationList: {donations}
   } = state
 
-  donations = donations || [];
   return {
-    donations
+    donations: donations.donations,
+    count: donations.count
   };
 
 }

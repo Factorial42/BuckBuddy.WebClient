@@ -1,5 +1,5 @@
 
-const reducer = (state = {donations: []}, action) => {
+const reducer = (state = {donations: {donations: [], count: 0}}, action) => {
   switch (action.type) {
     case 'CAMPAIGN_GET_DONATIONS_SUCCESS':
       return action.page
