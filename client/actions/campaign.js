@@ -15,12 +15,10 @@ import {
 import { setToken, getToken } from 'client/data/userLocalSession'
 import { browserHistory } from 'react-router'
 
-export function getMoreDonations(campaignSlug) {
+export function getMoreDonations(campaignSlug, pageNumber) {
 
   return (dispatch, getState) => {
 
-    let { campaignDonationList: {pageNumber} } = getState()
-    pageNumber = pageNumber ? pageNumber + 1 : 1;
     apiGetDonations(campaignSlug, pageNumber, 10)
       .then(donations => dispatch(getDonationsSuccess({
         pageNumber,
@@ -59,6 +57,7 @@ export function donate(paymentTokenId) {
       currency || 'USD',
       name)
       .then(() => dispatch(donateSuccess()))
+      .then(() => dispatch(loadCampaign(campaignSlug, userSlug)))
       .catch(error => dispatch(donateFailure(error)))
   }
 

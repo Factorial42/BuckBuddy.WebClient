@@ -3,7 +3,7 @@ import fileHelper from './fileHelper'
 import {get as getUser} from './user'
 
 
-export function getDonations(campaignSlug, pageNum, pageSize) {
+export function getDonations(campaignSlug, pageNum = 1, pageSize = 20) {
   //Req: curl -i -XGET 'localhost:4569/donations/byCampaignSlug/testcampaign-1461734320?pageNumber=2&pageSize=4'
   return axios.get(`/api-donations/donations/byCampaignSlug/${campaignSlug}?pageNumber=${pageNum}&pageSize=${pageSize}`)
     .then(res => res.data)
