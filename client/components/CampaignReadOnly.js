@@ -10,6 +10,7 @@ import CampaignContribute from 'client/components/CampaignContribute'
 import Slider from 'react-slick'
 
 import {
+  startEditingCampaign,
   cancelSharingCampaign,
   cancelContribCampaign
 } from 'client/actions/campaign'
@@ -34,12 +35,14 @@ const CampaignReadOnly = React.createClass({
 
         <CampaignStats campaign={campaign} />
 
+        {this._getCampaignEditButtonNode()}
+
         {this._getCampaignSharingModalNode()}
 
         {this._getCampaignContributingModalNode()}
 
         <h5>Contributors</h5>
-        
+
         <CampaignDonationList />
 
       </div>
@@ -130,20 +133,49 @@ const CampaignReadOnly = React.createClass({
     let {amount} = campaign;
 
     return amount;
-  }
+  },
+
+  _getCampaignEditButtonNode() {
+
+    if (!this.props.owner) return null;
+
+    return (
+      <a onClick={e => this.props.startEditingCampaign()}>Edit Campaign
+        &nbsp;
+        <span className="fa fa-pencil"/>
+      </a>
+    )
+
+  },
 
 });
 
 const mapStateToProps = state => {
 
-  let {campaignContributing, campaignSharing} = state
+  let {
+    campaignContributing,
+    campaignSharing
+  } = state
+
+  let owner = false
+
+  if (state.user &&
+      state.campaign &&
+      state.user.userId === state.campaign.userId) {
+      owner = true;
+  }
 
   return {
     campaignSharing,
-    campaignContributing
+    campaignContributing,
+    owner
   };
 
 }
 
 
-export default connect(mapStateToProps, {cancelSharingCampaign, cancelContribCampaign})(CampaignReadOnly)
+export default connect(mapStateToProps, {
+  startEditingCampaign,
+  cancelSharingCampaign,
+  cancelContribCampaign
+})(CampaignReadOnly)

@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { Row, Col, Button, Input } from 'bootstrap'
 import { Link } from 'react-router'
 import {
-  startEditingCampaign,
   cancelEditingCampaign,
   startContribCampaign,
   saveCampaign,
@@ -42,7 +41,6 @@ const CampaignPage = React.createClass({
         </Col>
 
         <Col {...colProps}>
-          {this._getCampaignEditButtonNode()}
           {this._getContributeButtonNode()}
         </Col>
       </Row>
@@ -60,21 +58,6 @@ const CampaignPage = React.createClass({
       <Button
         onClick={() => this.props.startContribCampaign()}
         className="button-action button-blue">Contribute</Button>
-    )
-
-  },
-
-  _getCampaignEditButtonNode() {
-
-    let {owner, campaignEditing} = this.props;
-
-    if (!owner || campaignEditing) return null;
-
-    return (
-      <a onClick={e => this.props.startEditingCampaign()}>Edit Campaign
-        &nbsp;
-        <span className="fa fa-pencil"/>
-      </a>
     )
 
   },
@@ -131,12 +114,6 @@ const CampaignPage = React.createClass({
 
   },
 
-  _handleEditClick() {
-
-    this.props.startEditingCampaign()
-
-  },
-
   componentDidMount() {
     this.props.loadCampaign(this.props.params.campaignSlug, this.props.params.userSlug)
   }
@@ -184,7 +161,6 @@ const setPhoto = () => console.log('TODO....add handler')
 
 export default connect(mapStateToProps, {
   setPhoto,
-  startEditingCampaign,
   cancelEditingCampaign,
   startContribCampaign,
   saveCampaign,
