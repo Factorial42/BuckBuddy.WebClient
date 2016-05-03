@@ -2,12 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Row, Col, Input, Button, Modal } from 'bootstrap'
-import CampaignContributeAnonymous from 'client/components/CampaignContributeAnonymous'
+import CampaignContributeForm from 'client/components/CampaignContributeForm'
 import StripeCheckout from 'client/components/StripeCheckout'
 
 import {
   startContribCampaignCheckout,
-  donate
+  donate,
+  loadFbDonorInfo
 } from 'client/actions/campaign'
 
 
@@ -16,9 +17,9 @@ const CampaignContribute = React.createClass({
   render() {
 
     let {
+      user,
       campaignContributingCheckout,
-      campaignDonation,
-      startContribCampaignCheckout
+      campaignDonation
     } = this.props
 
     if (campaignContributingCheckout) {
@@ -29,12 +30,27 @@ const CampaignContribute = React.createClass({
       )
     }
 
+    return this._getContributionForNode()
+
+  },
+
+  _getContributionForNode() {
+
     return (
       <div>
-        <CampaignContributeAnonymous
-          onSubmit={donation => startContribCampaignCheckout(donation)} />
+        <CampaignContributeForm
+          initialValues={this.props.initialValues}
+          onSubmit={donation => {
+            //console.log(donation)
+            this.props.startContribCampaignCheckout(donation)
+          }} />
+
+          <div className="text-center">
+            <Button onClick={e => this.props.loadFbDonorInfo()} className="button-action button-fb">Use FB Profile</Button>
+          </div>          
       </div>
     )
+
 
   },
 
@@ -51,16 +67,35 @@ const mapStateToProps = state => {
   let {
     campaignContributing,
     campaignContributingCheckout,
-    campaignDonation
+    campaignDonation,
+    campaignDonationFbInfo,
+    user
   } = state
+
+  let initialValues = {};
+
+  if (campaignDonationFbInfo) {
+    initialValues = {
+      name: campaignDonationFbInfo.name,
+      photoUri: campaignDonationFbInfo.photoUri
+    }
+  } else if (user) {
+    initialValues = {
+      name: user.firstName,
+      photoUri: user.profilePic
+    }
+  }
 
   return {
     campaignContributing,
     campaignContributingCheckout,
-    campaignDonation
+    campaignDonation,
+    initialValues
   };
-
 }
 
-
-export default connect(mapStateToProps, {startContribCampaignCheckout, donate})(CampaignContribute)
+export default connect(mapStateToProps, {
+  startContribCampaignCheckout,
+  loadFbDonorInfo,
+  donate
+})(CampaignContribute)

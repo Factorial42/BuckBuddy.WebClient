@@ -159,7 +159,7 @@ export function fbLoginCheck() {
 
   return dispatch =>
     {
-      return resolveFBHandle()
+      return resolveFBHandle()//TODO: use lib/fb.getLoginStatus
         .then($fb => {
           return new Promise((ful, rej) => {
             $fb.getLoginStatus((response) => {
@@ -187,6 +187,7 @@ export function fbLoginCheck() {
 export function fbConnect() {
 
   return dispatch => {
+    //TODO: use connect() helper from lib/fb
     return resolveFBHandle()
       .then($fb => {
 

@@ -12,8 +12,37 @@ import {
   getUserByToken
 } from 'client/data/user'
 
+import { connect as connectFb } from 'client/lib/fb'
 import { setToken, getToken } from 'client/data/userLocalSession'
 import { browserHistory } from 'react-router'
+
+export function loadFbDonorInfo() {
+
+  return dispatch => {
+    return connectFb()
+      .then(response => {
+        FB.api('/me', {fields: 'last_name,first_name,picture'}, function(response) {
+          dispatch(loadFbDonorInfoSuccess({
+            name: `${response.first_name} ${response.last_name}`,
+            photoUri: response.picture.data.url
+          }))
+        });
+
+      })
+      .catch(e => {
+        //swallow for now..
+      })
+
+  }
+
+
+}
+
+export function loadFbDonorInfoSuccess(donorInfo) {
+  return dispatch => {
+    dispatch({donorInfo, type: 'CAMPAIGN_LOAD_FB_DONOR_INFO_SUCCESS' });
+  };
+}
 
 export function getMoreDonations(campaignSlug, pageNumber) {
 
@@ -45,8 +74,8 @@ export function donate(paymentTokenId) {
 
   return (dispatch, getState) => {
 
-    let { campaign, campaignDonation, routing } = getState();
-    let { amount, currency, name } = campaignDonation
+    let { campaign, campaignDonation, routing, user } = getState();
+    let { amount, currency, name, photoUri } = campaignDonation
     let { userSlug, campaignSlug } = campaign;
 
     apiDonate(
@@ -55,7 +84,9 @@ export function donate(paymentTokenId) {
       amount * 100,
       paymentTokenId,
       currency || 'USD',
-      name)
+      name,
+      photoUri,
+      user ? user.userId : null)
       .then(() => dispatch(donateSuccess()))
       .then(() => dispatch(loadCampaign(campaignSlug, userSlug)))
       .catch(error => dispatch(donateFailure(error)))

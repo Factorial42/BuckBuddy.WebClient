@@ -9,6 +9,7 @@ import campaign from 'client/reducers/campaign'
 import campaignEditing from 'client/reducers/campaignEditing'
 import campaignSharing from 'client/reducers/campaignSharing'
 import campaignDonation from 'client/reducers/campaignDonation'
+import campaignDonationFbInfo from 'client/reducers/campaignDonationFbInfo'
 import campaignDonationList from 'client/reducers/campaignDonationList'
 import campaignContributing from 'client/reducers/campaignContributing'
 import campaignContributingCheckout from 'client/reducers/campaignContributingCheckout'
@@ -24,6 +25,7 @@ const reducers = combineReducers({
   campaignContributing,
   campaignContributingCheckout,
   campaignDonation,
+  campaignDonationFbInfo,
   campaignDonationList,
   authenticated,
   user,
