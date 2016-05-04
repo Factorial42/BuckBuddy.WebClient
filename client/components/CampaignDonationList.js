@@ -30,14 +30,24 @@ const CampaignDonationList = React.createClass({
       <Row>
         <Col lg={7} lgOffset={3}>
           <div className="campaign-donation">
+            {this._getDonorPicNode(donation)}
             {donation.firstName} contributed <span className="campaign-donation-amount">${donation.amountInCents / 100}</span>
             <h6>{moment(donation.createdAt * 1000).format('MM/DD/YYYY')}</h6>
           </div>
         </Col>
       </Row>
     )
-  }
+  },
 
+  _getDonorPicNode({donorProfilePic = 'https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100'}) {
+
+    return (
+      <div className="donor-photo">
+        <img src={donorProfilePic} />
+      </div>
+    )
+
+  }
 })
 
 const mapStateToProps = state => {
