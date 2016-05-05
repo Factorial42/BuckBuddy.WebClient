@@ -8,6 +8,10 @@ import campaignNew from 'client/reducers/campaignNew'
 import campaign from 'client/reducers/campaign'
 import campaignEditing from 'client/reducers/campaignEditing'
 import campaignSharing from 'client/reducers/campaignSharing'
+import userTransferring from 'client/reducers/userTransferring'
+import userCanTransfer from 'client/reducers/userCanTransfer'
+import userCashBalances from 'client/reducers/userCashBalances'
+import userRequiredTransferFields from 'client/reducers/userRequiredTransferFields'
 import campaignDonation from 'client/reducers/campaignDonation'
 import campaignDonationFbInfo from 'client/reducers/campaignDonationFbInfo'
 import campaignDonationList from 'client/reducers/campaignDonationList'
@@ -22,6 +26,7 @@ const reducers = combineReducers({
   campaign,
   campaignEditing,
   campaignSharing,
+  userTransferring,
   campaignContributing,
   campaignContributingCheckout,
   campaignDonation,
@@ -29,6 +34,9 @@ const reducers = combineReducers({
   campaignDonationList,
   authenticated,
   user,
+  userCashBalances,
+  userCanTransfer,
+  userRequiredTransferFields,
   signupFbToken,
   signupSuggestedValues,
   loading,

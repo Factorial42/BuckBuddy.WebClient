@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Row, Col, Input, Button, Modal } from 'bootstrap'
+import { Row, Col, Input, Button } from 'bootstrap'
 import CampaignContributeForm from 'client/components/CampaignContributeForm'
 import StripeCheckout from 'client/components/StripeCheckout'
 
@@ -47,7 +47,7 @@ const CampaignContribute = React.createClass({
 
           <div className="text-center">
             <Button onClick={e => this.props.loadFbDonorInfo()} className="button-action button-fb">Use FB Profile</Button>
-          </div>          
+          </div>
       </div>
     )
 

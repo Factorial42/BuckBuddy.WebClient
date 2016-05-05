@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Row, Col, Input, Button, Carousel } from 'bootstrap'
+import { Row, Col, Input, Button } from 'bootstrap'
 import { Link } from 'react-router'
 import { ColumnProps } from 'client/constants/Layout'
 import { reduxForm } from 'redux-form'

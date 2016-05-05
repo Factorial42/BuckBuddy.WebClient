@@ -18,7 +18,6 @@ export function activate(token) {
 }
 
 export function signup(userData) {
-
   return axios.post('/api-user/users/signup', userData)
     .then(res => res.data.data);
 }
@@ -62,4 +61,40 @@ export function getFbProfile(fbToken) {
   return axios.get(`/api-user/users/fb/profile?fbToken=${fbToken}`)
     .then(res => res.data.data);
 
+}
+
+export function canTransferFunds(accessToken) {
+  //localhost:4567/users/byToken/eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlYzY3OTc4MzIyZTVmYmQ3NjA0ZThkYjJhZDBlODlhYjFmYzRiN2RlZTBhOWE5NjU1ZmI2NjJiOGFlNjQ3ZTcxIn0.gAarGBEnQf11oc8h2bfyaiLoBYGOiaj_Lrjb-KV_SL5GZECE7j50wegLkI7ea1RfNAZBhFFa6LV4IPJQ7I3rjA/isTransfersEnabled
+  return axios.get(`/api-user/users/byToken/${accessToken}/isTransfersEnabled`)
+    .then(res => res.data.isTransfersEnabled);
+}
+
+export function getCashBalance(accessToken) {
+
+  //'localhost:4567/users/byToken/eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlYzY3OTc4MzIyZTVmYmQ3NjA0ZThkYjJhZDBlODlhYjFmYzRiN2RlZTBhOWE5NjU1ZmI2NjJiOGFlNjQ3ZTcxIn0.gAarGBEnQf11oc8h2bfyaiLoBYGOiaj_Lrjb-KV_SL5GZECE7j50wegLkI7ea1RfNAZBhFFa6LV4IPJQ7I3rjA/balance'
+
+  return axios.get(`/api-user/users/byToken/${accessToken}/balance`)
+    .then(res => res.data);
+
+}
+
+export function transferFunds(accessToken, amountInCents, currency = 'usd') {
+  //Req: curl -i -XPOST 'localhost:4567/users/byToken/eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlYzY3OTc4MzIyZTVmYmQ3NjA0ZThkYjJhZDBlODlhYjFmYzRiN2RlZTBhOWE5NjU1ZmI2NjJiOGFlNjQ3ZTcxIn0.gAarGBEnQf11oc8h2bfyaiLoBYGOiaj_Lrjb-KV_SL5GZECE7j50wegLkI7ea1RfNAZBhFFa6LV4IPJQ7I3rjA/cashout?currencyString=usd&amountInCents=5'
+
+  return axios.post(`/api-user/users/byToken/${accessToken}/cashout?currencyString=${currency}&amountInCents=${amountInCents}`)
+    .then(res => res.data);
+}
+
+export function getTransferRequiredFields(accessToken) {
+  //localhost:4567/users/byToken/eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlYzY3OTc4MzIyZTVmYmQ3NjA0ZThkYjJhZDBlODlhYjFmYzRiN2RlZTBhOWE5NjU1ZmI2NjJiOGFlNjQ3ZTcxIn0.gAarGBEnQf11oc8h2bfyaiLoBYGOiaj_Lrjb-KV_SL5GZECE7j50wegLkI7ea1RfNAZBhFFa6LV4IPJQ7I3rjA/verificationieldsNeeded
+  //
+  return axios.get(`/api-user/users/byToken/${accessToken}/verificationFieldsNeeded`)
+    .then(res => res.data);
+}
+
+export function saveTransferFields(accessToken, fields) {
+  //'localhost:4567/users/byToken/eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlYzY3OTc4MzIyZTVmYmQ3NjA0ZThkYjJhZDBlODlhYjFmYzRiN2RlZTBhOWE5NjU1ZmI2NjJiOGFlNjQ3ZTcxIn0.gAarGBEnQf11oc8h2bfyaiLoBYGOiaj_Lrjb-KV_SL5GZECE7j50wegLkI7ea1RfNAZBhFFa6LV4IPJQ7I3rjA/fieldsNeeded' -d
+console.log(fields)
+return axios.patch(`/api-user/users/byToken/${accessToken}/fieldsNeeded`, fields)
+  .then(res => res.data);
 }

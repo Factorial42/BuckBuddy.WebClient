@@ -1,5 +1,14 @@
 import React from 'react'
-import { Navbar, Nav, NavItem, MenuItem, DropdownButton, Grid  } from 'bootstrap'
+import {
+  Navbar,
+  Nav,
+  NavItem,
+  MenuItem,
+  DropdownButton,
+  Grid
+} from 'bootstrap'
+
+import UserTransferModal from 'client/components/UserTransferModal'
 import { logout } from 'client/actions/session'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
@@ -8,20 +17,31 @@ import {
   startSharingCampaign
 } from 'client/actions/campaign'
 
+import {
+  startTransferringFunds
+} from 'client/actions/user'
+
 let Header = React.createClass({
 
   render() {
     let settingsNode = null;
 
-    if (this.props.authenticated) {
+    let{
+      logout,
+      startTransferringFunds,
+      authenticated
+    } = this.props
+
+    if (authenticated) {
 
       let cog = (<span className="fa fa-2x fa-gear"/>)
 
       settingsNode = (
         <DropdownButton title={cog} className="nav-menu-dropdown">
           <MenuItem eventKey="1">Settings</MenuItem>
+          <MenuItem eventKey="1" onClick={e => startTransferringFunds()}>Cash out</MenuItem>
           <MenuItem divider />
-          <MenuItem eventKey={2} href="#" onClick={() => this.props.logout()}>Logout</MenuItem>
+          <MenuItem eventKey={2} href="#" onClick={() => logout()}>Logout</MenuItem>
         </DropdownButton>
 
       )
@@ -49,8 +69,10 @@ let Header = React.createClass({
           <div className="pull-right">
             {shareNode}
           </div>
-
+          <UserTransferModal />
         </Grid>
+
+
       </header>
 
     )
@@ -65,4 +87,8 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {logout, startSharingCampaign})(Header)
+export default connect(mapStateToProps, {
+  logout,
+  startSharingCampaign,
+  startTransferringFunds
+})(Header)

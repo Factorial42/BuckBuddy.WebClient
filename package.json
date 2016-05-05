@@ -27,6 +27,7 @@
     "joi": "^6.4.1",
     "jwt-simple": "^0.3.0",
     "moment": "2.10.6",
+    "react-bootstrap": "^0.29.3",
     "react-slick": "^0.12.0",
     "redux-form": "^5.1.1",
     "underscore": "^1.8.3"
@@ -43,7 +44,6 @@
     "css-loader": "^0.23.1",
     "immutable": "^3.7.6",
     "react": "^0.14.8",
-    "react-bootstrap": "^0.28.5",
     "react-dom": "^0.14.8",
     "react-dropzone": "^3.3.4",
     "react-redux": "^4.4.0",
