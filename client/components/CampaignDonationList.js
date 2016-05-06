@@ -28,11 +28,20 @@ const CampaignDonationList = React.createClass({
   _getDonationListItemNode(donation) {
     return (
       <Row>
-        <Col lg={7} lgOffset={3}>
+        <Col lg={12}>
           <div className="campaign-donation">
-            {this._getDonorPicNode(donation)}
-            {donation.firstName} contributed <span className="campaign-donation-amount">${donation.amountInCents / 100}</span>
-            <h6>{moment(donation.createdAt * 1000).format('MM/DD/YYYY')}</h6>
+            <div className="campaign-donation-top-line">
+              {this._getDonorPicNode(donation)}
+              <div className="campaign-donation-statement">
+                {donation.firstName} contributed <span className="campaign-donation-amount">${donation.amountInCents / 100}</span>
+              </div>
+              <div className="campaign-donation-thank">
+                <span className="fa fa-2x fa-thumbs-o-up" onClick={() => {}} />
+              </div>
+            </div>
+            <div className="campaign-donation-created">
+              {moment(donation.createdAt * 1000).format('MMM, DD YYYY')}
+            </div>
           </div>
         </Col>
       </Row>
@@ -42,7 +51,7 @@ const CampaignDonationList = React.createClass({
   _getDonorPicNode({donorProfilePic = 'https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100'}) {
 
     return (
-      <div className="donor-photo">
+      <div className="campaign-donation-photo">
         <img src={donorProfilePic} />
       </div>
     )
