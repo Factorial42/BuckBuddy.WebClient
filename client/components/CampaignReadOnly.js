@@ -41,7 +41,8 @@ const CampaignReadOnly = React.createClass({
 
         {this._getCampaignContributingModalNode()}
 
-        <h5>Contributors</h5>
+        <br/>
+        <br/>
 
         <CampaignDonationList />
 
