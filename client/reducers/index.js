@@ -12,6 +12,7 @@ import userTransferring from 'client/reducers/userTransferring'
 import userCanTransfer from 'client/reducers/userCanTransfer'
 import userCashBalances from 'client/reducers/userCashBalances'
 import userRequiredTransferFields from 'client/reducers/userRequiredTransferFields'
+import userRequiredTransferFieldsErrors from 'client/reducers/userRequiredTransferFieldsErrors'
 import campaignDonation from 'client/reducers/campaignDonation'
 import campaignDonationFbInfo from 'client/reducers/campaignDonationFbInfo'
 import campaignDonationList from 'client/reducers/campaignDonationList'
@@ -37,6 +38,7 @@ const reducers = combineReducers({
   userCashBalances,
   userCanTransfer,
   userRequiredTransferFields,
+  userRequiredTransferFieldsErrors,
   signupFbToken,
   signupSuggestedValues,
   loading,

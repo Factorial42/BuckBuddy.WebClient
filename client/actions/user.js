@@ -61,6 +61,13 @@ export function startTransferringFunds() {
   };
 }
 
+export function stripeBankAccountError(error) {
+  return dispatch => {
+    dispatch({ error, type: 'STRIPE_BANK_TOKEN_ERROR' });
+  };
+}
+
+
 export function cancelTransferringFunds() {
   return dispatch => {
     dispatch({ type: 'CANCEL_TRANSFERRING_FUNDS' });
@@ -77,6 +84,7 @@ export function transferFunds(amountInCents, currency) {
       })
       .catch(res => {
         //TODO?
+
       })
 
 
@@ -92,7 +100,8 @@ export function saveTransferFields(fields, stripeBankAccountFields) {
           return _getStripeToken(stripeBankAccountFields)
             .then(response => {
               return {external_account: response.id}
-            })
+            });
+
         }
         return {}
       })
@@ -105,8 +114,13 @@ export function saveTransferFields(fields, stripeBankAccountFields) {
         dispatch(startTransferringFunds())
       })
       .catch((err) => {
-        console.log(err)
-      })
+
+        if (err.param === 'bank_account') {
+          dispatch(stripeBankAccountError(err.message))
+        }
+
+      });
+
   }
 }
 
@@ -115,7 +129,7 @@ const _getStripeToken = ({
   accountRoutingNumber,
   accountNumber,
   accountHolderName,
-  accountHolderType
+  accountHolderType = 'individual'
 }) => {
 
   return new Promise((ful, rej) => {

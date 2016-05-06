@@ -30,6 +30,7 @@ const UserTransferModal = React.createClass({
     let {
       user,
       cancelTransferringFunds,
+      userRequiredTransferFieldsErrors,
       userCanTransfer
     } = this.props
 
@@ -54,7 +55,8 @@ const UserTransferModal = React.createClass({
   _getUserTransferFormNode() {
 
     let {
-      userRequiredTransferFields
+      userRequiredTransferFields,
+      userRequiredTransferFieldsErrors
     } = this.props
 
     let mappedFields = this._getTransferFormFields(userRequiredTransferFields)
@@ -63,6 +65,8 @@ const UserTransferModal = React.createClass({
     return (
       <div>
         <UserTransferForm
+          asyncErrors={userRequiredTransferFieldsErrors}
+          initialValues={{accountHolderType: 'individual'}}
           onSubmit={this._handleFieldsSave}
           fields={mappedFields}
           validate={validateFunction} />
@@ -191,8 +195,31 @@ const UserTransferModal = React.createClass({
       transferFunds
     } = this.props
 
+    let liveNodeWarningNode = null
+
+    if (!livemode) {
+      liveNodeWarningNode = (
+        <div>
+          Live Mode is Off :)
+        </div>
+      )
+    }
+
+    let buttonNode = null;
+
+    if (availableBalanceInfo.amount > 0) {
+      buttonNode = (
+        <Button type="submit"
+          onClick={e => transferFunds(availableBalanceInfo.amount)}
+          className="button-action button-green">Cashout Available Balance
+        </Button>
+      )
+    }
+
     return (
       <div className="text-center">
+
+        {liveNodeWarningNode}
 
         <div>
           Pending Amount: {pendingBalanceInfo.amount / 100} {pendingBalanceInfo.currency}
@@ -202,10 +229,8 @@ const UserTransferModal = React.createClass({
           Available Amount: {availableBalanceInfo.amount / 100} {availableBalanceInfo.currency}
         </div>
 
-        <Button type="submit"
-          onClick={e => transferFunds(availableBalanceInfo.amount)}
-          className="button-action button-green">Cashout Available Balance
-        </Button>
+        {buttonNode}
+
       </div>
     )
   }
@@ -219,6 +244,7 @@ const mapStateToProps = state => {
     userTransferring,
     userCanTransfer,
     userRequiredTransferFields,
+    userRequiredTransferFieldsErrors,
     userCashBalances
   } = state;
 
@@ -227,6 +253,7 @@ const mapStateToProps = state => {
     userTransferring,
     userCanTransfer,
     userRequiredTransferFields,
+    userRequiredTransferFieldsErrors,
     userCashBalances
   }
 
