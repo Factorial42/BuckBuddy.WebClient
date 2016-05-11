@@ -10,6 +10,10 @@ import CampaignContribute from 'client/components/CampaignContribute'
 import Slider from 'react-slick'
 
 import {
+  startTransferringFunds
+} from 'client/actions/user'
+
+import {
   startEditingCampaign,
   cancelSharingCampaign,
   cancelContribCampaign
@@ -36,6 +40,8 @@ const CampaignReadOnly = React.createClass({
         <CampaignStats campaign={campaign} />
 
         {this._getCampaignEditButtonNode()}
+
+        {this._getCampaignCashoutButtonNode()}
 
         {this._getCampaignSharingModalNode()}
 
@@ -136,6 +142,17 @@ const CampaignReadOnly = React.createClass({
     return amount;
   },
 
+  _getCampaignCashoutButtonNode() {
+
+    if (!this.props.owner) return null;
+
+    return (
+      <div>
+        <Button onClick={e => this.props.startTransferringFunds()} className="button-action button-green">Cash Out</Button>
+      </div>
+    )
+  },
+
   _getCampaignEditButtonNode() {
 
     if (!this.props.owner) return null;
@@ -178,5 +195,6 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
   startEditingCampaign,
   cancelSharingCampaign,
-  cancelContribCampaign
+  cancelContribCampaign,
+  startTransferringFunds
 })(CampaignReadOnly)

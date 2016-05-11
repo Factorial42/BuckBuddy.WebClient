@@ -5,7 +5,8 @@ import { Row, Col, Input, Button, Modal } from 'bootstrap'
 import moment from 'moment'
 
 import {
-  getMoreDonations
+  getMoreDonations,
+  thankDonor
 } from 'client/actions/campaign'
 
 const CampaignDonationList = React.createClass({
@@ -26,6 +27,28 @@ const CampaignDonationList = React.createClass({
   },
 
   _getDonationListItemNode(donation) {
+    let thankDonorNode = null;
+
+    let {owner, thankDonor} = this.props;
+
+    if (owner && donation.thankable) {
+
+      let clickHandler = () => this.props.thankDonor(donation.donationId);
+
+      let donationClassName = "campaign-donation-thank"
+
+      if (donation.thanked) {
+        clickHandler = () => {}
+        donationClassName += " campaign-donation-thanked"
+      }
+
+      thankDonorNode = (
+        <div className={donationClassName}>
+          <span className="fa fa-2x fa-thumbs-o-up" onClick={clickHandler} />
+        </div>
+      )
+    }
+
     return (
       <Row>
         <Col lg={12}>
@@ -35,9 +58,7 @@ const CampaignDonationList = React.createClass({
               <div className="campaign-donation-statement">
                 {donation.firstName} contributed <span className="campaign-donation-amount">${donation.amountInCents / 100}</span>
               </div>
-              <div className="campaign-donation-thank">
-                <span className="fa fa-2x fa-thumbs-o-up" onClick={() => {}} />
-              </div>
+              {thankDonorNode}
             </div>
             <div className="campaign-donation-created">
               {moment(donation.createdAt * 1000).format('MMM, DD YYYY')}
@@ -62,15 +83,23 @@ const CampaignDonationList = React.createClass({
 const mapStateToProps = state => {
 
   let {
-    campaignDonationList: {donations}
+    campaignDonationList: {donations},
+    user,
+    campaign
   } = state
+
+  let owner = user && campaign && user.userId === campaign.userId;
 
   return {
     donations: donations.donations,
-    count: donations.count
+    count: donations.count,
+    owner
   };
 
 }
 
 
-export default connect(mapStateToProps, {getMoreDonations})(CampaignDonationList)
+export default connect(mapStateToProps, {
+  getMoreDonations,
+  thankDonor
+})(CampaignDonationList)

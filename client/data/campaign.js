@@ -9,10 +9,17 @@ export function getDonations(campaignSlug, pageNum = 1, pageSize = 20) {
     .then(res => res.data)
 }
 
+export function thankDonor(donationId) {
+  //Req: curl -i -XPOST 'localhost:4569/donations/7055eb6d-01e2-409d-8435-58c6ae97bcab/thankYou'
+  return axios.post(`/api-donations/donations/${donationId}/thankYou`)
+    .then(res => res.data)
+}
+
 export function donate(
-  userSlug,
+  accessToken,
+  campaignUserSlug,
   campaignSlug,
-  amountInCents, 
+  amountInCents,
   paymentToken,
   currencyString,
   firstName,
@@ -20,8 +27,13 @@ export function donate(
   userId) {
   //Req: curl -i -XPOST 'localhost:4569/donations' -d '{"userSlug":"test-user-1461137856", "campaignSlug":"testcampaign-1461734320", "amountInCents":100, "paymentToken":"tok_184yPYHngV6Dzl2IwVR7ng1w","currencyString":"usd", "firstName":"testuser1"}'
   //
-  return axios.post('/api-donations/donations', {
-    userSlug,
+
+  let path = '/api-donations/donations'
+  if (accessToken) {
+    path += `?token=${accessToken}`
+  }
+  return axios.post(path, {
+    campaignUserSlug,
     campaignSlug,
     amountInCents,
     paymentToken,

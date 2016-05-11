@@ -102,30 +102,11 @@ const CampaignPage = React.createClass({
 
   },
 
-  _getCampaignButtonNode() {
-
-    let {campaignEditing} = this.props
-
-    if (!campaignEditing) return null
-
-    return (
-      <SaveButton onClick={this._handleSaveClick} />
-    )
-
-  },
-
   componentDidMount() {
     this.props.loadCampaign(this.props.params.campaignSlug, this.props.params.userSlug)
   }
 
 });
-
-const SaveButton = ({onClick}) => {
-  return (
-    <Button onClick={onClick} className="button-action button-blue">Save</Button>
-  )
-}
-
 
 const mapStateToProps = state => {
 

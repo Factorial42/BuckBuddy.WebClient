@@ -5,6 +5,7 @@ import {
   addCampaignPhoto as apiAddCampaignPhoto,
   deleteCampaignPhoto as apiDeleteCampaignPhoto,
   donate as apiDonate,
+  thankDonor as apiThankDonor,
   getDonations as apiGetDonations
 } from 'client/data/campaign'
 
@@ -69,6 +70,20 @@ export function getDonationsFailure(error) {
   };
 }
 
+export function thankDonor(donationId) {
+
+  return (dispatch, getState) => {
+
+    let { campaign } = getState();
+    let { userSlug, campaignSlug } = campaign;
+
+    apiThankDonor(donationId)
+      .then(() => dispatch(thankDonorSuccess()))
+      .then(() => dispatch(loadCampaign(campaignSlug, userSlug)))
+      .catch(error => dispatch(thankDonorFailure(error)))
+  }
+
+}
 
 export function donate(paymentTokenId) {
 
@@ -79,6 +94,7 @@ export function donate(paymentTokenId) {
     let { userSlug, campaignSlug } = campaign;
 
     apiDonate(
+      getToken(),
       userSlug,
       campaignSlug,
       amount * 100,
@@ -93,6 +109,19 @@ export function donate(paymentTokenId) {
   }
 
 }
+
+export function thankDonorSuccess() {
+  return dispatch => {
+    dispatch({type: 'CAMPAIGN_DONATION_THANK_SUCCESS' });
+  };
+}
+
+export function thankDonorFailure(error) {
+  return dispatch => {
+    dispatch({ error, type: 'CAMPAIGN_DONATION_THANK_FAILURE' });
+  };
+}
+
 
 export function donateSuccess() {
   return dispatch => {

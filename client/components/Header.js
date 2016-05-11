@@ -17,10 +17,6 @@ import {
   startSharingCampaign
 } from 'client/actions/campaign'
 
-import {
-  startTransferringFunds
-} from 'client/actions/user'
-
 let Header = React.createClass({
 
   render() {
@@ -39,7 +35,6 @@ let Header = React.createClass({
       settingsNode = (
         <DropdownButton title={cog} className="nav-menu-dropdown">
           <MenuItem eventKey="1">Settings</MenuItem>
-          <MenuItem eventKey="1" onClick={e => startTransferringFunds()}>Cash out</MenuItem>
           <MenuItem divider />
           <MenuItem eventKey={2} href="#" onClick={() => logout()}>Logout</MenuItem>
         </DropdownButton>
@@ -89,6 +84,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   logout,
-  startSharingCampaign,
-  startTransferringFunds
+  startSharingCampaign
 })(Header)
